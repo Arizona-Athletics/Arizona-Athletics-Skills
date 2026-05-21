@@ -1,0 +1,40 @@
+{
+  "name": "@ua/ua-tokens",
+  "version": "0.1.0",
+  "description": "Single source of truth for University of Arizona Athletics design tokens — CSS, SCSS, TypeScript, and Tailwind preset built from one tokens.json.",
+  "license": "MIT",
+  "type": "module",
+  "files": [
+    "dist/",
+    "tokens.json",
+    "build.ts",
+    "README.md"
+  ],
+  "main": "./dist/tokens.cjs",
+  "module": "./dist/tokens.js",
+  "types": "./dist/tokens.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/tokens.d.ts",
+      "import": "./dist/tokens.js",
+      "require": "./dist/tokens.cjs"
+    },
+    "./tokens.css": "./dist/tokens.css",
+    "./tokens.scss": "./dist/tokens.scss",
+    "./tokens.json": "./tokens.json",
+    "./tailwind": "./dist/tailwind.preset.cjs",
+    "./tailwind.preset.cjs": "./dist/tailwind.preset.cjs"
+  },
+  "scripts": {
+    "build": "bun build.ts",
+    "check": "tsc --noEmit",
+    "clean": "rm -rf dist && mkdir dist"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "typescript": "^5.7.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
