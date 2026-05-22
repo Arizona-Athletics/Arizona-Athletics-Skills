@@ -1,0 +1,23 @@
+# Next.js
+.next/
+out/
+next-env.d.ts
+
+# Dependencies
+node_modules/
+
+# Env files — never commit. Only .env.example is tracked.
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.env*
+!.env.example
+
+# Build / cache
+*.tsbuildinfo
+.turbo/
+
+# OS
+.DS_Store
