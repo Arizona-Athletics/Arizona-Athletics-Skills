@@ -1,0 +1,15 @@
+{{/*
+  ThemeToggle partial — cycle button.
+  Source: /docs/DARK_MODE.md.
+
+  The pre-paint script in baseof.html already wrote data-theme,
+  data-bs-theme, and data-theme-mode on <html>. This button is wired up by
+  static/js/theme.js at DOMContentLoaded. Cycle order: system → light → dark.
+*/}}
+<button type="button"
+        id="ua-theme-toggle"
+        class="btn btn-outline-secondary btn-sm d-inline-flex align-items-center gap-2 rounded-pill"
+        aria-label="Theme: system. Activate to switch.">
+  <span class="ua-theme-toggle__icon material-symbols-rounded" aria-hidden="true">contrast</span>
+  <span class="ua-theme-toggle__label small text-uppercase fw-semibold">System</span>
+</button>

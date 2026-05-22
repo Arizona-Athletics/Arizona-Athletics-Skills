@@ -1,0 +1,61 @@
+{{ define "main" }}
+  {{/*
+    Homepage — composes the six-component contract from
+    /docs/COMPONENTS.md and the canonical spec at
+    .claude/research/ua-design-spec-2026-05-22.md:
+
+      <Header>      → layouts/partials/header.html (rendered in baseof)
+      <Hero>        → layouts/partials/hero.html
+      <Toolbar>     → layouts/partials/toolbar.html
+      <Card> grid   → layouts/partials/card.html (looped over .Params.cards)
+      <Footer>      → layouts/partials/footer.html (rendered in baseof)
+      <ThemeToggle> → layouts/partials/theme-toggle.html (used inside the header)
+  */}}
+
+  {{ partial "hero.html" . }}
+
+  {{ partial "toolbar.html" . }}
+
+  <section class="bg-warm-gray py-5">
+    <div class="container">
+      {{ with .Params.cardsHeading }}
+        <header class="mb-4">
+          <p class="text-uppercase small fw-bold text-red mb-2">{{ .eyebrow }}</p>
+          <h2 class="display-5 fw-light mb-0">{{ .title }}</h2>
+        </header>
+      {{ end }}
+
+      <div class="row g-4">
+        {{ range .Params.cards }}
+          <div class="col-md-4">
+            {{ partial "card.html" . }}
+          </div>
+        {{ end }}
+      </div>
+    </div>
+  </section>
+
+  {{ with .Params.callout }}
+    <section class="background-wrapper text-bg-blue bg-trilines">
+      <div class="container py-5 my-5">
+        <div class="row">
+          <div class="col-lg-8">
+            <h2 class="display-3 fw-light mb-3">{{ .headline }}</h2>
+            <p class="lead mb-4">{{ .subhead }}</p>
+            {{ with .cta }}
+              <a href="{{ .href }}" class="btn btn-outline-white btn-lg">{{ .label }}</a>
+            {{ end }}
+          </div>
+        </div>
+      </div>
+    </section>
+  {{ end }}
+
+  {{ with .Content }}
+    <section class="container py-5">
+      <div class="row justify-content-center">
+        <div class="col-lg-8 ua-prose">{{ . }}</div>
+      </div>
+    </section>
+  {{ end }}
+{{ end }}

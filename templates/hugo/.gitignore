@@ -1,0 +1,14 @@
+# Hugo build artifacts
+public/
+resources/
+.hugo_build.lock
+
+# Local environment
+.env
+.env.local
+
+# Mirrored tokens snapshot (regenerated via `bun run tokens:sync`)
+static/css/tokens.css
+
+# OS noise
+.DS_Store

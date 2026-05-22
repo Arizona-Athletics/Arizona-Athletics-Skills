@@ -1,0 +1,83 @@
+# @ua/template-hugo — site configuration
+#
+# University of Arizona Athletics starter template. Hugo extended 0.140+.
+# See README.md for setup. Brand contract: /AGENTS.md.
+#
+# This file is intentionally minimal. Per-environment settings live under
+# config/_default/ and config/<env>/. Menus are defined in
+# config/_default/menus.yml.
+
+baseURL          = "https://example.arizona.edu/"
+languageCode     = "en-us"
+defaultContentLanguage = "en"
+title            = "Arizona Athletics"
+theme            = ""           # files live in /layouts directly — no theme subdir
+enableRobotsTXT  = true
+enableEmoji      = false
+timeout          = "60s"
+buildDrafts      = false
+buildFuture      = false
+
+# Output formats — HTML for pages, RSS for feeds. Sitemap is automatic.
+[outputs]
+  home    = ["HTML", "RSS"]
+  section = ["HTML", "RSS"]
+  page    = ["HTML"]
+
+# Markdown rendering — keep raw HTML so canonical AZ Bootstrap snippets pass through.
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
+  [markup.tableOfContents]
+    startLevel = 2
+    endLevel   = 4
+
+# ----------------------------------------------------------------------
+# Params
+# ----------------------------------------------------------------------
+# `azBootstrapVersion` pins the AZ Digital Bootstrap CDN release used in
+# layouts/_default/baseof.html. Bump in lockstep with the upstream release
+# feed checked by /ua-standards-check.
+# ----------------------------------------------------------------------
+[params]
+  azBootstrapVersion = "5.1.3"
+  description        = "The official starter for University of Arizona Athletics websites — Hugo + Arizona Bootstrap."
+  themeColor         = "#AB0520"   # not a CSS value — used only in <meta name="theme-color">
+  legal              = "Bear Down® and Block A® are registered trademarks of the Arizona Board of Regents."
+  contactEmail       = "web@arizona.edu"
+
+  # Typekit kit ID. CONFIGURE_ME — requires UA Marcom clearance (see docs/TYPOGRAPHY.md).
+  # When set, baseof.html will render <link rel="stylesheet" href="https://use.typekit.net/<id>.css">.
+  typekitKitId = "CONFIGURE_ME"
+
+  # Hero copy — pulled into layouts/partials/hero.html when frontmatter does not override.
+  [params.hero]
+    eyebrow = "University of Arizona Athletics"
+    headline = "Bear Down. Build Up."
+    subhead  = "Be the next chapter in 140+ years of Wildcat resolve."
+    [[params.hero.ctas]]
+      label = "Buy Tickets"
+      href  = "/tickets/"
+      style = "primary"
+    [[params.hero.ctas]]
+      label = "2026 Schedule"
+      href  = "/schedule/"
+      style = "secondary"
+
+# ----------------------------------------------------------------------
+# Author / org metadata
+# ----------------------------------------------------------------------
+[params.org]
+  name      = "Arizona Athletics"
+  address1  = "The University of Arizona"
+  address2  = "Tucson, AZ 85721"
+  copyright = "© 2026 Arizona Board of Regents"
+
+# ----------------------------------------------------------------------
+# Theme metadata (consumed by /ua-standards-check)
+# ----------------------------------------------------------------------
+[params.designSystem]
+  package = "@ua/ua-tokens"
+  version = "workspace:*"
+  spec    = ".claude/research/ua-design-spec-2026-05-22.md"

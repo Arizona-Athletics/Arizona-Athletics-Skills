@@ -1,0 +1,30 @@
+{{ define "main" }}
+  {{/* Reuse the hero partial for top-of-page chrome — falls back to site.Params.hero. */}}
+  {{ partial "hero.html" . }}
+
+  {{ partial "toolbar.html" . }}
+
+  <article class="container py-5 my-3">
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        <p class="text-uppercase small fw-bold text-red mb-2">
+          {{ with .Params.eyebrow }}{{ . }}{{ else }}From the desert{{ end }}
+        </p>
+        <h1 class="display-5 fw-light mb-4">{{ .Title }}</h1>
+        {{ with .Params.subhead }}
+          <p class="lead mb-4">{{ . }}</p>
+        {{ end }}
+
+        <div class="d-flex align-items-center gap-3 text-body-secondary small mb-5">
+          {{ with .Date }}<span>{{ . | time.Format ":date_long" }}</span>{{ end }}
+          {{ with .Params.author }}<span>By {{ . }}</span>{{ end }}
+          {{ with .Params.readingTime }}<span>{{ . }} min read</span>{{ end }}
+        </div>
+
+        <div class="ua-prose">
+          {{ .Content }}
+        </div>
+      </div>
+    </div>
+  </article>
+{{ end }}

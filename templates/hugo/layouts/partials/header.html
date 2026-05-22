@@ -1,0 +1,90 @@
+{{/*
+  Header partial — canonical UA chrome.
+  Source: .claude/research/ua-design-spec-2026-05-22.md §1.
+
+  Three stacked bands:
+    1. .arizona-header.bg-red — UA red strip with CDN wordmark + mobile actions.
+    2. Block A brand band — opaque white substrate, Block A + "Arizona Athletics" lockup.
+    3. .navbar.navbar-expand-lg.bg-blue — primary site nav from site.Menus.main.
+
+  Hard rules (from the spec):
+    - Wordmark is the CDN SVG. Never replace with a local file.
+    - Default header color is bg-red. Blue variant only on marcom-approved subdomains.
+    - Material Symbols Rounded for icons.
+    - Block A must sit on an opaque white substrate at >= 27px (we ship 48px).
+*/}}
+
+<div class="arizona-header az-fixed-header-on-mobile bg-red" id="header_arizona">
+  <div class="container">
+    <div class="row">
+      <a class="arizona-logo col-auto" href="https://www.arizona.edu"
+         title="The University of Arizona homepage">
+        <img class="arizona-line-logo"
+             alt="The University of Arizona Wordmark Line Logo White"
+             src="https://cdn.digital.arizona.edu/logos/v1.0.0/ua_wordmark_line_logo_white_rgb.min.svg"
+             fetchpriority="high">
+      </a>
+      <div class="d-lg-none d-flex col-auto px-0 ms-auto">
+        <button data-bs-toggle="offcanvas" type="button"
+                data-bs-target="#azMobileNav" aria-controls="azMobileNav"
+                class="btn btn-arizona-header">
+          <span aria-hidden="true" class="icon material-symbols-rounded">search</span>
+          <span class="icon-text">Search</span>
+        </button>
+        <button data-bs-toggle="offcanvas" type="button"
+                data-bs-target="#azMobileNav" aria-controls="azMobileNav"
+                class="btn btn-arizona-header">
+          <span aria-hidden="true" class="icon material-symbols-rounded">menu</span>
+          <span class="icon-text">Menu</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+{{/* Block A brand band — opaque white substrate per the spec's Block A rules. */}}
+<div class="ua-brand-band bg-white border-bottom">
+  <div class="container py-2">
+    <div class="d-flex align-items-center justify-content-between gap-3">
+      <a class="d-inline-flex align-items-center text-decoration-none link-body-emphasis"
+         href="{{ "/" | relURL }}" aria-label="{{ site.Params.org.name }} home">
+        <img src="{{ "block-a.svg" | relURL }}"
+             alt=""
+             width="48" height="48" class="me-3 d-block"
+             aria-hidden="true">
+        <span class="fs-4 fw-bold lh-1">{{ site.Params.org.name }}</span>
+      </a>
+      <div class="d-none d-lg-flex align-items-center gap-2">
+        {{ partial "theme-toggle.html" . }}
+      </div>
+    </div>
+  </div>
+</div>
+
+{{/* Site nav — Arizona Bootstrap .navbar with .bg-blue per spec. */}}
+<nav class="navbar navbar-expand-lg navbar-dark bg-blue" aria-label="Primary">
+  <div class="container">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+            data-bs-target="#uaPrimaryNav" aria-controls="uaPrimaryNav"
+            aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="uaPrimaryNav">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        {{ range site.Menus.main }}
+          {{ $active := or ($.IsMenuCurrent "main" .) ($.HasMenuCurrent "main" .) }}
+          <li class="nav-item">
+            <a class="nav-link{{ if $active }} active{{ end }}"
+               href="{{ .URL | relURL }}"
+               {{ if $active }}aria-current="page"{{ end }}>
+              {{ .Name }}
+            </a>
+          </li>
+        {{ end }}
+      </ul>
+      <div class="d-lg-none mt-2">
+        {{ partial "theme-toggle.html" . }}
+      </div>
+    </div>
+  </div>
+</nav>

@@ -1,0 +1,73 @@
+{{/*
+  Footer partial — 5-column canonical pattern.
+  Source: .claude/research/ua-design-spec-2026-05-22.md §5.
+
+  Required:
+    - Block A on opaque white substrate (>= 27px web — we ship 48px).
+    - Legal strip ending with "Bear Down® and Block A® are registered
+      trademarks of the Arizona Board of Regents."
+    - Privacy / Accessibility / The University of Arizona links.
+*/}}
+<footer class="ua-footer bg-warm-gray" role="contentinfo">
+  <div class="container">
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-5 py-5 my-3 border-top">
+      <div class="col mb-3">
+        <a href="{{ "/" | relURL }}" class="d-flex align-items-center mb-3 link-body-emphasis text-decoration-none"
+           aria-label="{{ site.Params.org.name }}">
+          <img src="{{ "block-a.svg" | relURL }}" alt="" width="48" height="48" class="me-2 d-block">
+        </a>
+        <p class="text-body-secondary small mb-1">
+          {{ site.Params.org.address1 }}<br>
+          {{ site.Params.org.address2 }}
+        </p>
+        <p class="text-body-secondary small mb-0">{{ site.Params.org.copyright }}</p>
+      </div>
+
+      <div class="col mb-3 d-none d-md-block"></div>
+
+      <div class="col mb-3">
+        <h2 class="text-uppercase fs-6 fw-bold">Athletics</h2>
+        <ul class="nav flex-column">
+          <li class="nav-item mb-2"><a href="/tickets/"  class="nav-link p-0 text-body-secondary">Tickets</a></li>
+          <li class="nav-item mb-2"><a href="/schedule/" class="nav-link p-0 text-body-secondary">Schedule</a></li>
+          <li class="nav-item mb-2"><a href="/roster/"   class="nav-link p-0 text-body-secondary">Roster</a></li>
+          <li class="nav-item mb-2"><a href="/fan-guide/" class="nav-link p-0 text-body-secondary">Fan Guide</a></li>
+        </ul>
+      </div>
+
+      <div class="col mb-3">
+        <h2 class="text-uppercase fs-6 fw-bold">Resources</h2>
+        <ul class="nav flex-column">
+          <li class="nav-item mb-2"><a href="https://www.arizona.edu/compliance"             class="nav-link p-0 text-body-secondary">Compliance</a></li>
+          <li class="nav-item mb-2"><a href="https://www.arizona.edu/digital-accessibility"  class="nav-link p-0 text-body-secondary">Accessibility</a></li>
+          <li class="nav-item mb-2"><a href="https://www.arizona.edu/information-security-privacy" class="nav-link p-0 text-body-secondary">Privacy</a></li>
+        </ul>
+      </div>
+
+      <div class="col mb-3">
+        <h2 class="text-uppercase fs-6 fw-bold">Stay Connected</h2>
+        <form>
+          <p class="small mb-2">Wildcat news in your inbox.</p>
+          <div class="d-flex flex-column flex-sm-row w-100 gap-2">
+            <label for="newsletter1" class="visually-hidden">Email address</label>
+            <input id="newsletter1" type="email" class="form-control" placeholder="Email address">
+            <button class="btn btn-red" type="button">Subscribe</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="d-flex flex-column flex-sm-row justify-content-between py-4 my-3 border-top">
+      <p class="small text-body-secondary mb-2 mb-sm-0">
+        A unit of the University of Arizona.
+        {{ site.Params.legal | safeHTML }}
+      </p>
+      <ul class="list-unstyled d-flex mb-0">
+        <li class="ms-3"><a class="link-body-emphasis" href="#" aria-label="X / Twitter"><span class="material-symbols-rounded" aria-hidden="true">alternate_email</span></a></li>
+        <li class="ms-3"><a class="link-body-emphasis" href="#" aria-label="Instagram"><span class="material-symbols-rounded" aria-hidden="true">photo_camera</span></a></li>
+        <li class="ms-3"><a class="link-body-emphasis" href="#" aria-label="Facebook"><span class="material-symbols-rounded" aria-hidden="true">thumb_up</span></a></li>
+        <li class="ms-3"><a class="link-body-emphasis" href="#" aria-label="YouTube"><span class="material-symbols-rounded" aria-hidden="true">play_circle</span></a></li>
+      </ul>
+    </div>
+  </div>
+</footer>

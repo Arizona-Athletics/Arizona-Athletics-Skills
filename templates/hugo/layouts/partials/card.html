@@ -1,0 +1,41 @@
+{{/*
+  Card partial — canonical card grid pattern.
+  Source: .claude/research/ua-design-spec-2026-05-22.md §4.
+
+  Accepts a dict with:
+    eyebrow   string  small-caps red eyebrow ("From McKale", "From the desert")
+    headline  string  body-emphasis headline
+    text      string  body copy
+    href      string  destination — uses .stretched-link so the whole card is clickable
+    cta       string  link label (default "Read story")
+    meta      string  optional caption (date, author, sport)
+
+  Caller (used by index.html, list.html, etc.):
+    {{ partial "card.html" (dict
+        "eyebrow"  "From McKale"
+        "headline" "Wildcats sweep weekend series"
+        "text"     "A second-half surge sealed it."
+        "href"     "/news/wildcats-sweep-weekend-series/"
+        "meta"     "May 18, 2026"
+    ) }}
+*/}}
+<article class="card border-0 shadow-sm rounded-3 h-100">
+  <div class="card-body">
+    {{ with .eyebrow }}
+      <p class="text-uppercase small fw-bold text-red mb-2">{{ . }}</p>
+    {{ end }}
+    <h3 class="h4 mb-3">{{ .headline }}</h3>
+    {{ with .text }}
+      <p class="text-body-secondary mb-3">{{ . | safeHTML }}</p>
+    {{ end }}
+    {{ with .meta }}
+      <p class="small text-body-secondary mb-3">{{ . }}</p>
+    {{ end }}
+    {{ with .href }}
+      <a href="{{ . }}" class="stretched-link fw-semibold">
+        {{ $.cta | default "Read story" }}
+        <span aria-hidden="true">&rarr;</span>
+      </a>
+    {{ end }}
+  </div>
+</article>

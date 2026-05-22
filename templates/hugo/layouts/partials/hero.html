@@ -1,0 +1,37 @@
+{{/*
+  Hero partial — canonical Athletics treatment.
+  Source: .claude/research/ua-design-spec-2026-05-22.md §2.
+
+  Defaults to .background-wrapper.text-bg-red.bg-triangles-top-left with a
+  display-2 headline weighted 300 (heavy weights feel ASU, not UA).
+
+  Resolution order for content:
+    1. Page frontmatter (.Params.hero)
+    2. Site-wide default (site.Params.hero in hugo.toml)
+*/}}
+{{- $hero := .Params.hero | default site.Params.hero -}}
+{{- if $hero -}}
+<section class="background-wrapper text-bg-red bg-triangles-top-left"
+         aria-labelledby="ua-hero-headline">
+  <div class="container py-5 my-5">
+    <div class="row">
+      <div class="col-lg-8">
+        {{ with $hero.eyebrow }}
+          <p class="text-uppercase small fw-semibold mb-3 opacity-75">{{ . }}</p>
+        {{ end }}
+        <h1 id="ua-hero-headline" class="display-2 fw-light mb-3">{{ $hero.headline }}</h1>
+        {{ with $hero.subhead }}
+          <p class="lead mb-4">{{ . }}</p>
+        {{ end }}
+        {{ with $hero.ctas }}
+          <div class="d-flex flex-wrap gap-2">
+            {{ range . }}
+              <a href="{{ .href }}" class="btn btn-outline-white btn-lg">{{ .label }}</a>
+            {{ end }}
+          </div>
+        {{ end }}
+      </div>
+    </div>
+  </div>
+</section>
+{{- end -}}

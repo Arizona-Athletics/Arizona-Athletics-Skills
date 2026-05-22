@@ -1,0 +1,54 @@
+# @ua/template-hugo — main navigation menu
+#
+# Pulled by layouts/partials/header.html via site.Menus.main.
+# Add or reorder items here, not in markup. Keep weights spaced by 10 to
+# make later insertions painless.
+main:
+  - identifier: football
+    name: Football
+    url: /football/
+    weight: 10
+  - identifier: basketball
+    name: Basketball
+    url: /basketball/
+    weight: 20
+  - identifier: baseball
+    name: Baseball
+    url: /baseball/
+    weight: 30
+  - identifier: softball
+    name: Softball
+    url: /softball/
+    weight: 40
+  - identifier: all-sports
+    name: All Sports
+    url: /sports/
+    weight: 50
+  - identifier: shop
+    name: Shop
+    url: /shop/
+    weight: 60
+
+# Secondary toolbar — Tickets / Schedule / Roster / News / Watch.
+# Athletics convention from the canonical spec, surfaced under the navbar.
+toolbar:
+  - identifier: tickets
+    name: Tickets
+    url: /tickets/
+    weight: 10
+  - identifier: schedule
+    name: Schedule
+    url: /schedule/
+    weight: 20
+  - identifier: roster
+    name: Roster
+    url: /roster/
+    weight: 30
+  - identifier: news
+    name: News
+    url: /news/
+    weight: 40
+  - identifier: watch
+    name: Watch
+    url: /watch/
+    weight: 50
