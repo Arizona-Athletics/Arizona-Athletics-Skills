@@ -201,6 +201,15 @@ function emitTailwind() {
     2,
   )};\n`;
   writeFileSync(join(DIST, "tailwind.preset.cjs"), body);
+
+  // Companion .d.ts so TS templates can `import uaPreset from "@ua/ua-tokens/tailwind"`
+  // without TS7016 ("Could not find a declaration file for module"). The preset is
+  // emitted as CommonJS (module.exports = ...), so the matching declaration is
+  // `export = preset`; templates with esModuleInterop pick this up as a default
+  // import. Typing it as `Partial<Config>` lets template configs spread
+  // `presets: [uaPreset]` without TypeScript demanding every Config field.
+  const dts = `${banner("Tailwind preset types")}import type { Config } from "tailwindcss";\n\ndeclare const preset: Partial<Config>;\nexport = preset;\n`;
+  writeFileSync(join(DIST, "tailwind.preset.d.ts"), dts);
 }
 
 // ─── Sanity checks ─────────────────────────────────────────────────────────
@@ -239,3 +248,4 @@ console.log("  - dist/tokens.js");
 console.log("  - dist/tokens.cjs");
 console.log("  - dist/tokens.d.ts");
 console.log("  - dist/tailwind.preset.cjs");
+console.log("  - dist/tailwind.preset.d.ts");
