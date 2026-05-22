@@ -1,0 +1,26 @@
+{
+  "name": "@ua/template-react-vite-plus",
+  "version": "0.1.0",
+  "description": "University of Arizona Athletics starter — React 19 + Vite+ wired to Arizona Bootstrap and @ua/ua-tokens.",
+  "private": true,
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "dev": "vp dev",
+    "build": "vp build",
+    "preview": "vp preview",
+    "check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@ua/ua-tokens": "workspace:*",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0"
+  },
+  "devDependencies": {
+    "@types/react": "^19.2.0",
+    "@types/react-dom": "^19.2.0",
+    "@vitejs/plugin-react": "^5.2.0",
+    "typescript": "^5.7.0",
+    "vite-plus": "^0.1.22"
+  }
+}
