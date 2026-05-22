@@ -1,0 +1,16 @@
+<!--
+  Reusable card snippet. Pass `card` as a local:
+    include('../partials/card', { card: { eyebrow, headline, body, href } })
+  Canonical pattern: white surface on .bg-warm-gray section, .shadow-sm.rounded-3,
+  red small-caps eyebrow, body-emphasis headline.
+-->
+<article class="card border-0 shadow-sm rounded-3 h-100">
+  <div class="card-body">
+    <p class="text-uppercase small fw-bold text-red mb-2"><%= card.eyebrow %></p>
+    <h3 class="h4 mb-3"><%= card.headline %></h3>
+    <p class="text-body-secondary"><%= card.body %></p>
+    <% if (card.href) { %>
+      <a href="<%= card.href %>" class="stretched-link">Read story</a>
+    <% } %>
+  </div>
+</article>

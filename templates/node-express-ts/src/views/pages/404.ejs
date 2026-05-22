@@ -1,0 +1,25 @@
+<%- include('../partials/head') %>
+<%- include('../partials/header') %>
+
+<main id="main">
+  <section class="background-wrapper text-bg-blue bg-trilines" aria-labelledby="err-title">
+    <div class="container py-5 my-5">
+      <div class="row">
+        <div class="col-lg-8">
+          <p class="text-uppercase small fw-bold mb-2" style="letter-spacing:.08em;">404 &middot; Not found</p>
+          <h1 id="err-title" class="display-3 fw-light mb-3">This one slipped past us.</h1>
+          <p class="lead mb-4">
+            Bear down &mdash; let&rsquo;s get you back. The page at
+            <code class="text-white-50"><%= path %></code> isn&rsquo;t here, but the rest of the
+            site is right where you left it.
+          </p>
+          <a href="/" class="btn btn-outline-white btn-lg me-2 mb-2">Back to the homepage</a>
+          <a href="/schedule" class="btn btn-outline-white btn-lg mb-2">See the Schedule</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<%- include('../partials/footer') %>
+<%- include('../partials/foot') %>

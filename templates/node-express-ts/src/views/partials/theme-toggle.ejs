@@ -1,0 +1,17 @@
+<!--
+  3-state theme toggle (system → light → dark). The state in this initial
+  render reflects what the server saw via the ua-theme cookie; the browser
+  pre-paint script in head.ejs may have already updated it to the resolved
+  value before paint. The runtime script in foot.ejs wires the click.
+-->
+<button type="button"
+        class="btn btn-outline-blue d-inline-flex align-items-center gap-2"
+        data-ua-theme-toggle
+        aria-label="Theme: <%= themeMode %>. Activate to switch.">
+  <span aria-hidden="true" class="material-symbols-rounded" data-ua-theme-icon>
+    <%= themeMode === 'dark' ? 'dark_mode' : themeMode === 'light' ? 'light_mode' : 'brightness_auto' %>
+  </span>
+  <span class="text-uppercase small fw-semibold" data-ua-theme-label>
+    <%= themeMode === 'dark' ? 'Dark' : themeMode === 'light' ? 'Light' : 'System' %>
+  </span>
+</button>

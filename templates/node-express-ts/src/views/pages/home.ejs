@@ -1,0 +1,52 @@
+<%- include('../partials/head') %>
+<%- include('../partials/header') %>
+
+<main id="main">
+  <!-- ========================================================== -->
+  <!-- 4. Hero — bg-red with triangle pattern, display-2 weight 300 -->
+  <!-- ========================================================== -->
+  <section class="background-wrapper text-bg-red bg-triangles-top-left" aria-labelledby="hero-title">
+    <div class="container py-5 my-5">
+      <div class="row">
+        <div class="col-lg-7">
+          <h1 id="hero-title" class="display-2 fw-light mb-3"><%= hero.headline %></h1>
+          <p class="lead mb-4"><%= hero.sub %></p>
+          <% hero.ctas.forEach(function (cta, i) { %>
+            <a href="<%= cta.href %>" class="btn btn-outline-white btn-lg mb-2 <%= i === 0 ? 'me-2' : '' %>"><%= cta.label %></a>
+          <% }) %>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================== -->
+  <!-- 5. Toolbar — thin Tickets · Schedule · Roster · News · Watch -->
+  <!-- ========================================================== -->
+  <nav class="navbar navbar-expand bg-warm-gray border-bottom py-1" aria-label="Quick links">
+    <div class="container">
+      <ul class="navbar-nav gap-3 small text-uppercase fw-semibold">
+        <% toolbar.forEach(function (item) { %>
+          <li class="nav-item"><a class="nav-link" href="<%= item.href %>"><%= item.label %></a></li>
+        <% }) %>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- ========================================================== -->
+  <!-- 6. Card grid — white cards on warm-gray, red small-caps eyebrow -->
+  <!-- ========================================================== -->
+  <section class="bg-warm-gray py-5" aria-label="Featured stories">
+    <div class="container">
+      <div class="row g-4">
+        <% cards.forEach(function (card) { %>
+          <div class="col-md-4">
+            <%- include('../partials/card', { card: card }) %>
+          </div>
+        <% }) %>
+      </div>
+    </div>
+  </section>
+</main>
+
+<%- include('../partials/footer') %>
+<%- include('../partials/foot') %>
