@@ -1,0 +1,206 @@
+{#
+/**
+ * @file
+ * Theme override for the basic structure of a single Drupal page.
+ *
+ * Renders the canonical UA Athletics page composition described in
+ * /.claude/research/ua-design-spec-2026-05-22.md:
+ *
+ *   1. .arizona-header.bg-red   — CDN wordmark + mobile offcanvas trigger
+ *   2. Block A brand band       — white substrate, Athletics lockup, primary nav
+ *   3. .navbar.navbar-expand-lg.bg-blue — site nav (primary_menu region)
+ *   4. Toolbar                  — thin .bg-warm-gray Tickets · Schedule · ... bar
+ *   5. Hero                     — text-bg-red bg-triangles-top-left
+ *   6. <main>                   — breadcrumb + highlighted + featured_top +
+ *                                  content + 3-col featured_bottom
+ *   7. 5-column footer          — footer_first … footer_fifth + bottom legal
+ *
+ * Available variables:
+ * - logged_in: True if the user is logged in.
+ * - is_admin: True if the user is a member of a role with the permission to view the administration theme.
+ * - page: Page region variables (header, primary_menu, content, footer_*, ...).
+ *
+ * @see template_preprocess_page()
+ * @see html.html.twig
+ */
+#}
+
+{# ---------------------------------------------------------------- #}
+{# 1. Arizona Header — red bar with CDN wordmark + mobile offcanvas. #}
+{# ---------------------------------------------------------------- #}
+<a class="visually-hidden-focusable" href="#main-content">{{ 'Skip to main content'|t }}</a>
+
+<div class="arizona-header az-fixed-header-on-mobile bg-red" id="header_arizona">
+  <div class="container">
+    <div class="row align-items-center">
+      <a class="arizona-logo col-auto" href="https://www.arizona.edu"
+         title="{{ 'The University of Arizona homepage'|t }}">
+        <img class="arizona-line-logo"
+             alt="{{ 'The University of Arizona Wordmark Line Logo White'|t }}"
+             src="https://cdn.digital.arizona.edu/logos/v1.0.0/ua_wordmark_line_logo_white_rgb.min.svg"
+             fetchpriority="high">
+      </a>
+
+      <div class="d-lg-none d-flex col-auto px-0 ms-auto">
+        <button data-bs-toggle="offcanvas" type="button"
+                data-bs-target="#azMobileNav" aria-controls="azMobileNav"
+                class="btn btn-arizona-header">
+          <span aria-hidden="true" class="icon material-symbols-rounded">search</span>
+          <span class="icon-text">{{ 'Search'|t }}</span>
+        </button>
+        <button data-bs-toggle="offcanvas" type="button"
+                data-bs-target="#azMobileNav" aria-controls="azMobileNav"
+                class="btn btn-arizona-header">
+          <span aria-hidden="true" class="icon material-symbols-rounded">menu</span>
+          <span class="icon-text">{{ 'Menu'|t }}</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+{# Optional secondary header region (banner ads, alerts). #}
+{% if page.header %}
+  {{ page.header }}
+{% endif %}
+
+{# ---------------------------------------------------------------- #}
+{# 2. Block A brand band — Block A on white substrate + lockup.     #}
+{#    Rendered by the system-branding-block override; this is just  #}
+{#    the wrapper so the band always exists even if the block isn't #}
+{#    placed yet.                                                   #}
+{# ---------------------------------------------------------------- #}
+<div class="ua-brand-band bg-white border-bottom">
+  <div class="container py-2">
+    <div class="d-flex align-items-center justify-content-between gap-3">
+      {{ page.secondary_menu }}
+    </div>
+  </div>
+</div>
+
+{# ---------------------------------------------------------------- #}
+{# 3. Primary nav — blue navbar, Bootstrap 5 expand-lg.              #}
+{# ---------------------------------------------------------------- #}
+{% if page.primary_menu %}
+  <nav class="navbar navbar-expand-lg bg-blue navbar-dark" aria-label="{{ 'Primary navigation'|t }}">
+    <div class="container">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+              data-bs-target="#uaPrimaryNav" aria-controls="uaPrimaryNav"
+              aria-expanded="false" aria-label="{{ 'Toggle primary navigation'|t }}">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="uaPrimaryNav">
+        {{ page.primary_menu }}
+      </div>
+    </div>
+  </nav>
+{% endif %}
+
+{# ---------------------------------------------------------------- #}
+{# 4. Toolbar — thin secondary action bar (Tickets · Schedule · …). #}
+{#    Site builders place a menu block here in /admin/structure/    #}
+{#    block; if empty, render nothing.                              #}
+{# ---------------------------------------------------------------- #}
+{% if page.featured_top %}
+  <nav class="navbar navbar-expand bg-warm-gray border-bottom py-1" aria-label="{{ 'Quick links'|t }}">
+    <div class="container">
+      {{ page.featured_top }}
+    </div>
+  </nav>
+{% endif %}
+
+{# ---------------------------------------------------------------- #}
+{# 5. Hero — the highlighted region rendered inside the canonical   #}
+{#    .background-wrapper.text-bg-red.bg-triangles-top-left frame.  #}
+{# ---------------------------------------------------------------- #}
+{% if page.highlighted %}
+  {{ page.highlighted }}
+{% endif %}
+
+{# Breadcrumb sits between hero and content. #}
+{% if page.breadcrumb %}
+  <div class="container pt-3">{{ page.breadcrumb }}</div>
+{% endif %}
+
+{# ---------------------------------------------------------------- #}
+{# 6. Main content                                                  #}
+{# ---------------------------------------------------------------- #}
+<main role="main" id="main-content" class="container py-4">
+  <a id="main-content" tabindex="-1"></a>
+  <div class="row">
+    {% if page.sidebar_first %}
+      <aside class="col-12 col-lg-3 mb-4" role="complementary">
+        {{ page.sidebar_first }}
+      </aside>
+      <div class="col-12 col-lg-9">
+        {{ page.content }}
+      </div>
+    {% else %}
+      <div class="col-12">
+        {{ page.content }}
+      </div>
+    {% endif %}
+  </div>
+</main>
+
+{# 3-up featured-bottom strip — typically a card grid. #}
+{% if page.featured_bottom_first or page.featured_bottom_second or page.featured_bottom_third %}
+  <section class="bg-warm-gray py-5">
+    <div class="container">
+      <div class="row g-4">
+        {% if page.featured_bottom_first %}
+          <div class="col-md-4">{{ page.featured_bottom_first }}</div>
+        {% endif %}
+        {% if page.featured_bottom_second %}
+          <div class="col-md-4">{{ page.featured_bottom_second }}</div>
+        {% endif %}
+        {% if page.featured_bottom_third %}
+          <div class="col-md-4">{{ page.featured_bottom_third }}</div>
+        {% endif %}
+      </div>
+    </div>
+  </section>
+{% endif %}
+
+{# ---------------------------------------------------------------- #}
+{# 7. Footer — 5-column grid + bottom legal strip.                  #}
+{# ---------------------------------------------------------------- #}
+<footer class="ua-footer bg-white border-top mt-5" role="contentinfo">
+  <div class="container">
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-5 py-5">
+      <div class="col mb-3">
+        {% if page.footer_first %}
+          {{ page.footer_first }}
+        {% else %}
+          <a href="/" class="d-flex align-items-center mb-3 link-body-emphasis text-decoration-none"
+             aria-label="{{ 'Arizona Athletics'|t }}">
+            <img src="/{{ directory }}/images/block-a.svg" alt="" width="48" height="48" class="me-2">
+          </a>
+          <p class="text-body-secondary small mb-0">
+            {{ 'The University of Arizona'|t }}<br>{{ 'Tucson, AZ 85721'|t }}
+          </p>
+          <p class="text-body-secondary small">
+            &copy; {{ 'now'|date('Y') }} {{ 'Arizona Board of Regents'|t }}
+          </p>
+        {% endif %}
+      </div>
+      <div class="col mb-3">{{ page.footer_second }}</div>
+      <div class="col mb-3">{{ page.footer_third }}</div>
+      <div class="col mb-3">{{ page.footer_fourth }}</div>
+      <div class="col mb-3">{{ page.footer_fifth }}</div>
+    </div>
+
+    <div class="d-flex flex-column flex-sm-row justify-content-between py-4 border-top">
+      <p class="small text-body-secondary mb-0">
+        {{ 'A unit of the University of Arizona. Bear Down&reg; and Block A&reg; are registered trademarks of the Arizona Board of Regents.'|t }}
+      </p>
+      {% if page.footer_bottom %}
+        {{ page.footer_bottom }}
+      {% endif %}
+    </div>
+  </div>
+</footer>
+
+{% if page.page_bottom %}
+  {{ page.page_bottom }}
+{% endif %}

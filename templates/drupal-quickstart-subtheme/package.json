@@ -1,0 +1,14 @@
+{
+  "name": "@ua/template-drupal-quickstart-subtheme",
+  "version": "0.1.0",
+  "description": "University of Arizona Athletics — Drupal 10/11 subtheme of arizona_bootstrap (Arizona Quickstart distro). Consumes @ua/ua-tokens.",
+  "private": true,
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "lint": "command -v phpcs >/dev/null && phpcs --standard=Drupal,DrupalPractice --extensions=php,module,inc,install,test,profile,theme,info ua_athletics_starter.theme || echo 'phpcs not installed — skipping (install drupal/coder for linting)'"
+  },
+  "dependencies": {
+    "@ua/ua-tokens": "workspace:*"
+  }
+}

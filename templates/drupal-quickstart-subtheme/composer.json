@@ -1,0 +1,25 @@
+{
+  "name": "uarizona-athletics/ua-athletics-starter",
+  "description": "University of Arizona Athletics — Drupal subtheme of arizona_bootstrap, designed to drop into an Arizona Quickstart 3.x site.",
+  "type": "drupal-theme",
+  "license": "MIT",
+  "homepage": "https://github.com/Arizona-Athletics/Athletics-Web-Templates",
+  "require": {
+    "php": ">=8.2",
+    "drupal/core": "^10 || ^11",
+    "az-digital/az_quickstart": "^3.3"
+  },
+  "suggest": {
+    "drupal/simplesamlphp_auth": "Wires Drupal to the UA SAML identity provider (WebAuth/NetID). Configure per docs/AUTH.md."
+  },
+  "extra": {
+    "drupal-scaffold": {
+      "locations": {
+        "web-root": "web/"
+      }
+    },
+    "installer-paths": {
+      "web/themes/custom/{$name}": ["type:drupal-theme"]
+    }
+  }
+}

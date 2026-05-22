@@ -1,0 +1,255 @@
+/*
+ * @ua/template-drupal-quickstart-subtheme · css/style.css
+ *
+ * UA Athletics overrides on top of the Arizona Bootstrap base theme.
+ *
+ * Stack (load order, lowest → highest specificity):
+ *   1. core/normalize + core/drupal (Drupal core)
+ *   2. arizona_bootstrap/global-styling (the base theme — Arizona Bootstrap 5.1.3)
+ *   3. ua_athletics_starter/global (this file)
+ *
+ * RULES (from /AGENTS.md and /docs/COLORS.md):
+ *   - No hardcoded hex values. All color references go through CSS custom
+ *     properties exposed by arizona-bootstrap (--bs-red, --bs-blue, --bs-warm-gray,
+ *     --bs-body-color, ...) or by @ua/ua-tokens semantic tokens (--bg, --surface,
+ *     --text, --accent) when the project layers tokens.css in.
+ *   - Brand tokens (--ua-red, --ua-blue) reserved for one-off identity accents.
+ *   - Dark mode flips automatically via [data-bs-theme="dark"] — do not write
+ *     component-level dark overrides.
+ */
+
+/* -------------------------------------------------------------------- */
+/* Page chrome                                                          */
+/* -------------------------------------------------------------------- */
+
+body.ua-athletics-starter {
+  background-color: var(--bs-body-bg);
+  color: var(--bs-body-color);
+  font-family: var(--bs-font-sans-serif);
+  line-height: var(--bs-body-line-height);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Display weight 300 — the canonical UA hero weight. Never heavy. */
+.ua-athletics-starter .display-1,
+.ua-athletics-starter .display-2,
+.ua-athletics-starter .display-3,
+.ua-athletics-starter .display-4,
+.ua-athletics-starter .display-5,
+.ua-athletics-starter .display-6 {
+  font-weight: 300;
+}
+
+/* Accessible focus ring across nav, buttons, links. */
+.ua-athletics-starter :focus-visible {
+  outline: 2px solid var(--bs-link-color);
+  outline-offset: 2px;
+}
+
+/* -------------------------------------------------------------------- */
+/* Arizona red header                                                   */
+/* -------------------------------------------------------------------- */
+
+.arizona-header.bg-red {
+  background-color: var(--bs-red);
+}
+
+.arizona-header .arizona-line-logo {
+  height: 32px;
+  width: auto;
+  margin: 0.75rem 0;
+}
+
+.arizona-header .btn-arizona-header {
+  color: var(--bs-white);
+  background: transparent;
+  border: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.5rem 0.75rem;
+}
+
+.arizona-header .btn-arizona-header:hover,
+.arizona-header .btn-arizona-header:focus-visible {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: var(--bs-white);
+}
+
+/* -------------------------------------------------------------------- */
+/* Block A brand band — white substrate row under the red bar.          */
+/* -------------------------------------------------------------------- */
+
+.ua-brand-band {
+  background-color: var(--bs-white);
+}
+
+.ua-brand-band img {
+  background: var(--bs-white); /* required white substrate around Block A */
+}
+
+/* -------------------------------------------------------------------- */
+/* Primary nav (blue navbar)                                            */
+/* -------------------------------------------------------------------- */
+
+/*
+ * Adapts the official AZ Marcom .navbar-az pattern to .bg-blue (navy):
+ *   - underline indicator (2px / 4px offset), never a background tile
+ *   - hover decoration color = --az-navbar-font-hover-color (#0c234b Midnight)
+ *     → on navy Midnight is invisible, so use Sky for legibility
+ *   - active decoration color = --az-navbar-accent-color (#ab0520 Arizona Red)
+ *     → stays Red — iconic on navy and matches Marcom accent
+ *
+ * AZ Bootstrap also paints the parent <li> with a near-white background on
+ * .navbar-nav .nav-item:hover (#f8f9fa) and :has(> .nav-link.active) (#e9ecef).
+ * Both are tab-style affordances for white navbars — suppress here so the
+ * underline carries the indicator on bg-blue instead of a washed-out tile.
+ */
+
+.navbar.bg-blue {
+  background-color: var(--bs-blue);
+}
+
+.navbar.bg-blue .navbar-nav .nav-item:has(> .nav-link:is(.active, .is-active, .show, :active)),
+.navbar.bg-blue .navbar-nav .nav-item:hover {
+  background-color: transparent;
+}
+
+.navbar.bg-blue .nav-link,
+.navbar.bg-blue .navbar-brand {
+  color: var(--bs-white);
+  text-decoration: none;
+}
+
+.navbar.bg-blue .nav-link:hover,
+.navbar.bg-blue .nav-link:focus-visible {
+  color: var(--bs-sky, var(--ua-sky));
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+  text-decoration-skip-ink: none;
+  text-decoration-color: var(--bs-sky, var(--ua-sky));
+}
+
+.navbar.bg-blue .nav-link.active,
+.navbar.bg-blue .nav-link.is-active,
+.navbar.bg-blue .nav-link:active,
+.navbar.bg-blue .menu-item--active-trail > .nav-link {
+  color: var(--bs-white);
+  background-color: transparent;
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+  text-decoration-skip-ink: none;
+  text-decoration-color: var(--bs-red, var(--ua-red));
+}
+
+/* -------------------------------------------------------------------- */
+/* Toolbar (secondary action bar, warm-gray)                            */
+/* -------------------------------------------------------------------- */
+
+.navbar.bg-warm-gray {
+  background-color: var(--bs-warm-gray);
+}
+
+.navbar.bg-warm-gray .nav-link {
+  color: var(--bs-body-color);
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+
+/* -------------------------------------------------------------------- */
+/* Hero — text-bg-red bg-triangles-top-left                             */
+/* -------------------------------------------------------------------- */
+
+.background-wrapper.text-bg-red {
+  background-color: var(--bs-red);
+  color: var(--bs-white);
+}
+
+.background-wrapper .btn-outline-white {
+  border-color: var(--bs-white);
+  color: var(--bs-white);
+  background: transparent;
+}
+.background-wrapper .btn-outline-white:hover,
+.background-wrapper .btn-outline-white:focus-visible {
+  background-color: var(--bs-white);
+  color: var(--bs-red);
+}
+
+/* -------------------------------------------------------------------- */
+/* Card teaser                                                          */
+/* -------------------------------------------------------------------- */
+
+.ua-card {
+  background-color: var(--bs-body-bg);
+  color: var(--bs-body-color);
+  transition: box-shadow 160ms ease, transform 160ms ease;
+}
+
+.ua-card:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--bs-box-shadow);
+}
+
+.ua-card .text-red {
+  color: var(--bs-red);
+  letter-spacing: 0.04em;
+}
+
+/* -------------------------------------------------------------------- */
+/* Footer                                                               */
+/* -------------------------------------------------------------------- */
+
+.ua-footer {
+  background-color: var(--bs-body-bg);
+  color: var(--bs-body-color);
+}
+
+.ua-footer h5 {
+  color: var(--bs-body-color);
+  letter-spacing: 0.04em;
+}
+
+.ua-footer .nav-link {
+  color: var(--bs-body-color);
+}
+.ua-footer .nav-link:hover,
+.ua-footer .nav-link:focus-visible {
+  color: var(--bs-body-color);
+  text-decoration: underline;
+}
+
+.ua-footer .btn-red {
+  background-color: var(--bs-red);
+  border-color: var(--bs-red);
+  color: var(--bs-white);
+}
+.ua-footer .btn-red:hover,
+.ua-footer .btn-red:focus-visible {
+  background-color: var(--bs-red);
+  border-color: var(--bs-red);
+  color: var(--bs-white);
+  filter: brightness(0.92);
+}
+
+/* -------------------------------------------------------------------- */
+/* Dark mode tweaks that the base theme doesn't already cover.          */
+/* Bootstrap 5.3's [data-bs-theme="dark"] flips --bs-body-bg /          */
+/* --bs-body-color; the only place we need to nudge is the brand band   */
+/* (white substrate must stay white even in dark mode).                 */
+/* -------------------------------------------------------------------- */
+
+[data-bs-theme="dark"] .ua-brand-band {
+  background-color: var(--bs-white);
+  color: var(--bs-dark);
+}
+
+[data-bs-theme="dark"] .ua-brand-band .link-body-emphasis,
+[data-bs-theme="dark"] .ua-brand-band a {
+  color: var(--bs-dark);
+}
