@@ -1,0 +1,9 @@
+# Bun workspace config — https://bun.sh/docs/runtime/bunfig
+[install]
+# Use a single hoisted node_modules at the repo root for workspaces.
+linker = "hoisted"
+
+[install.cache]
+# Disable global cache symlinking for reproducibility in CI.
+disable = false
+disableManifest = false

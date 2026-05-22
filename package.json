@@ -1,0 +1,24 @@
+{
+  "name": "arizona-athletics-web-templates",
+  "version": "0.1.0",
+  "description": "Shared design system + starter templates for University of Arizona Athletics web projects.",
+  "private": true,
+  "license": "MIT",
+  "type": "module",
+  "workspaces": [
+    "packages/*",
+    "templates/*"
+  ],
+  "scripts": {
+    "build": "bun --filter '@ua/*' run build",
+    "check": "bun --filter '@ua/*' run check",
+    "clean": "bun --filter '@ua/*' run clean"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.0"
+  },
+  "engines": {
+    "bun": ">=1.3.0"
+  },
+  "packageManager": "bun@1.3.14"
+}

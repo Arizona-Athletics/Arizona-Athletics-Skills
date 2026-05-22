@@ -1,0 +1,117 @@
+# AGENTS.md
+
+**For LLMs and agentic dev tools writing code in this repo.** Humans: see [`README.md`](./README.md).
+
+## What this repo is
+
+The shared design system and starter templates for **University of Arizona Athletics**
+web projects. One token package, many templates. Pull from here so every UA Athletics
+project — React, Next, Astro, Bootstrap HTML, Tailwind HTML, Drupal subtheme, Hugo,
+email — looks like the same brand.
+
+## The rule
+
+> **Consume from `@ua/ua-tokens`. Never hardcode UA colors. Default to semantic
+> tokens (`--bg`, `--surface`, `--text`, `--accent`); reach for brand tokens
+> (`--ua-red`, `--ua-blue`) only for one-off identity accents.**
+
+If you find yourself writing `color: var(--ua-blue)` for body text, you want
+`color: var(--text-strong)` instead. Dark mode flips semantic tokens automatically —
+you should never write a dark-mode override.
+
+## Before you write code
+
+**Step 0 — check that this repo is still current.** Run the
+[`ua-standards-check`](./.claude/skills/ua-standards-check/SKILL.md) skill (in
+Claude Code: `/ua-standards-check`) to diff this repo against:
+
+- UA Marcom + brand standards (`marcom.arizona.edu`, `brand.arizona.edu`)
+- Arizona Digital projects (`az-digital/arizona-bootstrap`, `az-digital/az_quickstart`) — latest releases
+- Major framework versions (Bun, TypeScript, React, Next, Astro, Vite+, Tailwind, Bootstrap)
+
+The skill is read-only — it reports drift and proposes updates. The human decides
+what to apply. Don't skip this for a one-line task, but always run it before a
+non-trivial PR (new template, token bump, framework upgrade). If you are not
+running in Claude Code, do the equivalent: fetch the sources, diff against
+`tokens.json` / `PLAN.md` / `package.json`, propose updates.
+
+Read these. Not optional.
+
+- [`docs/LLM_GUIDE.md`](./docs/LLM_GUIDE.md) — do/don't list. Start here.
+- [`docs/COLORS.md`](./docs/COLORS.md) — palette, semantic mapping, AA pairs.
+- [`docs/TYPOGRAPHY.md`](./docs/TYPOGRAPHY.md) — fonts, scale, Typekit clearance.
+- [`docs/COMPONENTS.md`](./docs/COMPONENTS.md) — the six-component contract.
+- [`docs/DARK_MODE.md`](./docs/DARK_MODE.md) — brand-true navy + FOUC-safe script.
+- [`docs/AUTH.md`](./docs/AUTH.md) — Cognito + UA SAML federation shape. No secrets.
+- [`BRAND.md`](./BRAND.md) — palette + type tables at a glance.
+
+## Toolchain (non-negotiable)
+
+- **Bun** for installs and scripts (`bun install`, `bun run build`). Not npm/yarn/pnpm.
+- **TypeScript** for all JS code. Strict mode.
+- **React** templates use [Vite+](https://viteplus.dev/) (`vp` CLI).
+- **`@ua/ua-tokens`** for design tokens. Always.
+
+## Six shared components
+
+Every template ships these. Build new ones only if none fit.
+
+| Component | Use |
+| --- | --- |
+| `Header` | Site chrome (top): brand, nav, theme toggle |
+| `Hero` | Page banner: headline, subhead, CTA |
+| `Toolbar` | Secondary action bar under hero/header |
+| `Card` | Content tile with optional media + footer |
+| `Footer` | Site chrome (bottom): wordmark, links, legal |
+| `ThemeToggle` | 3-state (system/light/dark), FOUC-safe, persisted |
+
+Spec: [`docs/COMPONENTS.md`](./docs/COMPONENTS.md).
+
+## Repo layout
+
+```
+packages/
+  ua-tokens/          # tokens.json → CSS / SCSS / TS / Tailwind preset
+templates/            # PR 2+: react-vite-plus, html-bootstrap5, drupal-quickstart-subtheme,
+                      #        nextjs-app-router, astro, node-express-ts, html-tailwind,
+                      #        react-ts-lib, hugo, email-html
+docs/                 # specs (see above)
+```
+
+## Quick patterns
+
+```css
+/* ✅ semantic token — flips in dark automatically */
+.card { background: var(--surface); color: var(--text); border: 1px solid var(--border); }
+
+/* ❌ hardcoded — won't flip, will drift from brand */
+.card { background: white; color: #1a2740; }
+```
+
+```tsx
+import { tokens } from "@ua/ua-tokens";
+tokens.brand.red;             // "#AB0520"
+tokens.semantic.light.accent; // "#AB0520"
+```
+
+```js
+// tailwind.config.js
+import preset from "@ua/ua-tokens/tailwind";
+export default { presets: [preset], content: ["./src/**/*.{ts,tsx,html}"] };
+```
+
+## Hard don'ts
+
+- Don't hardcode hex values. Use tokens.
+- Don't pick fonts outside the stack. Proxima Nova / Garamond Premier Pro / system mono.
+- Don't write dark-mode overrides — semantic tokens already handle it.
+- Don't put `COGNITO_CLIENT_SECRET` in any code that ships to the browser.
+- Don't migrate `--az-*` to `--ua-*` in existing apps; both ship as aliases on purpose.
+- Don't invent UA-specific identifiers (pool IDs, client IDs, kit IDs, IdP URLs). Use
+  `// CONFIGURE_ME` markers and let the human fill them in.
+- Don't pick npm/yarn/pnpm. Bun.
+- Don't write a `README.md` for every subdirectory unless asked.
+
+## When in doubt
+
+Ask the human. Don't guess UA-specific values, logos, or contact info.
