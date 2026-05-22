@@ -1,0 +1,183 @@
+/*
+ * @ua/template-html-tailwind · src/styles.css
+ *
+ * Tailwind 4 entry. Compiled to `dist/styles.css` by `tailwindcss -i src/styles.css`.
+ *
+ * Load order in <head> (matters!):
+ *   1. FOUC-safe pre-paint theme script (inline)
+ *   2. Arizona Bootstrap CSS (CDN) — provides .arizona-header, .bg-red, .display-2,
+ *      .background-wrapper, .bg-triangles-top-left, .btn-outline-white, .bg-warm-gray,
+ *      .card, .navbar.bg-blue, etc.
+ *   3. Material Symbols Rounded font
+ *   4. Typekit (CONFIGURE_ME, commented)
+ *   5. THIS FILE (dist/styles.css) — Tailwind utilities + a thin project layer
+ *
+ * Tailwind comes AFTER AZ Bootstrap so utility classes win where they overlap.
+ * AZ Bootstrap component classes (.arizona-header, .btn-red, .display-2,
+ * .background-wrapper) are specific enough to survive Tailwind's preflight reset.
+ *
+ * RULES (from /AGENTS.md):
+ *   - Zero hex values below. Tokens come from the @ua/ua-tokens Tailwind preset
+ *     (brand: text-ua-red / bg-ua-blue / …; semantic: bg-semantic-bg /
+ *     text-semantic-text-strong / border-semantic-border / …).
+ *   - Default to semantic tokens — they flip in dark mode automatically.
+ *   - Brand tokens (--ua-red, --ua-blue) are reserved for one-off identity accents.
+ *   - Do NOT write @media (prefers-color-scheme: dark) overrides. The dark theme
+ *     is driven by [data-theme="dark"] / [data-bs-theme="dark"] from tokens.css,
+ *     which AZ Bootstrap also reads.
+ */
+
+@import "tailwindcss";
+
+/*
+ * Pull the design tokens (--bg, --surface, --text, --accent, --ua-red, …) onto
+ * :root and the dark-theme override block onto [data-theme="dark"] /
+ * [data-bs-theme="dark"]. The Tailwind preset references these custom properties
+ * via the `semantic.*` color group, so this import is required for those
+ * utilities (bg-semantic-bg, text-semantic-text-strong, …) to resolve.
+ */
+@import "@ua/ua-tokens/tokens.css";
+
+/*
+ * Limit Tailwind's content scan to the files this template actually contains.
+ * Tailwind 4's CLI honors the JS config above for `content`; the @source rule
+ * is an extra safety net so a bare `bunx tailwindcss` (no config flag) still
+ * picks up index.html.
+ */
+@source "../index.html";
+@source "../auth.js";
+@source "../theme.js";
+
+/* -------------------------------------------------------------------- */
+/* Project layer — overrides that need more reach than a utility chain. */
+/* All colors come from semantic tokens or AZ Bootstrap class names.    */
+/* -------------------------------------------------------------------- */
+
+@layer base {
+  /*
+   * AZ Bootstrap sets html / body / h1-6 via its own reset. We override only
+   * the bits the design system cares about — token-backed font stack, semantic
+   * background. Stay token-driven so dark mode flips with no extra work.
+   */
+  html {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-sans);
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-sans);
+    line-height: var(--line-height-normal);
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--focus-ring);
+    outline-offset: 2px;
+    border-radius: var(--radius-sm);
+  }
+}
+
+@layer components {
+  /*
+   * Skip link — visually hidden until focused. Token-driven so dark mode flips
+   * automatically. AZ Bootstrap ships a .visually-hidden helper but no styled
+   * skip-link primitive, so we provide one.
+   */
+  .ua-skip-link {
+    position: absolute;
+    top: calc(var(--space-12) * -1);
+    left: var(--space-4);
+    background: var(--surface);
+    color: var(--text-strong);
+    padding: var(--space-2) var(--space-3);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    z-index: 1000;
+    text-decoration: none;
+  }
+
+  .ua-skip-link:focus-visible {
+    top: var(--space-3);
+  }
+
+  /*
+   * Brand band — sits between .arizona-header and the .navbar.bg-blue.
+   * Holds Block A on its mandatory opaque white substrate (see spec §6).
+   * Surface flips to navy in dark mode via --surface; the SVG carries its
+   * own white background rect so the Block A substrate rule still holds.
+   */
+  .ua-brand-band {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+  }
+
+  /*
+   * .arizona-header uses Material Symbols Rounded. AZ Bootstrap sizes these
+   * via the `.icon` class but does not declare the font itself. Re-declare
+   * here for safety; harmless if the CDN font hasn't loaded yet.
+   */
+  .material-symbols-rounded {
+    font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+  }
+
+  /*
+   * Primary navbar — adapts the official AZ Marcom .navbar-az pattern to
+   * .bg-blue (navy). AZ Bootstrap paints the parent <li> with a near-white
+   * tile on .nav-item:hover and .nav-item:has(> .nav-link.active) — both are
+   * affordances for white navbars. Suppress them on navy.
+   *
+   * Indicator: 2px underline with 4px offset.
+   *   hover  → Sky (Midnight is invisible on navy; Sky reads clean)
+   *   active → Arizona Red (Marcom accent, iconic on navy)
+   *
+   * Bootstrap's .text-white utility ships with !important, so we restate the
+   * color on every state to keep the indicator visible without fighting the
+   * inline utility class on the <a>.
+   */
+  .navbar.bg-blue .navbar-nav .nav-item:has(> .nav-link:is(.active, .is-active, .show, :active)),
+  .navbar.bg-blue .navbar-nav .nav-item:hover {
+    background-color: transparent;
+  }
+  .navbar.bg-blue .nav-link {
+    color: var(--bs-white, var(--ua-white));
+    text-decoration: none;
+  }
+  .navbar.bg-blue .nav-link:hover,
+  .navbar.bg-blue .nav-link:focus-visible {
+    color: var(--bs-sky, var(--ua-sky));
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 4px;
+    text-decoration-skip-ink: none;
+    text-decoration-color: var(--bs-sky, var(--ua-sky));
+  }
+  .navbar.bg-blue .nav-link.active,
+  .navbar.bg-blue .nav-link.is-active,
+  .navbar.bg-blue .nav-link:active {
+    color: var(--bs-white, var(--ua-white));
+    background-color: transparent;
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 4px;
+    text-decoration-skip-ink: none;
+    text-decoration-color: var(--bs-red, var(--ua-red));
+  }
+
+  /*
+   * Toolbar (.bg-warm-gray) — Marcom's white-navbar pattern: Arizona Blue text,
+   * Arizona Red on hover. No underline indicator at this size.
+   */
+  .navbar.bg-warm-gray .nav-link {
+    color: var(--bs-blue, var(--ua-blue));
+    letter-spacing: 0.04em;
+  }
+  .navbar.bg-warm-gray .nav-link:hover,
+  .navbar.bg-warm-gray .nav-link:focus-visible {
+    color: var(--bs-red, var(--ua-red));
+  }
+}

@@ -1,0 +1,368 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Arizona Athletics — UA Design System (HTML + Tailwind 4 + AZ Bootstrap)</title>
+  <meta name="description" content="University of Arizona Athletics — shared design system starter (plain HTML + Tailwind 4 + Arizona Bootstrap via CDN, tokens from @ua/ua-tokens)." />
+
+  <link rel="icon" type="image/svg+xml" href="/public/block-a.svg" />
+
+  <!--
+    1) FOUC-safe pre-paint theme script — MUST be the first thing inside <head>,
+       BEFORE any <link rel="stylesheet">. Reads localStorage["ua-theme"],
+       resolves "system" against prefers-color-scheme, and writes
+       data-theme + data-bs-theme + data-theme-mode on <html> so AZ Bootstrap
+       and the @ua/ua-tokens dark block both flip on the same attribute.
+       Canonical snippet from /docs/DARK_MODE.md. Do not "modernize" — kept in
+       ES5 so it parses on any browser without a transpile step.
+  -->
+  <script>
+    (function () {
+      try {
+        var stored = localStorage.getItem("ua-theme");
+        var mode = stored || "system";
+        var resolved = mode === "system"
+          ? (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light")
+          : mode;
+        var html = document.documentElement;
+        html.dataset.theme = resolved;
+        html.dataset.bsTheme = resolved;
+        html.dataset.themeMode = mode;
+      } catch (e) {
+        document.documentElement.dataset.theme = "light";
+      }
+    })();
+  </script>
+
+  <!--
+    2) Arizona Bootstrap CSS (CDN). AZ Bootstrap is NOT on npm — it ships from
+       cdn.digital.arizona.edu. This provides .arizona-header, .bg-red, .bg-blue,
+       .bg-warm-gray, .display-2, .lead, .btn-red, .btn-outline-white, .navbar,
+       .background-wrapper, .bg-triangles-top-left, the .card system, .nav-link
+       coloring, etc. Loaded BEFORE Tailwind so utility classes can win where
+       they overlap.
+  -->
+  <link
+    rel="stylesheet"
+    href="https://cdn.digital.arizona.edu/lib/arizona-bootstrap/5.1.3/css/arizona-bootstrap.min.css"
+  />
+
+  <!-- 3) Material Symbols Rounded — required by .arizona-header icons. -->
+  <link
+    rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0&display=swap"
+  />
+
+  <!--
+    4) Adobe Typekit (Proxima Nova + Garamond Premier Pro).
+       CONFIGURE_ME: replace with your unit's kit ID. Requires UA Marcom
+       clearance — email web@arizona.edu before pointing a new domain at the
+       shared kit. See /docs/TYPOGRAPHY.md.
+  -->
+  <!-- <link rel="stylesheet" href="https://use.typekit.net/CONFIGURE_ME.css" /> -->
+
+  <!--
+    5) Compiled Tailwind output. Sources tokens + utility classes from
+       @ua/ua-tokens via the Tailwind preset. Built by:
+         bun run build   (one-shot)
+         bun run dev     (watch)
+       Loaded LAST so utility classes win against AZ Bootstrap where they
+       overlap. AZ Bootstrap component classes (.arizona-header, .btn-red,
+       .display-2) are specific enough to survive.
+  -->
+  <link rel="stylesheet" href="/dist/styles.css" />
+</head>
+<body>
+  <a class="ua-skip-link" href="#main">Skip to content</a>
+
+  <!-- ============================================================ -->
+  <!-- Header — canonical AZ Bootstrap markup (spec §1)             -->
+  <!-- ============================================================ -->
+  <div class="arizona-header az-fixed-header-on-mobile bg-red" id="header_arizona">
+    <div class="container">
+      <div class="row align-items-center">
+        <a class="arizona-logo col-auto" href="https://www.arizona.edu"
+           title="The University of Arizona homepage">
+          <img class="arizona-line-logo"
+               alt="The University of Arizona Wordmark Line Logo White"
+               src="https://cdn.digital.arizona.edu/logos/v1.0.0/ua_wordmark_line_logo_white_rgb.min.svg"
+               fetchpriority="high">
+        </a>
+        <div class="col"></div>
+        <!--
+          Desktop theme toggle. The button is .btn-arizona-header (AZ Bootstrap)
+          so it sits correctly in the red bar; the small Tailwind utility chain
+          (gap-2, ml-auto) only handles micro-spacing.
+        -->
+        <div class="col-auto d-none d-lg-flex align-items-center gap-2">
+          <button
+            type="button"
+            id="ua-theme-toggle"
+            class="btn btn-arizona-header ua-theme-toggle"
+            aria-label="Theme: system. Activate to switch."
+          >
+            <span aria-hidden="true" class="icon material-symbols-rounded ua-theme-toggle__icon">contrast</span>
+            <span class="icon-text ua-theme-toggle__label">System</span>
+          </button>
+        </div>
+        <div class="d-lg-none d-flex col-auto px-0">
+          <button data-bs-toggle="offcanvas" type="button"
+                  data-bs-target="#azMobileNav" aria-controls="azMobileNav"
+                  class="btn btn-arizona-header">
+            <span aria-hidden="true" class="icon material-symbols-rounded">search</span>
+            <span class="icon-text">Search</span>
+          </button>
+          <button data-bs-toggle="offcanvas" type="button"
+                  data-bs-target="#azMobileNav" aria-controls="azMobileNav"
+                  class="btn btn-arizona-header">
+            <span aria-hidden="true" class="icon material-symbols-rounded">menu</span>
+            <span class="icon-text">Menu</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Brand band: Block A on opaque white substrate, between red bar and blue navbar. -->
+  <div class="ua-brand-band">
+    <div class="container py-3">
+      <a href="/" class="d-inline-flex align-items-center text-decoration-none"
+         aria-label="Arizona Athletics home">
+        <img src="/public/block-a.svg" alt="" width="48" height="48" class="me-3">
+        <span class="fs-4 fw-bold text-semantic-text-strong">Arizona Athletics</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- Primary site nav — canonical .navbar.navbar-expand-lg.bg-blue. -->
+  <nav class="navbar navbar-expand-lg bg-blue" aria-label="Primary">
+    <div class="container">
+      <button
+        class="navbar-toggler text-white border-0"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#primaryNav"
+        aria-controls="primaryNav"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span aria-hidden="true" class="material-symbols-rounded">menu</span>
+      </button>
+      <div class="collapse navbar-collapse" id="primaryNav">
+        <ul class="navbar-nav me-auto text-uppercase fw-semibold">
+          <li class="nav-item"><a class="nav-link text-white active" href="/football" aria-current="page">Football</a></li>
+          <li class="nav-item"><a class="nav-link text-white" href="/basketball">Basketball</a></li>
+          <li class="nav-item"><a class="nav-link text-white" href="/baseball">Baseball</a></li>
+          <li class="nav-item"><a class="nav-link text-white" href="/softball">Softball</a></li>
+          <li class="nav-item"><a class="nav-link text-white" href="/sports">All Sports</a></li>
+          <li class="nav-item"><a class="nav-link text-white" href="/shop">Shop</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <main id="main">
+    <!-- ========================================================== -->
+    <!-- Hero — canonical AZ Bootstrap markup (spec §2)             -->
+    <!-- ========================================================== -->
+    <section class="background-wrapper text-bg-red bg-triangles-top-left">
+      <div class="container py-5 my-5">
+        <div class="row">
+          <div class="col-lg-7">
+            <h1 class="display-2 fw-bold">Bear Down. Build Up.</h1>
+            <p class="lead mb-4">
+              Be the next chapter in 140+ years of Wildcat resolve.
+            </p>
+            <a href="/tickets" class="btn btn-outline-white btn-lg me-2">Buy Tickets</a>
+            <a href="/schedule" class="btn btn-outline-white btn-lg">2026 Schedule</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================== -->
+    <!-- Toolbar — canonical AZ Bootstrap markup (spec §3)          -->
+    <!-- ========================================================== -->
+    <nav class="navbar navbar-expand bg-warm-gray border-bottom py-1" aria-label="Secondary">
+      <div class="container">
+        <ul class="navbar-nav gap-3 small text-uppercase fw-semibold">
+          <li class="nav-item"><a class="nav-link" href="/tickets">Tickets</a></li>
+          <li class="nav-item"><a class="nav-link" href="/schedule">Schedule</a></li>
+          <li class="nav-item"><a class="nav-link" href="/roster">Roster</a></li>
+          <li class="nav-item"><a class="nav-link" href="/news">News</a></li>
+          <li class="nav-item"><a class="nav-link" href="/watch">Watch</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <!-- ========================================================== -->
+    <!-- Card grid — canonical AZ Bootstrap markup (spec §4)        -->
+    <!-- ========================================================== -->
+    <section class="bg-warm-gray py-5">
+      <div class="container">
+        <div class="row g-4">
+          <div class="col-md-4">
+            <article class="card border-0 shadow-sm rounded-3 h-100">
+              <div class="card-body">
+                <p class="text-uppercase small fw-bold text-red mb-2">From McKale</p>
+                <h3 class="h4 mb-3">Wildcats sweep weekend series</h3>
+                <p class="text-body-secondary">
+                  A second-half surge carries the Cats past a ranked conference foe in three straight.
+                </p>
+                <a href="/news/sweep" class="stretched-link">Read story</a>
+              </div>
+            </article>
+          </div>
+
+          <div class="col-md-4">
+            <article class="card border-0 shadow-sm rounded-3 h-100">
+              <div class="card-body">
+                <p class="text-uppercase small fw-bold text-red mb-2">From Arizona Stadium</p>
+                <h3 class="h4 mb-3">Tickets on sale for the season opener</h3>
+                <p class="text-body-secondary">
+                  Single-game and season passes open this week. Bear Down for kickoff under the desert sky.
+                </p>
+                <a href="/news/tickets" class="stretched-link">Read story</a>
+              </div>
+            </article>
+          </div>
+
+          <div class="col-md-4">
+            <article class="card border-0 shadow-sm rounded-3 h-100">
+              <div class="card-body">
+                <p class="text-uppercase small fw-bold text-red mb-2">From the Desert</p>
+                <h3 class="h4 mb-3">Bear Down Fund hits new milestone</h3>
+                <p class="text-body-secondary">
+                  Wildcat donors fuel the next generation of Arizona student-athletes across every program.
+                </p>
+                <a href="/news/bear-down-fund" class="stretched-link">Read story</a>
+              </div>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ============================================================ -->
+  <!-- Footer — canonical AZ Bootstrap 5-column pattern (spec §5)   -->
+  <!-- ============================================================ -->
+  <div class="container">
+    <footer class="row row-cols-1 row-cols-sm-2 row-cols-md-5 py-5 my-5 border-top">
+      <div class="col mb-3">
+        <a href="/" class="d-flex align-items-center mb-3 link-body-emphasis text-decoration-none"
+           aria-label="Arizona Athletics">
+          <img src="/public/block-a.svg" alt="" width="48" height="48" class="me-2">
+        </a>
+        <p class="text-body-secondary small mb-0">
+          The University of Arizona<br>Tucson, AZ 85721
+        </p>
+        <p class="text-body-secondary small">
+          &copy; <span id="ua-footer-year">2026</span> Arizona Board of Regents
+        </p>
+      </div>
+
+      <div class="col mb-3"></div>
+
+      <div class="col mb-3">
+        <h5 class="text-uppercase fs-6 fw-bold">Athletics</h5>
+        <ul class="nav flex-column">
+          <li class="nav-item mb-2"><a href="/tickets" class="nav-link p-0 text-body-secondary">Tickets</a></li>
+          <li class="nav-item mb-2"><a href="/schedule" class="nav-link p-0 text-body-secondary">Schedule</a></li>
+          <li class="nav-item mb-2"><a href="/roster" class="nav-link p-0 text-body-secondary">Roster</a></li>
+          <li class="nav-item mb-2"><a href="/fan-guide" class="nav-link p-0 text-body-secondary">Fan Guide</a></li>
+        </ul>
+      </div>
+
+      <div class="col mb-3">
+        <h5 class="text-uppercase fs-6 fw-bold">Resources</h5>
+        <ul class="nav flex-column">
+          <li class="nav-item mb-2"><a href="/compliance" class="nav-link p-0 text-body-secondary">Compliance</a></li>
+          <li class="nav-item mb-2"><a href="/accessibility" class="nav-link p-0 text-body-secondary">Accessibility</a></li>
+          <li class="nav-item mb-2"><a href="/privacy" class="nav-link p-0 text-body-secondary">Privacy</a></li>
+        </ul>
+      </div>
+
+      <div class="col mb-3">
+        <h5 class="text-uppercase fs-6 fw-bold">Stay Connected</h5>
+        <form>
+          <p class="small mb-2">Wildcat news in your inbox.</p>
+          <div class="d-flex flex-column flex-sm-row w-100 gap-2">
+            <label for="newsletter1" class="visually-hidden">Email address</label>
+            <input id="newsletter1" type="email" class="form-control" placeholder="Email address">
+            <button class="btn btn-red" type="button">Subscribe</button>
+          </div>
+        </form>
+      </div>
+    </footer>
+
+    <div class="d-flex flex-column flex-sm-row justify-content-between py-4 my-4 border-top">
+      <p class="small text-body-secondary">
+        A unit of the University of Arizona. Bear Down&reg; and Block A&reg; are
+        registered trademarks of the Arizona Board of Regents.
+      </p>
+      <ul class="list-unstyled d-flex">
+        <li class="ms-3">
+          <a class="link-body-emphasis" href="#" aria-label="Arizona Athletics on X">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M18.244 2H21l-6.52 7.45L22.5 22h-6.84l-4.79-6.27L4.93 22H2.17l6.98-7.98L1.5 2h6.99l4.33 5.73L18.244 2Zm-2.39 18h1.62L7.21 4H5.49l10.364 16Z" />
+            </svg>
+          </a>
+        </li>
+        <li class="ms-3">
+          <a class="link-body-emphasis" href="#" aria-label="Arizona Athletics on Instagram">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41-.56-.22-.96-.48-1.38-.9-.42-.42-.68-.82-.9-1.38-.16-.42-.36-1.06-.41-2.23C2.17 15.58 2.16 15.2 2.16 12s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.06-.36 2.23-.41C8.42 2.17 8.8 2.16 12 2.16ZM12 0C8.74 0 8.33.01 7.05.07 5.78.13 4.9.33 4.14.63a5.7 5.7 0 0 0-2.06 1.34A5.7 5.7 0 0 0 .74 4.04C.43 4.8.23 5.68.17 6.95.11 8.23.1 8.64.1 11.9c0 3.26.01 3.67.07 4.95.06 1.27.26 2.15.56 2.91.32.81.74 1.5 1.34 2.1.6.6 1.29 1.02 2.1 1.34.76.3 1.64.5 2.91.56 1.28.06 1.69.07 4.95.07s3.67-.01 4.95-.07c1.27-.06 2.15-.26 2.91-.56a5.7 5.7 0 0 0 2.1-1.34c.6-.6 1.02-1.29 1.34-2.1.3-.76.5-1.64.56-2.91.06-1.28.07-1.69.07-4.95s-.01-3.67-.07-4.95c-.06-1.27-.26-2.15-.56-2.91A5.7 5.7 0 0 0 21.93 1.97 5.7 5.7 0 0 0 19.87.63C19.1.33 18.22.13 16.95.07 15.67.01 15.26 0 12 0Zm0 5.84A6.16 6.16 0 1 0 18.16 12 6.16 6.16 0 0 0 12 5.84ZM12 16a4 4 0 1 1 4-4 4 4 0 0 1-4 4Zm6.4-11.85a1.44 1.44 0 1 0 1.44 1.44 1.44 1.44 0 0 0-1.44-1.44Z" />
+            </svg>
+          </a>
+        </li>
+        <li class="ms-3">
+          <a class="link-body-emphasis" href="#" aria-label="Arizona Athletics on Facebook">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M22.675 0H1.325C.593 0 0 .593 0 1.325v21.351C0 23.408.593 24 1.325 24H12.82v-9.294H9.692V11.08h3.128V8.413c0-3.1 1.893-4.788 4.66-4.788 1.325 0 2.464.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.31h3.587l-.467 3.626h-3.12V24h6.116c.73 0 1.323-.592 1.323-1.324V1.325C24 .593 23.408 0 22.675 0Z" />
+            </svg>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Mobile offcanvas — referenced by .arizona-header search/menu buttons. -->
+  <div class="offcanvas offcanvas-end bg-red text-white" tabindex="-1"
+       id="azMobileNav" aria-labelledby="azMobileNavLabel">
+    <div class="offcanvas-header">
+      <h2 class="offcanvas-title h5 text-uppercase fw-bold" id="azMobileNavLabel">
+        Arizona Athletics
+      </h2>
+      <button type="button" class="btn btn-arizona-header"
+              data-bs-dismiss="offcanvas" aria-label="Close">
+        <span aria-hidden="true" class="icon material-symbols-rounded">close</span>
+        <span class="icon-text">Close</span>
+      </button>
+    </div>
+    <div class="offcanvas-body">
+      <ul class="nav flex-column text-uppercase fw-semibold gap-2">
+        <li class="nav-item"><a class="nav-link text-white" href="/football">Football</a></li>
+        <li class="nav-item"><a class="nav-link text-white" href="/basketball">Basketball</a></li>
+        <li class="nav-item"><a class="nav-link text-white" href="/baseball">Baseball</a></li>
+        <li class="nav-item"><a class="nav-link text-white" href="/softball">Softball</a></li>
+        <li class="nav-item"><a class="nav-link text-white" href="/sports">All Sports</a></li>
+        <li class="nav-item"><a class="nav-link text-white" href="/shop">Shop</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Arizona Bootstrap JS bundle (offcanvas, navbar collapse, dropdowns, etc.). -->
+  <script
+    src="https://cdn.digital.arizona.edu/lib/arizona-bootstrap/5.1.3/js/arizona-bootstrap.bundle.min.js"
+    defer
+  ></script>
+
+  <!-- Theme toggle runtime + system-preference listener + footer year stamp. -->
+  <script src="/theme.js" defer></script>
+
+  <!-- Auth (Cognito PKCE) scaffold. Stubs only; values via env. -->
+  <script src="/auth.js" defer></script>
+</body>
+</html>
