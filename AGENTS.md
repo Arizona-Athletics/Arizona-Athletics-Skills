@@ -21,6 +21,20 @@ you should never write a dark-mode override.
 
 ## Before you write code
 
+**Step 0 — check that this repo is still current.** Run the
+[`ua-standards-check`](./.claude/skills/ua-standards-check/SKILL.md) skill (in
+Claude Code: `/ua-standards-check`) to diff this repo against:
+
+- UA Marcom + brand standards (`marcom.arizona.edu`, `brand.arizona.edu`)
+- Arizona Digital projects (`az-digital/arizona-bootstrap`, `az-digital/az_quickstart`) — latest releases
+- Major framework versions (Bun, TypeScript, React, Next, Astro, Vite+, Tailwind, Bootstrap)
+
+The skill is read-only — it reports drift and proposes updates. The human decides
+what to apply. Don't skip this for a one-line task, but always run it before a
+non-trivial PR (new template, token bump, framework upgrade). If you are not
+running in Claude Code, do the equivalent: fetch the sources, diff against
+`tokens.json` / `PLAN.md` / `package.json`, propose updates.
+
 Read these. Not optional.
 
 - [`docs/LLM_GUIDE.md`](./docs/LLM_GUIDE.md) — do/don't list. Start here.
