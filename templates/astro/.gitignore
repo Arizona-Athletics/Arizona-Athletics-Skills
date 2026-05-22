@@ -1,0 +1,16 @@
+# UA Athletics — Astro template
+
+# Build artifacts
+dist/
+.astro/
+
+# Dependencies
+node_modules/
+
+# Local env — secrets and project-specific Cognito IDs go here.
+.env
+.env.local
+.env.*.local
+
+# OS / editor noise
+.DS_Store

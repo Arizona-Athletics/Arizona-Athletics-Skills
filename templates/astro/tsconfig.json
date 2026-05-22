@@ -1,0 +1,12 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "noEmit": true,
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "jsx": "preserve",
+    "types": ["astro/client"]
+  },
+  "include": ["src", "src/env.d.ts", "astro.config.mjs", "tailwind.config.ts"],
+  "exclude": ["node_modules", "dist", ".astro"]
+}

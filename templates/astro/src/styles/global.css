@@ -1,0 +1,54 @@
+/*
+ * UA Athletics — global stylesheet
+ *
+ * Order matters:
+ *   1. @ua/ua-tokens/tokens.css — defines every --ua-* brand variable and the
+ *      light/dark semantic variables on :root + [data-theme="dark"].
+ *   2. Tailwind 4 — generated utilities consume the UA preset (see
+ *      tailwind.config.ts), so `bg-semantic-bg`, `text-semantic-text`, etc.
+ *      resolve to the same CSS variables.
+ *
+ * Components MUST consume semantic tokens (var(--bg), var(--surface), …).
+ * Reach for brand tokens (var(--ua-red), var(--ua-blue), …) only for one-off
+ * identity accents. See docs/COLORS.md.
+ */
+@import "@ua/ua-tokens/tokens.css";
+@import "tailwindcss";
+
+/* Tailwind 4 needs to know which JS preset to load. */
+@config "../../tailwind.config.ts";
+
+/* Page baseline — keep it minimal; component styles live with components. */
+html {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  line-height: var(--line-height-normal);
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+}
+
+/* Skip-to-content: required for keyboard users, visually hidden until focused. */
+.ua-skip-link {
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline-start: 0;
+  transform: translateY(-200%);
+  background: var(--surface);
+  color: var(--text-strong);
+  padding: var(--space-2) var(--space-4);
+  border: 2px solid var(--focus-ring);
+  z-index: 100;
+}
+.ua-skip-link:focus {
+  transform: translateY(0);
+}
+
+/* Focus ring — applied wherever native outlines are unsuitable. */
+:where(a, button, [role="button"], input, select, textarea, summary):focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}

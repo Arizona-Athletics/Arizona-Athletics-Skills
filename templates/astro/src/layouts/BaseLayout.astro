@@ -1,0 +1,78 @@
+---
+// BaseLayout — every page wraps in this. Ships the FOUC-safe theme bootstrap
+// inline in <head>, BEFORE any stylesheet, then loads tokens.css + globals.
+//
+// The page is rendered with <html lang="en"> (no `data-theme` attribute on
+// SSR'd HTML). The bootstrap script runs synchronously, reads localStorage,
+// resolves system→light|dark, and writes `data-theme` / `data-bs-theme` /
+// `data-theme-mode` before the first style is applied. See docs/DARK_MODE.md.
+//
+// IMPORTANT: the `<script is:inline>` block below must remain the FIRST child
+// of <head>. Astro hoists imported styles into <head>, but does so AFTER
+// statically-authored children, which keeps the bootstrap synchronous and
+// before any paint. Do not add a <link rel="stylesheet"> above it.
+
+import "../styles/global.css";
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = "Arizona Athletics",
+  description = "University of Arizona Athletics — Astro starter built on the shared design system.",
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <!--
+      UA Athletics theme bootstrap — MUST run BEFORE any stylesheet.
+      Resolves `system` to a concrete light/dark value so first paint matches
+      the user's preference and there is no white flash on dark-mode loads.
+      Do not "modernize" — intentionally ES5 so it parses without transpile.
+      Canonical snippet: docs/DARK_MODE.md
+    -->
+    <script is:inline>
+      (function () {
+        try {
+          var stored = localStorage.getItem("ua-theme");
+          var mode = stored || "system";
+          var resolved = mode === "system"
+            ? (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light")
+            : mode;
+          var html = document.documentElement;
+          html.dataset.theme = resolved;
+          html.dataset.bsTheme = resolved;
+          html.dataset.themeMode = mode;
+        } catch (e) {
+          document.documentElement.dataset.theme = "light";
+        }
+      })();
+    </script>
+
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <title>{title}</title>
+
+    <!--
+      CONFIGURE_ME: replace {KIT_ID} with the project's Adobe Typekit kit ID
+      once UA Marcom has cleared the domain. Loads Proxima Nova + Garamond
+      Premier Pro. See docs/TYPOGRAPHY.md.
+    -->
+    <!-- <link rel="stylesheet" href="https://use.typekit.net/{KIT_ID}.css" /> -->
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <!-- Hoisted styles from `import "../styles/global.css"` are injected by
+         Astro into this <head> AFTER this point. The script above runs first
+         and sets the theme attribute before any styled paint. -->
+  </head>
+  <body>
+    <a href="#main" class="ua-skip-link">Skip to content</a>
+    <slot />
+  </body>
+</html>
