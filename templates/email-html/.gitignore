@@ -1,0 +1,8 @@
+node_modules/
+dist/
+.DS_Store
+*.log
+
+# Build output if `bun run inline` writes alongside sources
+src/**/*.inlined.html
+preview/**/*.inlined.html

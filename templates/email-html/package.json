@@ -1,0 +1,16 @@
+{
+  "name": "@ua/template-email-html",
+  "version": "0.1.0",
+  "description": "University of Arizona Athletics starter — transactional + marketing email HTML templates with brand-true headers, footers, and CTAs.",
+  "private": true,
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "inline": "bun run scripts/inline-css.ts",
+    "check": "echo 'No type-check needed — HTML only'"
+  },
+  "dependencies": {
+    "@ua/ua-tokens": "workspace:*"
+  },
+  "devDependencies": {}
+}

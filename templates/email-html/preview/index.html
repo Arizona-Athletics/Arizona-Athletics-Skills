@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>@ua/template-email-html &mdash; preview</title>
+  <style>
+    /*
+      This preview page is a local dev convenience — NOT for production use.
+      It uses CSS variables and modern layout because it's a browser-only
+      page. The email templates it links to do NOT.
+    */
+    :root {
+      --ua-red: #AB0520;
+      --ua-blue: #0C234B;
+      --ua-warm-gray: #F4EDE5;
+      --ua-cool-gray: #E2E9EB;
+      --text: #1A2740;
+      --text-muted: #5A6577;
+      --link: #1E5288;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: "proxima-nova", "Proxima Nova", "Calibri", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      background: var(--ua-warm-gray);
+      color: var(--text);
+      line-height: 1.5;
+    }
+    header {
+      background: var(--ua-red);
+      color: #fff;
+      padding: 24px;
+      text-align: center;
+    }
+    header img {
+      max-width: 280px;
+      height: auto;
+      display: block;
+      margin: 0 auto;
+    }
+    main {
+      max-width: 1040px;
+      margin: 48px auto;
+      padding: 0 24px;
+    }
+    h1 {
+      font-size: 2.25rem;
+      font-weight: 300;
+      letter-spacing: -0.01em;
+      color: var(--ua-blue);
+      margin: 0 0 8px 0;
+    }
+    .lead {
+      font-size: 1.125rem;
+      color: var(--text-muted);
+      margin: 0 0 32px 0;
+      max-width: 60ch;
+    }
+    .group {
+      margin: 0 0 48px 0;
+    }
+    .group h2 {
+      color: var(--ua-blue);
+      font-size: 1.375rem;
+      font-weight: 600;
+      margin: 0 0 16px 0;
+      padding-bottom: 8px;
+      border-bottom: 2px solid var(--ua-red);
+      display: inline-block;
+    }
+    ul.templates {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 16px;
+    }
+    ul.templates li a {
+      display: block;
+      background: #fff;
+      border: 1px solid var(--ua-cool-gray);
+      padding: 20px;
+      text-decoration: none;
+      color: var(--ua-blue);
+      transition: border-color 120ms, box-shadow 120ms;
+    }
+    ul.templates li a:hover,
+    ul.templates li a:focus-visible {
+      border-color: var(--ua-red);
+      box-shadow: 0 4px 12px rgba(12, 35, 75, 0.12);
+      outline: 0;
+    }
+    ul.templates li .eyebrow {
+      color: var(--ua-red);
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin: 0 0 8px 0;
+    }
+    ul.templates li .name {
+      font-size: 1.125rem;
+      font-weight: 600;
+      margin: 0 0 6px 0;
+    }
+    ul.templates li .desc {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      margin: 0;
+      line-height: 1.5;
+    }
+    footer {
+      background: var(--ua-cool-gray);
+      color: var(--text-muted);
+      padding: 32px 24px;
+      text-align: center;
+      font-size: 0.8125rem;
+    }
+    footer p { margin: 0 0 8px 0; }
+    a.inline-link {
+      color: var(--link);
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <img
+      src="https://cdn.digital.arizona.edu/logos/v1.0.0/ua_wordmark_line_logo_white_rgb.min.png"
+      alt="University of Arizona Athletics"
+      width="280"
+      height="48"
+    />
+  </header>
+
+  <main>
+    <h1>Email template preview</h1>
+    <p class="lead">
+      Local dev convenience for <code>@ua/template-email-html</code>. Open each file
+      to eyeball the rendered HTML before round-tripping through a real email
+      service. These are static <code>.html</code> files &mdash; no server
+      needed.
+    </p>
+
+    <section class="group">
+      <h2>Transactional</h2>
+      <ul class="templates">
+        <li>
+          <a href="../src/transactional/welcome.html">
+            <p class="eyebrow">welcome.html</p>
+            <p class="name">Welcome</p>
+            <p class="desc">New-user welcome with email-confirm CTA and "what's next" list.</p>
+          </a>
+        </li>
+        <li>
+          <a href="../src/transactional/password-reset.html">
+            <p class="eyebrow">password-reset.html</p>
+            <p class="name">Password reset</p>
+            <p class="desc">30-minute reset link with safety callout for unauthorized requests.</p>
+          </a>
+        </li>
+        <li>
+          <a href="../src/transactional/event-confirmation.html">
+            <p class="eyebrow">event-confirmation.html</p>
+            <p class="name">Event / ticket confirmation</p>
+            <p class="desc">Order receipt with event details table, view-tickets CTA, gate info.</p>
+          </a>
+        </li>
+        <li>
+          <a href="../src/transactional/notification.html">
+            <p class="eyebrow">notification.html</p>
+            <p class="name">Generic notification</p>
+            <p class="desc">Simplest layout. Copy this when extending to a new transactional message.</p>
+          </a>
+        </li>
+      </ul>
+    </section>
+
+    <section class="group">
+      <h2>Marketing</h2>
+      <ul class="templates">
+        <li>
+          <a href="../src/marketing/newsletter.html">
+            <p class="eyebrow">newsletter.html</p>
+            <p class="name">Newsletter</p>
+            <p class="desc">Hero, 3-column card grid (stacks on mobile), next-game strip, schedule CTA.</p>
+          </a>
+        </li>
+      </ul>
+    </section>
+
+    <section class="group">
+      <h2>Partials</h2>
+      <ul class="templates">
+        <li>
+          <a href="../src/partials/header.html">
+            <p class="eyebrow">partials/header.html</p>
+            <p class="name">Header</p>
+            <p class="desc">Red band + UA Athletics wordmark. Reusable across every template.</p>
+          </a>
+        </li>
+        <li>
+          <a href="../src/partials/footer.html">
+            <p class="eyebrow">partials/footer.html</p>
+            <p class="name">Footer</p>
+            <p class="desc">Cool-gray footer with address, unsubscribe, and trademark notice.</p>
+          </a>
+        </li>
+        <li>
+          <a href="../src/partials/button.html">
+            <p class="eyebrow">partials/button.html</p>
+            <p class="name">Bulletproof CTA button</p>
+            <p class="desc">Table-based with MSO/VML fallback. Squared corners (Arizona Bootstrap convention).</p>
+          </a>
+        </li>
+      </ul>
+    </section>
+  </main>
+
+  <footer>
+    <p>
+      <strong>Heads up:</strong> What you see in this browser is the high-end fidelity
+      version. Real-world rendering varies wildly by client. Always test in
+      <a class="inline-link" href="https://www.litmus.com/" target="_blank" rel="noopener">Litmus</a> or
+      <a class="inline-link" href="https://www.emailonacid.com/" target="_blank" rel="noopener">Email on Acid</a>
+      before sending to production.
+    </p>
+    <p>Bear Down&reg; and Block A&reg; are registered trademarks of the Arizona Board of Regents.</p>
+  </footer>
+</body>
+</html>
