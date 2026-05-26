@@ -1,0 +1,20 @@
+{
+  "name": "@ua/template-html-tailwind",
+  "version": "0.1.0",
+  "description": "University of Arizona Athletics starter — plain HTML5 + Tailwind 4 + Arizona Bootstrap (CDN), consuming @ua/ua-tokens via the Tailwind preset.",
+  "private": true,
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "dev": "tailwindcss -i src/styles.css -o dist/styles.css --watch",
+    "build": "tailwindcss -i src/styles.css -o dist/styles.css",
+    "serve": "python3 -m http.server 8081"
+  },
+  "dependencies": {
+    "@ua/ua-tokens": "workspace:*"
+  },
+  "devDependencies": {
+    "@tailwindcss/cli": "^4.0.0",
+    "tailwindcss": "^4.0.0"
+  }
+}

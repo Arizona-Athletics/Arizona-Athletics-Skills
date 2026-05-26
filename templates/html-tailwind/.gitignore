@@ -1,0 +1,8 @@
+node_modules/
+dist/styles.css
+dist/*.map
+.env
+.env.local
+.bun
+*.tsbuildinfo
+.DS_Store
