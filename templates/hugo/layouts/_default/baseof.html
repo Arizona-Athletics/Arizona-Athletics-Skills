@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+{{- $hero := .Params.hero | default site.Params.hero -}}
+<html lang="{{ site.LanguageCode | default "en-us" }}">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{{ if .IsHome }}{{ site.Title }} — UA Design System{{ else }}{{ .Title }} | {{ site.Title }}{{ end }}</title>
+  <meta name="description" content="{{ with .Description }}{{ . }}{{ else }}{{ site.Params.description }}{{ end }}" />
+  <meta name="theme-color" content="{{ site.Params.themeColor }}" />
+
+  {{/*
+    UA Athletics theme bootstrap — must run BEFORE any stylesheet so the
+    first paint is correct. Canonical snippet from /docs/DARK_MODE.md.
+    Kept in ES5 so it parses on any browser without a transpile step.
+  */}}
+  <script>
+    (function () {
+      try {
+        var stored = localStorage.getItem("ua-theme");
+        var mode = stored || "system";
+        var resolved = mode === "system"
+          ? (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light")
+          : mode;
+        var html = document.documentElement;
+        html.dataset.theme = resolved;
+        html.dataset.bsTheme = resolved;
+        html.dataset.themeMode = mode;
+      } catch (e) {
+        document.documentElement.dataset.theme = "light";
+      }
+    })();
+  </script>
+
+  {{/*
+    @ua/ua-tokens — design tokens (must come BEFORE Arizona Bootstrap so any
+    semantic overrides win where they overlap). Hugo's static/ pipeline does
+    not pull from node_modules at build time, so the dist file is mirrored
+    into /static/css/tokens.css via the README's setup step. For monorepo
+    dev you can symlink it (see README). Production swap: ship the file with
+    a hashed name or fingerprint it via Hugo Pipes.
+  */}}
+  <link rel="stylesheet" href="{{ "css/tokens.css" | relURL }}" />
+
+  {{/* Arizona Bootstrap (NOT on npm) — CDN per /docs/COMPONENTS.md. */}}
+  <link
+    rel="stylesheet"
+    href="https://cdn.digital.arizona.edu/lib/arizona-bootstrap/{{ site.Params.azBootstrapVersion }}/css/arizona-bootstrap.min.css"
+  />
+
+  {{/* Material Symbols Rounded — used by the .arizona-header search/menu buttons. */}}
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,300,0,0" />
+
+  {{/*
+    Typekit (Proxima Nova + Garamond Premier Pro). CONFIGURE_ME — requires UA
+    Marcom clearance per /docs/TYPOGRAPHY.md. Leave commented until cleared.
+  */}}
+  {{- if and site.Params.typekitKitId (ne site.Params.typekitKitId "CONFIGURE_ME") }}
+  <link rel="stylesheet" href="https://use.typekit.net/{{ site.Params.typekitKitId }}.css" />
+  {{- else }}
+  {{/* <link rel="stylesheet" href="https://use.typekit.net/CONFIGURE_ME.css" /> */}}
+  {{- end }}
+
+  {{/* Project-local UA overrides (semantic tokens only — no hex). Must come last. */}}
+  <link rel="stylesheet" href="{{ "css/styles.css" | relURL }}" />
+
+  <link rel="icon" href="{{ "block-a.svg" | relURL }}" type="image/svg+xml" />
+
+  {{ block "head" . }}{{ end }}
+</head>
+<body>
+  <a class="visually-hidden-focusable" href="#main">Skip to content</a>
+
+  {{ partial "header.html" . }}
+
+  <main id="main">
+    {{ block "main" . }}{{ end }}
+  </main>
+
+  {{ partial "footer.html" . }}
+
+  {{/* Arizona Bootstrap JS bundle — popovers, dropdowns, offcanvas. */}}
+  <script src="https://cdn.digital.arizona.edu/lib/arizona-bootstrap/{{ site.Params.azBootstrapVersion }}/js/arizona-bootstrap.bundle.min.js"></script>
+
+  {{/* Theme toggle runtime + system-preference listener. */}}
+  <script src="{{ "js/theme.js" | relURL }}"></script>
+
+  {{/* Auth (Cognito PKCE) scaffold — stubs only; values via env. */}}
+  <script src="{{ "js/auth.js" | relURL }}"></script>
+
+  {{ block "scripts" . }}{{ end }}
+</body>
+</html>

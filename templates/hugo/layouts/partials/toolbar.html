@@ -1,0 +1,18 @@
+{{/*
+  Toolbar partial — Athletics secondary action bar.
+  Source: .claude/research/ua-design-spec-2026-05-22.md §3.
+
+  Sits directly under the hero on .bg-warm-gray. Items come from
+  config/_default/menus.yml (Menus.toolbar).
+*/}}
+<nav class="navbar navbar-expand bg-warm-gray border-bottom py-1" aria-label="Quick actions">
+  <div class="container">
+    <ul class="navbar-nav gap-3 small text-uppercase fw-semibold">
+      {{ range site.Menus.toolbar }}
+        <li class="nav-item">
+          <a class="nav-link" href="{{ .URL | relURL }}">{{ .Name }}</a>
+        </li>
+      {{ end }}
+    </ul>
+  </div>
+</nav>

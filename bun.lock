@@ -56,6 +56,13 @@
         "tailwindcss": "^4.0.0",
       },
     },
+    "templates/hugo": {
+      "name": "@ua/template-hugo",
+      "version": "0.1.0",
+      "dependencies": {
+        "@ua/ua-tokens": "workspace:*",
+      },
+    },
     "templates/nextjs-app-router": {
       "name": "@ua/template-nextjs-app-router",
       "version": "0.1.0",
@@ -626,6 +633,8 @@
     "@ua/template-html-bootstrap5": ["@ua/template-html-bootstrap5@workspace:templates/html-bootstrap5"],
 
     "@ua/template-html-tailwind": ["@ua/template-html-tailwind@workspace:templates/html-tailwind"],
+
+    "@ua/template-hugo": ["@ua/template-hugo@workspace:templates/hugo"],
 
     "@ua/template-nextjs-app-router": ["@ua/template-nextjs-app-router@workspace:templates/nextjs-app-router"],
 
