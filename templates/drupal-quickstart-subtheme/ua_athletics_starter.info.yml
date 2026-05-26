@@ -1,0 +1,35 @@
+name: UA Athletics Starter
+type: theme
+description: 'University of Arizona Athletics starter subtheme of arizona_bootstrap.'
+package: 'Arizona Quickstart Custom'
+base theme: arizona_bootstrap
+core_version_requirement: ^10 || ^11
+screenshot: images/screenshot.png
+
+libraries:
+  - ua_athletics_starter/global
+
+libraries-extend:
+  arizona_bootstrap/global-styling:
+    - ua_athletics_starter/global
+
+regions:
+  header: 'Header'
+  primary_menu: 'Primary menu'
+  secondary_menu: 'Secondary menu'
+  breadcrumb: 'Breadcrumb'
+  page_top: 'Page top'
+  page_bottom: 'Page bottom'
+  highlighted: 'Highlighted'
+  featured_top: 'Featured top'
+  content: 'Content'
+  sidebar_first: 'Sidebar first'
+  featured_bottom_first: 'Featured bottom first'
+  featured_bottom_second: 'Featured bottom second'
+  featured_bottom_third: 'Featured bottom third'
+  footer_first: 'Footer first'
+  footer_second: 'Footer second'
+  footer_third: 'Footer third'
+  footer_fourth: 'Footer fourth'
+  footer_fifth: 'Footer fifth'
+  footer_bottom: 'Footer bottom'

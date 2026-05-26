@@ -1,0 +1,66 @@
+<?php
+
+/**
+ * @file
+ * Functions to support theming in the UA Athletics Starter subtheme.
+ *
+ * Keep this file tiny. Heavy lifting belongs in modules or in Twig overrides
+ * under templates/. This file only:
+ *   - Reads the `ua-theme` cookie so the pre-paint dark-mode toggle survives
+ *     a Drupal page render (data-bs-theme + data-theme on <html>).
+ *   - Adds a couple of helper body classes so Twig can stay declarative.
+ *
+ * Canonical dark-mode contract lives in /docs/DARK_MODE.md at the repo root.
+ */
+
+declare(strict_types=1);
+
+/**
+ * Implements hook_preprocess_html().
+ *
+ * Mirrors the FOUC-safe pre-paint script in js/theme.js: if the user has a
+ * stored preference in the `ua-theme` cookie, stamp data-bs-theme and
+ * data-theme onto <html> server-side so the very first paint matches.
+ */
+function ua_athletics_starter_preprocess_html(array &$variables): void {
+  $mode = 'system';
+  if (!empty($_COOKIE['ua-theme'])) {
+    $candidate = (string) $_COOKIE['ua-theme'];
+    if (in_array($candidate, ['system', 'light', 'dark'], TRUE)) {
+      $mode = $candidate;
+    }
+  }
+
+  // We cannot read OS preference server-side; "system" falls through to
+  // light for the SSR markup, then theme.js will correct on first paint.
+  $resolved = $mode === 'dark' ? 'dark' : 'light';
+
+  $variables['html_attributes']->setAttribute('data-bs-theme', $resolved);
+  $variables['html_attributes']->setAttribute('data-theme', $resolved);
+  $variables['html_attributes']->setAttribute('data-theme-mode', $mode);
+
+  $variables['attributes']['class'][] = 'ua-athletics-starter';
+}
+
+/**
+ * Implements hook_preprocess_page().
+ *
+ * Surfaces the site name to Twig templates that want to render
+ * "Arizona Athletics" lockups without a config lookup.
+ */
+function ua_athletics_starter_preprocess_page(array &$variables): void {
+  $variables['ua_site_name'] = \Drupal::config('system.site')->get('name') ?? 'Arizona Athletics';
+}
+
+/**
+ * Implements hook_preprocess_block().
+ *
+ * Adds a `ua-block-{plugin_id}` class so site-builders can target individual
+ * blocks without writing custom modules. Cheap, low-blast-radius.
+ */
+function ua_athletics_starter_preprocess_block(array &$variables): void {
+  if (!empty($variables['plugin_id'])) {
+    $plugin = preg_replace('/[^a-z0-9_-]+/', '-', strtolower((string) $variables['plugin_id']));
+    $variables['attributes']['class'][] = 'ua-block-' . $plugin;
+  }
+}

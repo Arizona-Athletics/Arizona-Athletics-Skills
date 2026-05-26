@@ -1,0 +1,79 @@
+{#
+/**
+ * @file
+ * Theme override for a node in teaser view-mode.
+ *
+ * Renders the canonical UA Athletics card from
+ * /.claude/research/ua-design-spec-2026-05-22.md §4:
+ *
+ *   <article class="card border-0 shadow-sm rounded-3 h-100">
+ *     <div class="card-body">
+ *       <p class="text-uppercase small fw-bold text-red mb-2">From McKale</p>
+ *       <h3 class="h4 mb-3">Wildcats sweep weekend series</h3>
+ *       <p class="text-body-secondary">…</p>
+ *       <a href="#" class="stretched-link">Read story</a>
+ *     </div>
+ *   </article>
+ *
+ * Eyebrow source-of-truth, in order:
+ *   1. field_eyebrow             (custom Athletics field, if present)
+ *   2. node type label           (e.g. "News", "Story")
+ *   3. fallback string "From the Desert"
+ *
+ * Available variables (subset, see node.html.twig in core):
+ * - node: The node entity.
+ * - label: Node title.
+ * - url: URL to the full node.
+ * - content: All rendered fields. {{ content|without('field_eyebrow', 'title', 'body') }}
+ *   renders the rest.
+ * - attributes: HTML attributes for the wrapping <article>.
+ */
+#}
+{%
+  set classes = [
+    'card',
+    'border-0',
+    'shadow-sm',
+    'rounded-3',
+    'h-100',
+    'ua-card',
+    'node',
+    'node--type-' ~ node.bundle|clean_class,
+    'node--view-mode-teaser',
+  ]
+%}
+
+{% set eyebrow = content.field_eyebrow|render|trim %}
+{% if not eyebrow %}
+  {% set eyebrow = node.type.entity.label ?? 'From the Desert'|t %}
+{% endif %}
+
+<article{{ attributes.addClass(classes) }}>
+  <div class="card-body d-flex flex-column">
+    {% if eyebrow %}
+      <p class="text-uppercase small fw-bold text-red mb-2">{{ eyebrow }}</p>
+    {% endif %}
+
+    {{ title_prefix }}
+    {% if not page %}
+      <h3{{ title_attributes.addClass('h4', 'mb-3') }}>
+        <a href="{{ url }}" rel="bookmark" class="stretched-link link-body-emphasis text-decoration-none">
+          {{ label }}
+        </a>
+      </h3>
+    {% else %}
+      <h2{{ title_attributes.addClass('h4', 'mb-3') }}>{{ label }}</h2>
+    {% endif %}
+    {{ title_suffix }}
+
+    <div{{ content_attributes.addClass('card-text', 'text-body-secondary', 'mb-3') }}>
+      {{ content|without('field_eyebrow', 'title') }}
+    </div>
+
+    {% if not page %}
+      <p class="mt-auto mb-0">
+        <a href="{{ url }}" class="link-body-emphasis">{{ 'Read story'|t }}</a>
+      </p>
+    {% endif %}
+  </div>
+</article>

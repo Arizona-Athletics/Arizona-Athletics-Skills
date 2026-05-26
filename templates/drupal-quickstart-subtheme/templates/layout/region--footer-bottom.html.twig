@@ -1,0 +1,19 @@
+{#
+/**
+ * @file
+ * Theme override for the Footer bottom region — the social-icons strip that
+ * sits to the right of the trademark legal line at the bottom of the page.
+ *
+ * Renders an empty <ul> placeholder if the region is empty so the legal strip
+ * still lays out cleanly.
+ */
+#}
+{% if content %}
+  {{ content }}
+{% else %}
+  <ul class="list-unstyled d-flex mb-0" aria-label="{{ 'Social media'|t }}">
+    <li class="ms-3"><a class="link-body-emphasis" href="#" aria-label="{{ 'X (formerly Twitter)'|t }}">X</a></li>
+    <li class="ms-3"><a class="link-body-emphasis" href="#" aria-label="{{ 'Instagram'|t }}">IG</a></li>
+    <li class="ms-3"><a class="link-body-emphasis" href="#" aria-label="{{ 'Facebook'|t }}">FB</a></li>
+  </ul>
+{% endif %}

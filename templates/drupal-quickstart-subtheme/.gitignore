@@ -1,0 +1,31 @@
+# Drupal — never commit
+vendor/
+web/sites/default/files/
+web/sites/default/settings.local.php
+web/sites/*/files/
+web/sites/*/private/
+sites/default/files/
+sites/default/settings.local.php
+
+# Drupal Composer scaffolded core (when used inside a full site)
+web/core/
+web/modules/contrib/
+web/themes/contrib/
+web/profiles/contrib/
+web/libraries/
+
+# Local dev artifacts
+.idea/
+.vscode/
+.phpunit.result.cache
+*.log
+
+# OS / editor noise
+.DS_Store
+Thumbs.db
+
+# Bun / node (this workspace is a Bun member but the subtheme itself ships PHP/Twig)
+node_modules/
+.env
+.env.local
+bun.lockb

@@ -1,0 +1,21 @@
+{#
+/**
+ * @file
+ * Theme override for the Footer fifth region — the newsletter / stay-connected
+ * column. Renders a placeholder Wildcat-news signup if empty.
+ */
+#}
+{% if content %}
+  {{ content }}
+{% else %}
+  <h5 class="text-uppercase fs-6 fw-bold">{{ 'Stay Connected'|t }}</h5>
+  <form>
+    <p class="small mb-2">{{ 'Wildcat news in your inbox.'|t }}</p>
+    <div class="d-flex flex-column flex-sm-row w-100 gap-2">
+      <label for="ua-newsletter" class="visually-hidden">{{ 'Email address'|t }}</label>
+      <input id="ua-newsletter" type="email" class="form-control"
+             placeholder="{{ 'Email address'|t }}">
+      <button class="btn btn-red" type="button">{{ 'Subscribe'|t }}</button>
+    </div>
+  </form>
+{% endif %}
