@@ -1,0 +1,12 @@
+# Real secrets — copy .env.example to .env and fill in locally.
+.env
+.env.*.local
+
+# Dependencies (only used if a future config adds optional tooling).
+node_modules/
+
+# OS / editor noise.
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/

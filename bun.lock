@@ -16,9 +16,18 @@
         "typescript": "^5.7.0",
       },
     },
+    "templates/html-bootstrap5": {
+      "name": "@ua/template-html-bootstrap5",
+      "version": "0.1.0",
+      "dependencies": {
+        "@ua/ua-tokens": "workspace:*",
+      },
+    },
   },
   "packages": {
     "@types/node": ["@types/node@22.19.19", "", { "dependencies": { "undici-types": "~6.21.0" } }, "sha512-dyh/xO2Fh5bYrfWaaqGrRQQGkNdmYw6AmaAUvYeUMNTWQtvb796ikLdmTchRmOlOiIJ1TDXfWgVx1QkUlQ6Hew=="],
+
+    "@ua/template-html-bootstrap5": ["@ua/template-html-bootstrap5@workspace:templates/html-bootstrap5"],
 
     "@ua/ua-tokens": ["@ua/ua-tokens@workspace:packages/ua-tokens"],
 

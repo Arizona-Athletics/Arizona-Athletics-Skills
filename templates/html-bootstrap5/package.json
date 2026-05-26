@@ -1,0 +1,17 @@
+{
+  "name": "@ua/template-html-bootstrap5",
+  "version": "0.1.0",
+  "description": "University of Arizona Athletics — vanilla HTML5 + Arizona Bootstrap 5.1.3 (CDN) starter template. No build step.",
+  "private": true,
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "dev": "python3 -m http.server 8080",
+    "start": "python3 -m http.server 8080",
+    "format": "echo 'No formatter wired — drop in prettier or biome at the project root if you need one.'",
+    "lint": "echo 'No linter wired — this template is plain HTML/JS with no build step.'"
+  },
+  "dependencies": {
+    "@ua/ua-tokens": "workspace:*"
+  }
+}
