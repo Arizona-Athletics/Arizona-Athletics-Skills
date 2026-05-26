@@ -1,0 +1,103 @@
+<!-- ============================================================ -->
+<!-- 1. Arizona Header (canonical, bg-red, CDN wordmark)          -->
+<!-- ============================================================ -->
+<div class="arizona-header az-fixed-header-on-mobile bg-red" id="header_arizona">
+  <div class="container">
+    <div class="row">
+      <a class="arizona-logo col-auto" href="https://www.arizona.edu"
+         title="The University of Arizona homepage">
+        <img class="arizona-line-logo"
+             alt="The University of Arizona Wordmark Line Logo White"
+             src="https://cdn.digital.arizona.edu/logos/v1.0.0/ua_wordmark_line_logo_white_rgb.min.svg"
+             fetchpriority="high">
+      </a>
+      <div class="d-lg-none d-flex col-auto px-0">
+        <button data-bs-toggle="offcanvas" type="button"
+                data-bs-target="#azMobileNav" aria-controls="azMobileNav"
+                class="btn btn-arizona-header">
+          <span aria-hidden="true" class="icon material-symbols-rounded">search</span>
+          <span class="icon-text">Search</span>
+        </button>
+        <button data-bs-toggle="offcanvas" type="button"
+                data-bs-target="#azMobileNav" aria-controls="azMobileNav"
+                class="btn btn-arizona-header">
+          <span aria-hidden="true" class="icon material-symbols-rounded">menu</span>
+          <span class="icon-text">Menu</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Mobile offcanvas (required by the Arizona header buttons above). -->
+<div class="offcanvas offcanvas-start" tabindex="-1" id="azMobileNav" aria-labelledby="azMobileNavLabel">
+  <div class="offcanvas-header bg-red text-white">
+    <h2 class="offcanvas-title h5 mb-0" id="azMobileNavLabel">Arizona Athletics</h2>
+    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body">
+    <ul class="nav flex-column gap-2">
+      <li class="nav-item"><a class="nav-link" href="/football">Football</a></li>
+      <li class="nav-item"><a class="nav-link" href="/basketball">Basketball</a></li>
+      <li class="nav-item"><a class="nav-link" href="/baseball">Baseball</a></li>
+      <li class="nav-item"><a class="nav-link" href="/softball">Softball</a></li>
+      <li class="nav-item"><a class="nav-link" href="/all-sports">All Sports</a></li>
+      <li class="nav-item"><a class="nav-link" href="/shop">Shop</a></li>
+    </ul>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- 2. Secondary brand band — Block A on white substrate         -->
+<!--    + theme toggle. Block A must stay on white per brand.     -->
+<!-- ============================================================ -->
+<div class="ua-brand-band bg-white border-bottom">
+  <div class="container d-flex align-items-center justify-content-between py-3">
+    <a class="d-inline-flex align-items-center text-decoration-none" href="/" aria-label="Arizona Athletics home">
+      <img src="/static/img/block-a.svg" alt="" width="56" height="56" class="me-3" />
+      <span class="d-flex flex-column lh-1">
+        <span class="text-uppercase text-blue fw-bold" style="letter-spacing:.08em;">Arizona</span>
+        <span class="display-6 text-blue fw-bold mb-0">Athletics</span>
+      </span>
+    </a>
+
+    <div class="d-flex align-items-center gap-2">
+      <%- include('./theme-toggle') %>
+
+      <% if (isAuthenticated) { %>
+        <a href="/auth/logout" class="btn btn-outline-blue d-none d-md-inline-flex align-items-center gap-2">
+          <span aria-hidden="true" class="material-symbols-rounded">logout</span>
+          <span class="text-uppercase small fw-semibold">Sign Out</span>
+        </a>
+      <% } else { %>
+        <a href="/auth/login" class="btn btn-blue d-none d-md-inline-flex align-items-center gap-2">
+          <span aria-hidden="true" class="material-symbols-rounded">login</span>
+          <span class="text-uppercase small fw-semibold">Sign In</span>
+        </a>
+      <% } %>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- 3. Site navbar (.bg-blue) — primary site sections            -->
+<!-- ============================================================ -->
+<nav class="navbar navbar-expand-lg bg-blue" aria-label="Athletics primary">
+  <div class="container">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+            data-bs-target="#uaPrimaryNav" aria-controls="uaPrimaryNav"
+            aria-expanded="false" aria-label="Toggle athletics navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="uaPrimaryNav">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0 gap-lg-2">
+        <li class="nav-item"><a class="nav-link text-white fw-semibold" href="/football">Football</a></li>
+        <li class="nav-item"><a class="nav-link text-white fw-semibold" href="/basketball">Basketball</a></li>
+        <li class="nav-item"><a class="nav-link text-white fw-semibold" href="/baseball">Baseball</a></li>
+        <li class="nav-item"><a class="nav-link text-white fw-semibold" href="/softball">Softball</a></li>
+        <li class="nav-item"><a class="nav-link text-white fw-semibold" href="/all-sports">All Sports</a></li>
+        <li class="nav-item"><a class="nav-link text-white fw-semibold" href="/shop">Shop</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>

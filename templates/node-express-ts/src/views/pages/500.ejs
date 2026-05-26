@@ -1,0 +1,27 @@
+<%- include('../partials/head') %>
+<%- include('../partials/header') %>
+
+<main id="main">
+  <section class="background-wrapper text-bg-red bg-triangles-top-left" aria-labelledby="err-title">
+    <div class="container py-5 my-5">
+      <div class="row">
+        <div class="col-lg-8">
+          <p class="text-uppercase small fw-bold mb-2" style="letter-spacing:.08em;">
+            <%= status || 500 %> &middot; Something went sideways
+          </p>
+          <h1 id="err-title" class="display-3 fw-light mb-3">
+            <%= title || 'Something didn&rsquo;t connect.' %>
+          </h1>
+          <p class="lead mb-4">
+            <%= message || 'Try again, or head back to the homepage. We&rsquo;ll keep the lights on.' %>
+          </p>
+          <a href="/" class="btn btn-outline-white btn-lg me-2 mb-2">Back to the homepage</a>
+          <a href="javascript:history.back()" class="btn btn-outline-white btn-lg mb-2">Try again</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<%- include('../partials/footer') %>
+<%- include('../partials/foot') %>

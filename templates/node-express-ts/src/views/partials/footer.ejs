@@ -1,0 +1,82 @@
+<!-- ============================================================ -->
+<!-- 7. Footer — 5-column canonical pattern + legal strip          -->
+<!-- ============================================================ -->
+<footer class="bg-white" role="contentinfo">
+  <div class="container">
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-5 py-5 my-5 border-top">
+      <div class="col mb-3">
+        <a href="/" class="d-flex align-items-center mb-3 link-body-emphasis text-decoration-none"
+           aria-label="Arizona Athletics">
+          <img src="/static/img/block-a.svg" alt="" width="48" height="48" class="me-2" />
+          <span class="fw-bold">Arizona Athletics</span>
+        </a>
+        <p class="text-body-secondary small mb-0">
+          The University of Arizona<br />Tucson, AZ 85721
+        </p>
+        <p class="text-body-secondary small">&copy; <%= year %> Arizona Board of Regents</p>
+      </div>
+
+      <div class="col mb-3"></div>
+
+      <div class="col mb-3">
+        <h5 class="text-uppercase fs-6 fw-bold">Athletics</h5>
+        <ul class="nav flex-column">
+          <li class="nav-item mb-2"><a href="/tickets" class="nav-link p-0 text-body-secondary">Tickets</a></li>
+          <li class="nav-item mb-2"><a href="/schedule" class="nav-link p-0 text-body-secondary">Schedule</a></li>
+          <li class="nav-item mb-2"><a href="/roster" class="nav-link p-0 text-body-secondary">Roster</a></li>
+          <li class="nav-item mb-2"><a href="/fan-guide" class="nav-link p-0 text-body-secondary">Fan Guide</a></li>
+        </ul>
+      </div>
+
+      <div class="col mb-3">
+        <h5 class="text-uppercase fs-6 fw-bold">Resources</h5>
+        <ul class="nav flex-column">
+          <li class="nav-item mb-2"><a href="https://www.arizona.edu/compliance" class="nav-link p-0 text-body-secondary">Compliance</a></li>
+          <li class="nav-item mb-2"><a href="https://www.arizona.edu/digital-accessibility" class="nav-link p-0 text-body-secondary">Accessibility</a></li>
+          <li class="nav-item mb-2"><a href="https://www.arizona.edu/information-security-privacy" class="nav-link p-0 text-body-secondary">Privacy</a></li>
+        </ul>
+      </div>
+
+      <div class="col mb-3">
+        <h5 class="text-uppercase fs-6 fw-bold">Stay Connected</h5>
+        <form>
+          <p class="small mb-2">Wildcat news in your inbox.</p>
+          <div class="d-flex flex-column flex-sm-row w-100 gap-2">
+            <label for="newsletter1" class="visually-hidden">Email address</label>
+            <input id="newsletter1" type="email" class="form-control" placeholder="Email address" />
+            <button class="btn btn-red" type="button">Subscribe</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="d-flex flex-column flex-sm-row justify-content-between py-4 my-4 border-top">
+      <p class="small text-body-secondary mb-0">
+        A unit of the University of Arizona. Bear Down&reg; and Block A&reg; are
+        registered trademarks of the Arizona Board of Regents.
+      </p>
+      <ul class="list-unstyled d-flex mb-0">
+        <li class="ms-3">
+          <a class="link-body-emphasis text-decoration-none" href="https://twitter.com/AZATHLETICS" aria-label="Arizona Athletics on X">
+            <span class="material-symbols-rounded" aria-hidden="true">alternate_email</span>
+          </a>
+        </li>
+        <li class="ms-3">
+          <a class="link-body-emphasis text-decoration-none" href="https://instagram.com/arizonaathletics" aria-label="Arizona Athletics on Instagram">
+            <span class="material-symbols-rounded" aria-hidden="true">photo_camera</span>
+          </a>
+        </li>
+        <li class="ms-3">
+          <a class="link-body-emphasis text-decoration-none" href="https://facebook.com/ArizonaAthletics" aria-label="Arizona Athletics on Facebook">
+            <span class="material-symbols-rounded" aria-hidden="true">thumb_up</span>
+          </a>
+        </li>
+        <li class="ms-3">
+          <a class="link-body-emphasis text-decoration-none" href="https://youtube.com/@arizonaathletics" aria-label="Arizona Athletics on YouTube">
+            <span class="material-symbols-rounded" aria-hidden="true">play_circle</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</footer>

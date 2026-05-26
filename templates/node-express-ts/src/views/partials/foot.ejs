@@ -1,0 +1,60 @@
+  <!-- Arizona Bootstrap 5.1.3 JS bundle — required for offcanvas + collapse. -->
+  <script
+    src="https://cdn.digital.arizona.edu/lib/arizona-bootstrap/5.1.3/js/arizona-bootstrap.bundle.min.js"
+    defer></script>
+
+  <!-- Theme toggle runtime — cycles system → light → dark and writes ua-theme. -->
+  <script nonce="<%= cspNonce %>">
+    (function () {
+      var STATES = ["system", "light", "dark"];
+      var LABELS = { system: "System", light: "Light", dark: "Dark" };
+      var ICONS = { system: "brightness_auto", light: "light_mode", dark: "dark_mode" };
+
+      function resolve(mode) {
+        if (mode === "system") {
+          return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+        }
+        return mode;
+      }
+
+      function apply(mode) {
+        var resolved = resolve(mode);
+        var html = document.documentElement;
+        html.dataset.theme = resolved;
+        html.dataset.bsTheme = resolved;
+        html.dataset.themeMode = mode;
+        try { localStorage.setItem("ua-theme", mode === "system" ? "" : mode); } catch (_) {}
+        document.cookie = "ua-theme=" + resolved + "; path=/; max-age=" + (60 * 60 * 24 * 365) + "; samesite=lax";
+        document.querySelectorAll("[data-ua-theme-toggle]").forEach(function (btn) {
+          var labelEl = btn.querySelector("[data-ua-theme-label]");
+          var iconEl = btn.querySelector("[data-ua-theme-icon]");
+          if (labelEl) labelEl.textContent = LABELS[mode];
+          if (iconEl) iconEl.textContent = ICONS[mode];
+          btn.setAttribute("aria-label", "Theme: " + LABELS[mode] + ". Activate to switch.");
+        });
+      }
+
+      function next(mode) {
+        var i = STATES.indexOf(mode);
+        return STATES[(i + 1) % STATES.length];
+      }
+
+      document.addEventListener("click", function (e) {
+        var btn = e.target.closest("[data-ua-theme-toggle]");
+        if (!btn) return;
+        var current = document.documentElement.dataset.themeMode || "system";
+        apply(next(current));
+      });
+
+      // React to OS-level theme changes when in "system" mode.
+      var mql = window.matchMedia("(prefers-color-scheme: dark)");
+      mql.addEventListener("change", function () {
+        var mode = document.documentElement.dataset.themeMode || "system";
+        if (mode === "system") apply("system");
+      });
+
+      apply(document.documentElement.dataset.themeMode || "system");
+    })();
+  </script>
+</body>
+</html>
