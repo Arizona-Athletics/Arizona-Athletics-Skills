@@ -1,0 +1,43 @@
+<!--
+  UA Athletics bulletproof CTA button — reusable partial.
+
+  Table-based for cross-client compatibility. Outlook 2016+ Windows would
+  render a styled <a> with broken padding; the <table> + <td> structure
+  makes Outlook honor padding correctly.
+
+  Arizona Bootstrap btn-red is squared (border-radius: 0). We match that —
+  no border-radius declared.
+
+  Color reference (literal hex required in email — no var()):
+  - Background: #AB0520  (Arizona Red, --ua-red)
+  - Hover bg:   #8B0015  (Chili, --ua-chili) — note: hover doesn't render in
+    most email clients; we still declare it for the clients that do
+    (e.g. Apple Mail webkit, some Yandex builds).
+  - Text:       #FFFFFF
+
+  Swap href="CONFIGURE_ME_CTA_URL" and the visible label.
+
+  MSO conditional fallback: Outlook reads the <v:roundrect> commented block
+  only — other clients ignore it. Even though we don't want rounded corners,
+  the VML <v:rect> approach ensures fixed-width clickable area in Outlook.
+-->
+<table role="presentation" cellpadding="0" cellspacing="0" border="0" align="center" style="margin:0 auto;">
+  <tr>
+    <td align="center" bgcolor="#AB0520" style="background-color:#AB0520;border-radius:0;mso-padding-alt:0;">
+      <!--[if mso]>
+      <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="CONFIGURE_ME_CTA_URL" style="height:48px;v-text-anchor:middle;width:240px;" arcsize="0%" stroke="f" fillcolor="#AB0520">
+        <w:anchorlock/>
+        <center style="color:#FFFFFF;font-family:'Segoe UI',Calibri,Arial,sans-serif;font-size:16px;font-weight:600;letter-spacing:0.02em;">CONFIGURE_ME_CTA_LABEL</center>
+      </v:roundrect>
+      <![endif]-->
+      <!--[if !mso]><!-- -->
+      <a
+        href="CONFIGURE_ME_CTA_URL"
+        target="_blank"
+        rel="noopener"
+        style="display:inline-block;background-color:#AB0520;color:#FFFFFF;font-family:'proxima-nova','Proxima Nova',Calibri,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;font-size:16px;font-weight:600;line-height:1;text-decoration:none;text-align:center;letter-spacing:0.02em;padding:16px 32px;border:1px solid #AB0520;border-radius:0;"
+      >CONFIGURE_ME_CTA_LABEL</a>
+      <!--<![endif]-->
+    </td>
+  </tr>
+</table>

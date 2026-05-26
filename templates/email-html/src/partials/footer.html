@@ -1,0 +1,52 @@
+<!--
+  UA Athletics email footer — reusable partial.
+
+  Cool-gray band with mailing address, unsubscribe link, and the required
+  trademark notice. Every CONFIGURE_ME_* token is a placeholder your sending
+  platform must replace before send.
+
+  Color reference (literal hex required in email — no var()):
+  - Background: #E2E9EB  (Cool Gray, --ua-cool-gray)
+  - Body text:  #5A6577  (muted)
+  - Link:       #1E5288  (Azurite — reads on cool gray)
+
+  Trademark line is required by Marcom — do not strip:
+    "Bear Down® and Block A® are registered trademarks of the
+     Arizona Board of Regents."
+-->
+<table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" bgcolor="#E2E9EB" style="background-color:#E2E9EB;">
+  <tr>
+    <td align="center" style="padding:0;">
+      <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="600" style="width:600px;max-width:600px;">
+        <tr>
+          <td align="center" style="padding:32px 32px 16px 32px;font-family:'proxima-nova','Proxima Nova',Calibri,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;color:#5A6577;font-size:13px;line-height:1.5;">
+              <p style="margin:0 0 8px 0;font-weight:600;color:#0C234B;">University of Arizona Athletics</p>
+              <p style="margin:0 0 8px 0;">McKale Memorial Center<br/>1 National Championship Drive<br/>Tucson, AZ 85721</p>
+          </td>
+        </tr>
+        <tr>
+          <td align="center" style="padding:0 32px 16px 32px;font-family:'proxima-nova','Proxima Nova',Calibri,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;color:#5A6577;font-size:13px;line-height:1.5;">
+            <p style="margin:0;">
+              You're receiving this because you signed up at <a href="CONFIGURE_ME_SITE_URL" style="color:#1E5288;text-decoration:underline;">arizonawildcats.com</a>.
+              <br/>
+              <a href="CONFIGURE_ME_UNSUBSCRIBE_URL" style="color:#1E5288;text-decoration:underline;">Unsubscribe</a>
+              &nbsp;&middot;&nbsp;
+              <a href="CONFIGURE_ME_PREFERENCES_URL" style="color:#1E5288;text-decoration:underline;">Email preferences</a>
+              &nbsp;&middot;&nbsp;
+              <a href="CONFIGURE_ME_PRIVACY_URL" style="color:#1E5288;text-decoration:underline;">Privacy</a>
+            </p>
+          </td>
+        </tr>
+        <tr>
+          <td align="center" style="padding:0 32px 32px 32px;font-family:'proxima-nova','Proxima Nova',Calibri,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;color:#5A6577;font-size:11px;line-height:1.5;">
+            <p style="margin:0;">
+              &copy; 2026 Arizona Board of Regents. All rights reserved.
+              <br/>
+              Bear Down&reg; and Block A&reg; are registered trademarks of the Arizona Board of Regents.
+            </p>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>

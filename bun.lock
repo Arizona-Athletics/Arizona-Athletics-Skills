@@ -38,6 +38,13 @@
         "@ua/ua-tokens": "workspace:*",
       },
     },
+    "templates/email-html": {
+      "name": "@ua/template-email-html",
+      "version": "0.1.0",
+      "dependencies": {
+        "@ua/ua-tokens": "workspace:*",
+      },
+    },
     "templates/html-bootstrap5": {
       "name": "@ua/template-html-bootstrap5",
       "version": "0.1.0",
@@ -629,6 +636,8 @@
     "@ua/template-astro": ["@ua/template-astro@workspace:templates/astro"],
 
     "@ua/template-drupal-quickstart-subtheme": ["@ua/template-drupal-quickstart-subtheme@workspace:templates/drupal-quickstart-subtheme"],
+
+    "@ua/template-email-html": ["@ua/template-email-html@workspace:templates/email-html"],
 
     "@ua/template-html-bootstrap5": ["@ua/template-html-bootstrap5@workspace:templates/html-bootstrap5"],
 

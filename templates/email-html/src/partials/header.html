@@ -1,0 +1,36 @@
+<!--
+  UA Athletics email header — reusable partial.
+
+  Renders a 600px-wide, solid Arizona Red band with the UA Athletics wordmark
+  centered. Uses table layout for Outlook 2016+ compatibility. The wordmark
+  PNG is served from cdn.digital.arizona.edu (Arizona Digital's canonical
+  source). PNG instead of SVG because Outlook 2016+ Windows does not render
+  SVG natively.
+
+  Color reference (literal hex required in email — no var()):
+  - Background: #AB0520  (Arizona Red, --ua-red)
+  - Wordmark:   white PNG, alt text "University of Arizona Athletics"
+
+  Paste between <body> and the email-specific hero band.
+-->
+<table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" bgcolor="#AB0520" style="background-color:#AB0520;">
+  <tr>
+    <td align="center" style="padding:0;">
+      <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="600" style="width:600px;max-width:600px;">
+        <tr>
+          <td align="center" style="padding:24px 24px 24px 24px;background-color:#AB0520;">
+            <a href="https://www.arizona.edu" style="text-decoration:none;border:0;outline:none;" target="_blank" rel="noopener">
+              <img
+                src="https://cdn.digital.arizona.edu/logos/v1.0.0/ua_wordmark_line_logo_white_rgb.min.png"
+                alt="University of Arizona Athletics"
+                width="280"
+                height="48"
+                style="display:block;border:0;outline:none;text-decoration:none;max-width:280px;height:auto;line-height:100%;"
+              />
+            </a>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
