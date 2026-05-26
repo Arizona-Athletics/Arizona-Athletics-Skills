@@ -1,0 +1,73 @@
+/*
+ * Global stylesheet for the UA Athletics Next.js App Router template.
+ *
+ * Order matters: @ua/ua-tokens ships the CSS custom-property definitions
+ * (--bg, --surface, --text, --accent, --focus-ring, etc.) and the
+ * [data-theme="dark"] override block. Tailwind picks up those vars via the
+ * preset's `semantic.*` color mapping. Everything else here is the bare
+ * minimum reset / type baseline; component styling lives in Tailwind utilities.
+ */
+
+@import "@ua/ua-tokens/tokens.css";
+@import "tailwindcss";
+
+@layer base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    margin: 0;
+    background-color: var(--bg);
+    color: var(--text);
+    font-family: var(--font-sans);
+    line-height: var(--line-height-normal);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--focus-ring);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+
+  a {
+    color: var(--link);
+    text-decoration: none;
+  }
+
+  a:hover {
+    color: var(--link-hover);
+    text-decoration: underline;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    color: var(--text-strong);
+    font-family: var(--font-sans);
+    line-height: var(--line-height-tight);
+    margin: 0;
+  }
+
+  /* Skip-to-content link: visually hidden until focused. */
+  .skip-link {
+    position: absolute;
+    top: -40px;
+    left: 0;
+    background: var(--surface);
+    color: var(--text-strong);
+    padding: var(--space-2) var(--space-4);
+    border: 2px solid var(--focus-ring);
+    z-index: 100;
+  }
+
+  .skip-link:focus {
+    top: 0;
+  }
+}
