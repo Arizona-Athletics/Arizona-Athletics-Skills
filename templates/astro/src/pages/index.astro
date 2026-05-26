@@ -1,0 +1,68 @@
+---
+// Home page — demo of all six UA Athletics components composed together.
+// The three Card variants below cover: (1) eyebrow + body, (2) minimal,
+// (3) body + footer slot — so the demo exercises every Card prop path.
+
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Header from "../components/Header.astro";
+import Hero from "../components/Hero.astro";
+import Toolbar from "../components/Toolbar.astro";
+import Card from "../components/Card.astro";
+import Footer from "../components/Footer.astro";
+---
+
+<BaseLayout
+  title="Arizona Athletics — Astro starter"
+  description="University of Arizona Athletics — Astro starter built on the shared design system."
+>
+  <Header />
+
+  <main id="main">
+    <Hero
+      headline="Bear Down. Always."
+      subhead="The official home of Arizona Athletics, built on the shared UA design system."
+    />
+
+    <Toolbar />
+
+    <section class="page-grid">
+      {/* Variant 1: eyebrow + body */}
+      <Card
+        eyebrow="Football"
+        headline="Wildcats Take the Territorial Cup"
+        body="Arizona defeats ASU 38-35 in double overtime to retain the Cup."
+      />
+
+      {/* Variant 2: minimal — headline only */}
+      <Card headline="Bear Down Fund" />
+
+      {/* Variant 3: body + footer slot */}
+      <Card
+        eyebrow="Basketball"
+        headline="McKale Center Renovations On Schedule"
+        body="The 2026 renovation adds 1,800 seats and a new student section."
+      >
+        <span slot="footer">Nov 30, 2025 · 3 min read</span>
+      </Card>
+    </section>
+  </main>
+
+  <Footer />
+</BaseLayout>
+
+<style>
+  .page-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--space-5);
+    max-width: var(--container-wide);
+    margin-inline: auto;
+    padding: var(--space-8) var(--space-6);
+  }
+
+  @media (max-width: 767px) {
+    .page-grid {
+      padding: var(--space-6) var(--space-4);
+    }
+  }
+</style>

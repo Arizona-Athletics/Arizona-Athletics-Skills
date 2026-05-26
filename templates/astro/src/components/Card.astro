@@ -1,0 +1,99 @@
+---
+// Card — content tile. Eyebrow, headline, body, optional footer slot.
+// Tokens used: --surface, --text, --text-strong, --text-muted, --border,
+// --radius-sm, --radius-md, --shadow-sm, --shadow-md, --focus-ring,
+// --space-3, --space-4, --font-sans.
+// Contract: docs/COMPONENTS.md#card
+
+interface Props {
+  eyebrow?: string;
+  headline: string;
+  body?: string;
+  href?: string;
+}
+
+const { eyebrow, headline, body, href } = Astro.props;
+
+const Tag = href ? "a" : "article";
+---
+
+<Tag
+  class:list={["ua-card", { "ua-card--link": href }]}
+  href={href}
+>
+  <div class="ua-card__body">
+    {eyebrow ? <p class="ua-card__eyebrow">{eyebrow}</p> : null}
+    <h3 class="ua-card__headline">{headline}</h3>
+    {body ? <p class="ua-card__text">{body}</p> : null}
+  </div>
+  {
+    Astro.slots.has("footer") ? (
+      <div class="ua-card__footer">
+        <slot name="footer" />
+      </div>
+    ) : null
+  }
+</Tag>
+
+<style>
+  .ua-card {
+    display: flex;
+    flex-direction: column;
+    background: var(--surface);
+    color: var(--text);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+    transition: box-shadow 150ms ease, transform 150ms ease;
+    text-decoration: none;
+  }
+  .ua-card:hover {
+    box-shadow: var(--shadow-md);
+  }
+  .ua-card--link:hover {
+    transform: translateY(-1px);
+  }
+  .ua-card--link:focus-visible {
+    outline: 2px solid var(--focus-ring);
+    outline-offset: 2px;
+  }
+
+  .ua-card__body {
+    padding: var(--space-5);
+    flex: 1;
+  }
+
+  .ua-card__eyebrow {
+    font-family: var(--font-sans);
+    font-size: 0.75rem; /* 12px */
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--text-muted);
+    margin: 0 0 var(--space-2);
+  }
+
+  .ua-card__headline {
+    font-family: var(--font-sans);
+    font-weight: var(--font-weight-semibold);
+    font-size: var(--font-size-h3);
+    color: var(--text-strong);
+    margin: 0 0 var(--space-3);
+    line-height: var(--line-height-snug);
+  }
+
+  .ua-card__text {
+    font-family: var(--font-sans);
+    font-weight: var(--font-weight-regular);
+    color: var(--text);
+    margin: 0;
+    line-height: var(--line-height-normal);
+  }
+
+  .ua-card__footer {
+    border-top: 1px solid var(--border);
+    padding: var(--space-3) var(--space-5);
+    color: var(--text-muted);
+    font-family: var(--font-sans);
+    font-size: var(--font-size-h6);
+  }
+</style>

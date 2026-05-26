@@ -1,0 +1,130 @@
+---
+// PKCE callback — fires when Cognito redirects back with ?code=...&state=...
+// All work happens client-side: read the code/state from the URL, verify
+// state, exchange the code for tokens, then route the user on. No server
+// component required, no client_secret in scope.
+//
+// See docs/AUTH.md for the full handshake.
+
+import BaseLayout from "../../layouts/BaseLayout.astro";
+---
+
+<BaseLayout title="Signing you in… — Arizona Athletics">
+  <main id="main" class="callback">
+    <div class="callback__card" role="status" aria-live="polite">
+      <h1 class="callback__heading">Signing you in…</h1>
+      <p class="callback__body" data-callback-status>
+        Completing your University of Arizona NetID sign-in.
+      </p>
+      <p class="callback__body callback__body--error" data-callback-error hidden></p>
+      <p class="callback__body">
+        <a href="/" data-callback-home hidden>Return home</a>
+      </p>
+    </div>
+  </main>
+</BaseLayout>
+
+<script>
+  // Runs only in the browser. Pulls code + state from the URL, exchanges via
+  // the helpers in src/lib/auth.ts, and routes the user on. Tokens are held
+  // in memory (this page does not write to localStorage — per docs/AUTH.md
+  // tokens MUST NOT land in localStorage). A production app would hand them
+  // off to a context / store here.
+  import { exchangeCodeForTokens } from "../../lib/auth";
+
+  async function run(): Promise<void> {
+    const status = document.querySelector<HTMLElement>("[data-callback-status]");
+    const errorEl = document.querySelector<HTMLElement>("[data-callback-error]");
+    const homeLink = document.querySelector<HTMLAnchorElement>(
+      "[data-callback-home]",
+    );
+
+    function showError(msg: string): void {
+      if (errorEl) {
+        errorEl.hidden = false;
+        errorEl.textContent = msg;
+      }
+      if (homeLink) homeLink.hidden = false;
+    }
+
+    const url = new URL(window.location.href);
+    const code = url.searchParams.get("code");
+    const state = url.searchParams.get("state");
+    const oauthError = url.searchParams.get("error");
+
+    if (oauthError) {
+      showError(`Sign-in failed: ${oauthError}`);
+      return;
+    }
+    if (!code || !state) {
+      showError("Missing authorization code or state. Try signing in again.");
+      return;
+    }
+
+    try {
+      const tokens = await exchangeCodeForTokens(code, state);
+
+      // CONFIGURE_ME: hand `tokens` off to your app-level auth store here.
+      // For example: dispatch a custom event the layout listens for, or
+      // populate a small in-memory module-scoped object. Per docs/AUTH.md
+      // do NOT write tokens to localStorage. Holding `tokens` in a closure
+      // here is the minimum acceptable storage.
+      void tokens;
+
+      if (status) status.textContent = "Signed in. Redirecting…";
+
+      // Strip ?code and ?state from the URL so the tokens cannot leak via
+      // browser history, referrer headers, or analytics fixtures.
+      const target = "/"; // CONFIGURE_ME: post-login landing route
+      window.history.replaceState({}, "", target);
+      window.location.replace(target);
+    } catch (err) {
+      const detail = err instanceof Error ? err.message : "Unknown error";
+      showError(detail);
+    }
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", run);
+  } else {
+    void run();
+  }
+</script>
+
+<style>
+  .callback {
+    min-height: 60vh;
+    display: grid;
+    place-items: center;
+    padding: var(--space-8) var(--space-6);
+  }
+  .callback__card {
+    max-width: 480px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: var(--space-6);
+    box-shadow: var(--shadow-sm);
+  }
+  .callback__heading {
+    font-family: var(--font-sans);
+    font-weight: var(--font-weight-extrabold);
+    font-size: var(--font-size-h2);
+    color: var(--text-strong);
+    margin: 0 0 var(--space-3);
+  }
+  .callback__body {
+    font-family: var(--font-sans);
+    color: var(--text);
+    margin: 0 0 var(--space-3);
+  }
+  .callback__body--error {
+    color: var(--accent);
+  }
+  .callback__body a {
+    color: var(--link);
+  }
+  .callback__body a:hover {
+    color: var(--link-hover);
+  }
+</style>

@@ -1,0 +1,158 @@
+---
+// Header — site chrome at top: brand, site title, primary nav, theme toggle.
+// Tokens used: --surface, --text, --text-strong, --accent, --border,
+// --shadow-sm, --focus-ring, --font-sans, --space-3, --space-4.
+// Contract: docs/COMPONENTS.md#header
+
+import ThemeToggle from "./ThemeToggle.astro";
+
+interface NavItem {
+  href: string;
+  label: string;
+  current?: boolean;
+}
+
+interface Props {
+  siteTitle?: string;
+  nav?: NavItem[];
+  sticky?: boolean;
+}
+
+const {
+  siteTitle = "Arizona Wildcats",
+  nav = [
+    { href: "/", label: "Home", current: true },
+    { href: "/teams", label: "Teams" },
+    { href: "/schedule", label: "Schedule" },
+    { href: "/tickets", label: "Tickets" },
+    { href: "/news", label: "News" },
+  ],
+  sticky = false,
+} = Astro.props;
+---
+
+<header
+  role="banner"
+  class:list={["ua-header", { "ua-header--sticky": sticky }]}
+>
+  <a class="ua-header__brand" href="/" aria-label="Arizona Athletics home">
+    {/* CONFIGURE_ME: replace this text mark with the official Block A or UA
+        wordmark SVG. Do not invent an SVG path. Ask UA Marcom. */}
+    <span class="ua-header__brand-mark" aria-hidden="true">A</span>
+    <span class="ua-header__site-title">{siteTitle}</span>
+  </a>
+
+  <nav class="ua-header__nav" aria-label="Primary">
+    <ul>
+      {
+        nav.map((item) => (
+          <li>
+            <a
+              href={item.href}
+              aria-current={item.current ? "page" : undefined}
+              class:list={["ua-header__nav-link", { "is-active": item.current }]}
+            >
+              {item.label}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </nav>
+
+  <div class="ua-header__actions">
+    <ThemeToggle />
+    {/* CONFIGURE_ME: drop in an account/login control here (Cognito hosted UI
+        redirect). See src/lib/auth.ts. */}
+  </div>
+</header>
+
+<style>
+  .ua-header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    background: var(--surface);
+    color: var(--text);
+    border-bottom: 1px solid var(--border);
+    padding: 0 var(--space-5);
+    height: 64px;
+  }
+  .ua-header--sticky {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+  }
+
+  .ua-header__brand {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-3);
+    color: var(--text-strong);
+    text-decoration: none;
+    font-weight: var(--font-weight-bold);
+  }
+
+  .ua-header__brand-mark {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    background: var(--accent);
+    color: var(--ua-white);
+    font-family: var(--font-sans);
+    font-weight: var(--font-weight-extrabold);
+    border-radius: var(--radius-sm);
+  }
+
+  .ua-header__site-title {
+    font-family: var(--font-sans);
+    font-weight: var(--font-weight-semibold);
+    color: var(--text-strong);
+    font-size: var(--font-size-h5);
+  }
+
+  .ua-header__nav {
+    flex: 1;
+  }
+  .ua-header__nav ul {
+    display: flex;
+    gap: var(--space-5);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .ua-header__nav-link {
+    color: var(--text);
+    text-decoration: none;
+    font-family: var(--font-sans);
+    font-weight: var(--font-weight-medium);
+    padding: var(--space-2) 0;
+    border-bottom: 2px solid transparent;
+  }
+  .ua-header__nav-link:hover {
+    color: var(--text-strong);
+  }
+  .ua-header__nav-link.is-active {
+    color: var(--text-strong);
+    border-bottom-color: var(--accent);
+  }
+
+  .ua-header__actions {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-3);
+  }
+
+  @media (max-width: 767px) {
+    .ua-header {
+      height: 56px;
+      padding: 0 var(--space-4);
+    }
+    .ua-header__nav {
+      display: none;
+    }
+  }
+</style>
