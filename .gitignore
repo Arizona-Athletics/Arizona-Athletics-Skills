@@ -9,3 +9,6 @@ bun.lockb
 # @ua/ua-tokens ships its compiled dist as a snapshot so downstream templates
 # can consume it without a build step.
 !packages/ua-tokens/dist/
+
+# Local preview folders for architecture comparison (not committed)
+templates/_preview-*/
