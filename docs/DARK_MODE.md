@@ -179,8 +179,8 @@ For Next App Router, the script lives in `app/layout.tsx` as a `<script dangerou
 
 ## Source
 
-- Dark palette: `/Users/jasoncantor/Downloads/Athletics-Web-Templates/packages/ua-tokens/tokens.json`
-- Generated CSS: `/Users/jasoncantor/Downloads/Athletics-Web-Templates/packages/ua-tokens/tokens.css` (the combined `[data-theme="dark"], [data-bs-theme="dark"]` block)
+- Dark palette: `packages/ua-tokens/tokens.json`
+- Generated CSS: `packages/ua-tokens/tokens.css` (the combined `[data-theme="dark"], [data-bs-theme="dark"]` block)
 - Toggle behavior and `setTheme` helper: `templates/*/src/lib/theme.ts` (forward reference — not yet built; once shipped, every template will import the same helper)
 - Brand-truth reference implementation: `bear-down-lms`
 

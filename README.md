@@ -8,8 +8,8 @@ or transactional email.
 
 ## Status
 
-**PR 1 — bootstrap.** This commit ships the token package and the design-system docs.
-Templates land in subsequent PRs. See [`PLAN.md`](./PLAN.md) for the full roadmap.
+The token package, the design-system docs, and all nine starter templates are in
+place. See [`PLAN.md`](./PLAN.md) for the full roadmap.
 
 ## What's here
 
@@ -28,7 +28,9 @@ Templates land in subsequent PRs. See [`PLAN.md`](./PLAN.md) for the full roadma
 - [`AGENTS.md`](./AGENTS.md) — condensed contract for LLMs and agentic tools
 - [`PLAN.md`](./PLAN.md) — long-form rationale and roadmap
 
-## What's coming (PR 2+)
+## Templates
+
+Nine starter templates live in [`templates/`](./templates):
 
 ```
 templates/
@@ -39,12 +41,24 @@ templates/
 ├── astro                      # Astro 6
 ├── node-express-ts            # Express 5 + TS + EJS
 ├── html-tailwind              # vanilla HTML + Tailwind 4
-├── react-ts-lib               # publishable React component lib
 ├── hugo                       # static site
 └── email-html                 # transactional email (MJML)
 ```
 
-## Quick start (PR 1 scope)
+### Pull a template
+
+Each template is self-contained. Scaffold a new project straight from GitHub with
+[`giget`](https://github.com/unjs/giget) — no clone, no monorepo checkout:
+
+```bash
+bunx giget gh:Arizona-Athletics/arizona-athletics-web-templates/templates/<slug> my-app
+```
+
+Replace `<slug>` with one of: `astro`, `drupal-quickstart-subtheme`, `email-html`,
+`html-bootstrap5`, `html-tailwind`, `hugo`, `nextjs-app-router`, `node-express-ts`,
+`react-vite-plus`.
+
+## Quick start
 
 ```bash
 bun install

@@ -3,7 +3,7 @@
   "description": "University of Arizona Athletics — Drupal subtheme of arizona_bootstrap, designed to drop into an Arizona Quickstart 3.x site.",
   "type": "drupal-theme",
   "license": "MIT",
-  "homepage": "https://github.com/Arizona-Athletics/Athletics-Web-Templates",
+  "homepage": "https://github.com/Arizona-Athletics/arizona-athletics-web-templates",
   "require": {
     "php": ">=8.2",
     "drupal/core": "^10 || ^11",
