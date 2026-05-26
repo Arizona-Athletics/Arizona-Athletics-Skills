@@ -89,6 +89,8 @@ const {
     display: inline-flex;
     gap: var(--space-2);
     flex: 1;
+    flex-wrap: wrap;
+    min-width: 0;
   }
 
   .ua-chip {
@@ -119,6 +121,10 @@ const {
     .ua-toolbar {
       flex-wrap: wrap;
       padding: var(--space-3) var(--space-4);
+    }
+
+    .ua-toolbar__filters {
+      flex-basis: 100%;
     }
   }
 </style>

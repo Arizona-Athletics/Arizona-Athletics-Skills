@@ -45,8 +45,12 @@
   <!-- CONFIGURE_ME: Adobe Typekit (Proxima Nova). Requires UA Marcom clearance. See /docs/TYPOGRAPHY.md. -->
   <!-- <link rel="stylesheet" href="https://use.typekit.net/YOUR_KIT_ID.css"> -->
 
-  <!-- @ua/ua-tokens — dev path (monorepo). Swap to node_modules or CDN in production deploys. -->
-  <link rel="stylesheet" href="../../packages/ua-tokens/dist/tokens.css" />
+  <!--
+    @ua/ua-tokens — copied locally by `bun run tokens:sync`.
+    The static dev server is rooted at this template directory, so parent
+    paths outside the template do not resolve in the browser.
+  -->
+  <link rel="stylesheet" href="./vendor/tokens.css" />
 
   <!-- Project-local UA overrides (semantic tokens / Arizona Bootstrap CSS vars only — zero hex). Must come last. -->
   <link rel="stylesheet" href="./styles.css" />
@@ -60,6 +64,7 @@
   <!-- ============================================================ -->
   <!-- 1. Arizona Header (canonical, bg-red, CDN wordmark)          -->
   <!-- ============================================================ -->
+  <header role="banner">
   <div class="arizona-header az-fixed-header-on-mobile bg-red" id="header_arizona">
     <div class="container">
       <div class="row">
@@ -151,6 +156,7 @@
       </div>
     </div>
   </nav>
+  </header>
 
   <main id="main">
     <!-- ========================================================== -->

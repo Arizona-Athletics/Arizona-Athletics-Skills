@@ -29,6 +29,9 @@ html {
 body {
   margin: 0;
   min-height: 100vh;
+  background: var(--bg);
+  color: var(--text);
+  overflow-x: clip;
 }
 
 /* Skip-to-content: required for keyboard users, visually hidden until focused. */

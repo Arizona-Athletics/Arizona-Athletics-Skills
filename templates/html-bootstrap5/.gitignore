@@ -10,3 +10,6 @@ node_modules/
 Thumbs.db
 .idea/
 .vscode/
+
+# Regenerated from @ua/ua-tokens by `bun run tokens:sync`.
+vendor/tokens.css

@@ -33,6 +33,7 @@ body {
 body {
   margin: 0;
   min-height: 100vh;
+  overflow-x: clip;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   display: flex;
@@ -70,7 +71,7 @@ a:focus-visible {
 .display-5,
 .display-6 {
   font-weight: var(--font-weight-regular);
-  letter-spacing: -0.01em;
+  letter-spacing: 0;
   line-height: var(--line-height-tight);
   color: var(--text-strong);
 }
@@ -85,11 +86,10 @@ a:focus-visible {
 /* -------------------------------------------------------------------- */
 
 .ua-brand-band {
-  /* The opaque white substrate behind Block A. Keep this surface-driven so
-     dark mode still satisfies the spec's "opaque white substrate" rule —
-     in dark mode --surface is navy, but the substrate stays white. */
+  /* The opaque white substrate behind Block A. */
   background: var(--ua-white);
   border-color: var(--border) !important;
+  color: var(--ua-blue);
 }
 
 /* -------------------------------------------------------------------- */
@@ -141,12 +141,30 @@ a:focus-visible {
 /* -------------------------------------------------------------------- */
 
 .navbar.bg-warm-gray .nav-link {
-  color: var(--bs-blue, var(--ua-blue));
+  color: var(--link);
   letter-spacing: 0.04em;
 }
 .navbar.bg-warm-gray .nav-link:hover,
 .navbar.bg-warm-gray .nav-link:focus-visible {
-  color: var(--bs-red, var(--ua-red));
+  color: var(--accent);
+}
+
+.navbar.bg-warm-gray,
+section.bg-warm-gray,
+.bg-warm-gray {
+  background-color: var(--surface-alt) !important;
+  color: var(--text);
+  border-color: var(--border) !important;
+}
+
+.navbar.bg-warm-gray .navbar-nav {
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 0.25rem var(--space-3, 1rem) !important;
+}
+
+.offcanvas:not(.show):not(.showing) {
+  display: none;
 }
 
 /* -------------------------------------------------------------------- */
@@ -200,6 +218,16 @@ a:focus-visible {
   color: var(--text-strong);
 }
 
+.card .text-body-secondary,
+.text-body-secondary {
+  color: var(--text-muted) !important;
+}
+
+.card .stretched-link {
+  color: var(--link);
+  font-weight: var(--font-weight-semibold);
+}
+
 /* -------------------------------------------------------------------- */
 /* Footer                                                               */
 /* -------------------------------------------------------------------- */
@@ -208,16 +236,22 @@ a:focus-visible {
   border-top: 1px solid var(--border);
   margin-top: var(--space-10);
   flex-shrink: 0;
+  background-color: var(--bg) !important;
 }
 
 .ua-footer .nav-link {
-  color: var(--text);
+  color: var(--text-muted) !important;
 }
 
 .ua-footer .nav-link:hover,
 .ua-footer .nav-link:focus-visible {
-  color: var(--text-strong);
+  color: var(--accent) !important;
   text-decoration: underline;
+}
+
+.ua-footer .link-body-emphasis,
+.link-body-emphasis {
+  color: var(--text-strong) !important;
 }
 
 .ua-footer .form-control {

@@ -23,10 +23,11 @@
 /* -------------------------------------------------------------------- */
 
 body.ua-athletics-starter {
-  background-color: var(--bs-body-bg);
-  color: var(--bs-body-color);
-  font-family: var(--bs-font-sans-serif);
-  line-height: var(--bs-body-line-height);
+  background-color: var(--bg, var(--bs-body-bg));
+  color: var(--text, var(--bs-body-color));
+  font-family: var(--font-sans, var(--bs-font-sans-serif));
+  line-height: var(--line-height-normal, var(--bs-body-line-height));
+  overflow-x: clip;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -39,11 +40,12 @@ body.ua-athletics-starter {
 .ua-athletics-starter .display-5,
 .ua-athletics-starter .display-6 {
   font-weight: 300;
+  color: var(--text-strong, var(--bs-body-color));
 }
 
 /* Accessible focus ring across nav, buttons, links. */
 .ua-athletics-starter :focus-visible {
-  outline: 2px solid var(--bs-link-color);
+  outline: 2px solid var(--focus-ring, var(--bs-link-color));
   outline-offset: 2px;
 }
 
@@ -73,7 +75,7 @@ body.ua-athletics-starter {
 
 .arizona-header .btn-arizona-header:hover,
 .arizona-header .btn-arizona-header:focus-visible {
-  background-color: rgba(255, 255, 255, 0.1);
+  background-color: color-mix(in srgb, var(--bs-white), transparent 90%);
   color: var(--bs-white);
 }
 
@@ -83,10 +85,16 @@ body.ua-athletics-starter {
 
 .ua-brand-band {
   background-color: var(--bs-white);
+  color: var(--bs-dark);
 }
 
 .ua-brand-band img {
   background: var(--bs-white); /* required white substrate around Block A */
+}
+
+.ua-brand-band .link-body-emphasis,
+.ua-brand-band a {
+  color: var(--bs-dark);
 }
 
 /* -------------------------------------------------------------------- */
@@ -96,15 +104,8 @@ body.ua-athletics-starter {
 /*
  * Adapts the official AZ Marcom .navbar-az pattern to .bg-blue (navy):
  *   - underline indicator (2px / 4px offset), never a background tile
- *   - hover decoration color = --az-navbar-font-hover-color (#0c234b Midnight)
- *     → on navy Midnight is invisible, so use Sky for legibility
- *   - active decoration color = --az-navbar-accent-color (#ab0520 Arizona Red)
- *     → stays Red — iconic on navy and matches Marcom accent
- *
- * AZ Bootstrap also paints the parent <li> with a near-white background on
- * .navbar-nav .nav-item:hover (#f8f9fa) and :has(> .nav-link.active) (#e9ecef).
- * Both are tab-style affordances for white navbars — suppress here so the
- * underline carries the indicator on bg-blue instead of a washed-out tile.
+ *   - hover decoration uses Sky so it stays legible on navy
+ *   - active decoration uses Arizona Red
  */
 
 .navbar.bg-blue {
@@ -150,15 +151,39 @@ body.ua-athletics-starter {
 /* -------------------------------------------------------------------- */
 
 .navbar.bg-warm-gray {
-  background-color: var(--bs-warm-gray);
+  background-color: var(--surface-alt, var(--bs-warm-gray));
+  color: var(--text, var(--bs-body-color));
+  border-color: var(--border, var(--bs-border-color)) !important;
 }
 
 .navbar.bg-warm-gray .nav-link {
-  color: var(--bs-body-color);
+  color: var(--link, var(--bs-link-color));
   font-size: 0.875rem;
   text-transform: uppercase;
   font-weight: 600;
   letter-spacing: 0.04em;
+}
+
+.navbar.bg-warm-gray .nav-link:hover,
+.navbar.bg-warm-gray .nav-link:focus-visible {
+  color: var(--accent, var(--bs-red));
+}
+
+.navbar.bg-warm-gray .navbar-nav {
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 0.25rem var(--space-3, 1rem) !important;
+}
+
+section.bg-warm-gray,
+.bg-warm-gray {
+  background-color: var(--surface-alt, var(--bs-warm-gray)) !important;
+  color: var(--text, var(--bs-body-color));
+  border-color: var(--border, var(--bs-border-color)) !important;
+}
+
+.offcanvas:not(.show):not(.showing) {
+  display: none;
 }
 
 /* -------------------------------------------------------------------- */
@@ -186,8 +211,9 @@ body.ua-athletics-starter {
 /* -------------------------------------------------------------------- */
 
 .ua-card {
-  background-color: var(--bs-body-bg);
-  color: var(--bs-body-color);
+  background-color: var(--surface, var(--bs-body-bg));
+  color: var(--text, var(--bs-body-color));
+  border-color: var(--border, var(--bs-border-color)) !important;
   transition: box-shadow 160ms ease, transform 160ms ease;
 }
 
@@ -197,8 +223,18 @@ body.ua-athletics-starter {
 }
 
 .ua-card .text-red {
-  color: var(--bs-red);
+  color: var(--accent, var(--bs-red));
   letter-spacing: 0.04em;
+}
+
+.ua-card h3,
+.ua-card .h4 {
+  color: var(--text-strong, var(--bs-body-color));
+}
+
+.ua-card .text-body-secondary,
+.text-body-secondary {
+  color: var(--text-muted, var(--bs-secondary-color)) !important;
 }
 
 /* -------------------------------------------------------------------- */
@@ -206,21 +242,22 @@ body.ua-athletics-starter {
 /* -------------------------------------------------------------------- */
 
 .ua-footer {
-  background-color: var(--bs-body-bg);
-  color: var(--bs-body-color);
+  background-color: var(--bg, var(--bs-body-bg)) !important;
+  color: var(--text, var(--bs-body-color));
+  border-color: var(--border, var(--bs-border-color)) !important;
 }
 
 .ua-footer h5 {
-  color: var(--bs-body-color);
+  color: var(--text-strong, var(--bs-body-color));
   letter-spacing: 0.04em;
 }
 
 .ua-footer .nav-link {
-  color: var(--bs-body-color);
+  color: var(--text-muted, var(--bs-secondary-color)) !important;
 }
 .ua-footer .nav-link:hover,
 .ua-footer .nav-link:focus-visible {
-  color: var(--bs-body-color);
+  color: var(--accent, var(--bs-red)) !important;
   text-decoration: underline;
 }
 
@@ -235,21 +272,4 @@ body.ua-athletics-starter {
   border-color: var(--bs-red);
   color: var(--bs-white);
   filter: brightness(0.92);
-}
-
-/* -------------------------------------------------------------------- */
-/* Dark mode tweaks that the base theme doesn't already cover.          */
-/* Bootstrap 5.3's [data-bs-theme="dark"] flips --bs-body-bg /          */
-/* --bs-body-color; the only place we need to nudge is the brand band   */
-/* (white substrate must stay white even in dark mode).                 */
-/* -------------------------------------------------------------------- */
-
-[data-bs-theme="dark"] .ua-brand-band {
-  background-color: var(--bs-white);
-  color: var(--bs-dark);
-}
-
-[data-bs-theme="dark"] .ua-brand-band .link-body-emphasis,
-[data-bs-theme="dark"] .ua-brand-band a {
-  color: var(--bs-dark);
 }

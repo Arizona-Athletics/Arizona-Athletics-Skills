@@ -1,45 +1,53 @@
 import { useEffect, useState } from "react";
+import {
+  type ThemeMode,
+  getTheme,
+  listenForSystemChanges,
+  nextThemeMode,
+  setTheme,
+} from "../lib/theme";
 
-type Theme = "light" | "dark";
+const ICONS: Record<ThemeMode, string> = {
+  system: "desktop_windows",
+  light: "light_mode",
+  dark: "dark_mode",
+};
 
-const STORAGE_KEY = "ua-theme";
-
-function resolveInitial(): Theme {
-  if (typeof document === "undefined") return "light";
-  const attr = document.documentElement.getAttribute("data-bs-theme");
-  if (attr === "light" || attr === "dark") return attr;
-  return "light";
-}
+const LABELS: Record<ThemeMode, string> = {
+  system: "System",
+  light: "Light",
+  dark: "Dark",
+};
 
 export function ThemeToggle() {
-  const [theme, setTheme] = useState<Theme>(resolveInitial);
+  const [mode, setMode] = useState<ThemeMode>("system");
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    const html = document.documentElement;
-    html.setAttribute("data-bs-theme", theme);
-    html.setAttribute("data-theme", theme);
-    try {
-      localStorage.setItem(STORAGE_KEY, theme);
-    } catch {
-      // ignore
-    }
-  }, [theme]);
+    setMode(getTheme());
+    setMounted(true);
+    return listenForSystemChanges(() => {});
+  }, []);
 
-  const toggle = () => setTheme((t) => (t === "dark" ? "light" : "dark"));
+  const handleClick = () => {
+    const next = nextThemeMode(mode);
+    setMode(next);
+    setTheme(next);
+  };
 
-  const isDark = theme === "dark";
+  const current = mounted ? mode : "system";
+
   return (
     <button
       type="button"
-      onClick={toggle}
+      onClick={handleClick}
       className="btn btn-arizona-header"
-      aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
-      aria-pressed={isDark}
+      aria-label={`Theme: ${LABELS[current].toLowerCase()}. Activate to switch.`}
     >
       <span aria-hidden="true" className="icon material-symbols-rounded">
-        {isDark ? "light_mode" : "dark_mode"}
+        {ICONS[current]}
       </span>
-      <span className="icon-text">{isDark ? "Light" : "Dark"}</span>
+      <span className="icon-text">{LABELS[current]}</span>
     </button>
   );
 }

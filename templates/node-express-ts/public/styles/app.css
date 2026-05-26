@@ -37,12 +37,22 @@ body {
 body {
   margin: 0;
   min-height: 100vh;
+  overflow-x: clip;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 main {
   display: block;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: var(--text-strong);
 }
 
 /* Focus ring uses the semantic focus-ring color so it brightens in dark mode. */
@@ -73,6 +83,7 @@ main {
 .ua-brand-band {
   /* Stays white in both themes — Block A requires its white substrate. */
   background-color: var(--bs-white, var(--ua-white));
+  color: var(--bs-blue, var(--ua-blue));
 }
 
 /* -------------------------------------------------------------------- */
@@ -90,14 +101,8 @@ main {
 /*
  * Adapts the official AZ Marcom .navbar-az pattern to .bg-blue (navy):
  *   - underline indicator (2px / 4px offset), never a background tile
- *   - hover decoration color = --az-navbar-font-hover-color (#0c234b Midnight)
- *     → on navy Midnight is invisible, so use Sky for legibility
- *   - active decoration color = --az-navbar-accent-color (#ab0520 Arizona Red)
- *     → stays Red — iconic on navy and matches Marcom accent
- *
- * AZ Bootstrap also paints the parent <li> with a near-white background on
- * .navbar-nav .nav-item:hover (#f8f9fa) and :has(> .nav-link.active) (#e9ecef).
- * Both are tab-style affordances for white navbars — suppress here.
+ *   - hover decoration uses Sky so it stays legible on navy
+ *   - active decoration uses Arizona Red
  */
 .navbar.bg-blue .navbar-nav .nav-item:has(> .nav-link:is(.active, .is-active, .show, :active)),
 .navbar.bg-blue .navbar-nav .nav-item:hover {
@@ -132,13 +137,31 @@ main {
 /* Toolbar (.bg-warm-gray)                                              */
 /* -------------------------------------------------------------------- */
 
+.navbar.bg-warm-gray,
+section.bg-warm-gray,
+.bg-warm-gray {
+  background-color: var(--surface-alt) !important;
+  color: var(--text);
+  border-color: var(--border) !important;
+}
+
 .navbar.bg-warm-gray .nav-link {
-  color: var(--bs-blue, var(--ua-blue));
+  color: var(--link);
   letter-spacing: 0.04em;
 }
 .navbar.bg-warm-gray .nav-link:hover,
 .navbar.bg-warm-gray .nav-link:focus-visible {
-  color: var(--bs-red, var(--ua-red));
+  color: var(--accent);
+}
+
+.navbar.bg-warm-gray .navbar-nav {
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 0.25rem var(--space-3, 1rem) !important;
+}
+
+.offcanvas:not(.show):not(.showing) {
+  display: none;
 }
 
 /* -------------------------------------------------------------------- */
@@ -146,16 +169,29 @@ main {
 /* -------------------------------------------------------------------- */
 
 .card .text-red {
+  color: var(--accent) !important;
   letter-spacing: 0.06em;
+}
+
+.card h3,
+.card .h4 {
+  color: var(--text-strong);
+}
+
+.card .text-body-secondary {
+  color: var(--text-muted) !important;
 }
 
 .card .stretched-link {
   font-weight: var(--font-weight-semibold);
-  color: var(--bs-blue, var(--link));
+  color: var(--link);
 }
 
 /* Subtle lift on card hover — visual cue, no color change. */
 .card {
+  background-color: var(--surface);
+  color: var(--text);
+  border-color: var(--border) !important;
   transition: box-shadow 160ms ease, transform 160ms ease;
 }
 .card:hover {
@@ -166,9 +202,37 @@ main {
 /* Footer refinements                                                   */
 /* -------------------------------------------------------------------- */
 
+footer.bg-white {
+  background-color: var(--bg) !important;
+  color: var(--text);
+}
+
+footer h5 {
+  color: var(--text-strong);
+}
+
+footer .text-body-secondary,
+.text-body-secondary {
+  color: var(--text-muted) !important;
+}
+
+footer .link-body-emphasis,
+.link-body-emphasis {
+  color: var(--text-strong) !important;
+}
+
+footer .border-top,
+.border-top {
+  border-color: var(--border) !important;
+}
+
+footer .nav-link.text-body-secondary {
+  color: var(--text-muted) !important;
+}
+
 footer .nav-link.text-body-secondary:hover,
 footer .nav-link.text-body-secondary:focus-visible {
-  color: var(--bs-red, var(--accent));
+  color: var(--accent) !important;
   text-decoration: underline;
 }
 
@@ -187,4 +251,21 @@ footer .material-symbols-rounded {
 [data-ua-theme-toggle] .material-symbols-rounded {
   font-size: 1.125rem;
   line-height: 1;
+}
+
+.form-control {
+  background-color: var(--surface);
+  border-color: var(--border);
+  color: var(--text);
+}
+
+.form-control::placeholder {
+  color: var(--text-faint);
+}
+
+.form-control:focus {
+  background-color: var(--surface);
+  border-color: var(--focus-ring);
+  color: var(--text);
+  box-shadow: 0 0 0 0.25rem color-mix(in srgb, var(--focus-ring), transparent 75%);
 }

@@ -33,7 +33,7 @@ A single canonical page that demonstrates every UA Athletics surface in the spec
 - **Arizona Bootstrap 5.1.3** — loaded from the official UA CDN. AZ Bootstrap is not on npm, so the CDN `<link>` and `<script>` tags are the canonical install:
   - CSS: `https://cdn.digital.arizona.edu/lib/arizona-bootstrap/5.1.3/css/arizona-bootstrap.min.css`
   - JS: `https://cdn.digital.arizona.edu/lib/arizona-bootstrap/5.1.3/js/arizona-bootstrap.bundle.min.js`
-- **`@ua/ua-tokens`** — linked from `../../packages/ua-tokens/dist/tokens.css` for monorepo dev. In a standalone deployment, swap to the published CDN URL (or to a tokens.css copy you check in).
+- **`@ua/ua-tokens`** — copied into `vendor/tokens.css` by `bun run tokens:sync` before `dev` / `start`, so the static server can load tokens from inside the template root.
 - **Material Symbols Rounded** — Google Fonts CDN; used by the AZ header buttons and the social icon row in the footer.
 - **Vanilla JS** — `theme.js` (FOUC-safe theme toggle, system-change listener, year stamp) and `auth.js` (Cognito + UA SAML PKCE scaffold, all values `// CONFIGURE_ME`).
 
@@ -45,7 +45,7 @@ A single canonical page that demonstrates every UA Athletics surface in the spec
 | `styles.css`          | Project-local overrides. **Zero hex values** — Arizona Bootstrap + `@ua/ua-tokens` CSS vars only. |
 | `theme.js`            | `[data-ua-theme-toggle]` cycle button + OS prefers-color-scheme listener + year stamp.  |
 | `auth.js`             | Cognito + UA SAML PKCE scaffold. Every real value is `// CONFIGURE_ME`. No secrets.     |
-| `package.json`        | Workspace member `@ua/template-html-bootstrap5`. Scripts: `dev` / `format` / `lint`.    |
+| `package.json`        | Workspace member `@ua/template-html-bootstrap5`. Scripts: `tokens:sync` / `dev` / `format` / `lint`. |
 | `.env.example`        | Cognito placeholders. Copy to `.env` (gitignored) and fill in for your deployment.       |
 | `.gitignore`          | `node_modules/`, `.env`, OS junk.                                                       |
 | `public/block-a.svg`  | Placeholder Block A (96×96, white substrate, Arizona Blue block, Arizona Red serif). Swap for the licensed asset. |

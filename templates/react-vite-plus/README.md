@@ -67,8 +67,8 @@ If you find yourself reaching for `var(--ua-red)` for body text, you want
   preference before the first stylesheet evaluates, setting `data-bs-theme`
   and `data-theme` on `<html>`. See
   [`../../docs/DARK_MODE.md`](../../docs/DARK_MODE.md).
-- The `ThemeToggle` flips between `light` and `dark` and persists the choice
-  to `localStorage["ua-theme"]`.
+- The `ThemeToggle` cycles `system → light → dark → system` and persists the
+  selected mode to `localStorage["ua-theme"]`.
 
 ## Things to configure before shipping (`// CONFIGURE_ME`)
 

@@ -114,10 +114,9 @@ Consume from `@ua/ua-tokens`. Never hardcode UA colors. Default to semantic
 tokens (`--bg`, `--surface`, `--text`, `--accent`); reach for brand tokens
 (`--ua-red`, `--ua-blue`) only for one-off identity accents.
 
-`public/styles/app.css` does exactly that — it imports `@ua/ua-tokens/tokens.css`
-and bridges the resulting semantic variables onto Arizona Bootstrap's
-`--bs-*` variables so the entire UI flips dark/light without per-component
-overrides.
+`head.ejs` loads `@ua/ua-tokens/tokens.css` before `public/styles/app.css`;
+`app.css` then bridges Bootstrap utility surfaces back to semantic variables so
+the entire UI flips dark/light without per-component overrides.
 
 ## Theme toggle
 

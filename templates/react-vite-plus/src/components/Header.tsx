@@ -14,7 +14,7 @@ export interface HeaderProps {
 
 export function Header({ siteTitle = "Arizona Athletics", nav, actions }: HeaderProps) {
   return (
-    <>
+    <header role="banner">
       <div className="arizona-header az-fixed-header-on-mobile bg-red" id="header_arizona">
         <div className="container">
           <div className="row align-items-center">
@@ -138,6 +138,6 @@ export function Header({ siteTitle = "Arizona Athletics", nav, actions }: Header
           <div className="mt-4">{actions}</div>
         </div>
       </div>
-    </>
+    </header>
   );
 }
