@@ -18,6 +18,9 @@ Before any non-trivial task, run the freshness audit:
 /ua-standards-check
 ```
 
+If the command is not installed in your user-level Claude Code skills, run
+`bun run install:agent-skills` from the repo root.
+
 That skill ([`./.claude/skills/ua-standards-check/SKILL.md`](./.claude/skills/ua-standards-check/SKILL.md))
 fetches UA Marcom + brand standards, Arizona Digital release feeds, and major
 framework versions, then reports drift against this repo. **It is read-only** —

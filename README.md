@@ -65,6 +65,23 @@ bun install
 bun run build       # builds @ua/ua-tokens → packages/ua-tokens/dist
 ```
 
+### Install the agent skill
+
+The repo ships `ua-standards-check` as a Claude Code and Codex skill. Install it
+into both user-level skill folders with:
+
+```bash
+bun run install:agent-skills
+```
+
+The installer copies
+`.claude/skills/ua-standards-check` to
+`$CLAUDE_HOME/skills/ua-standards-check` or
+`~/.claude/skills/ua-standards-check`, and to
+`$CODEX_HOME/skills/ua-standards-check` or
+`~/.codex/skills/ua-standards-check`. Use `--codex-only`, `--claude-only`, or
+`--dry-run` after `--` for narrower installs.
+
 Use the tokens in any project:
 
 ```html

@@ -12,7 +12,8 @@
   "scripts": {
     "build": "bun --filter '@ua/*' run build",
     "check": "bun --filter '@ua/*' run check",
-    "clean": "bun --filter '@ua/*' run clean"
+    "clean": "bun --filter '@ua/*' run clean",
+    "install:agent-skills": "bun scripts/install-agent-skills.ts"
   },
   "devDependencies": {
     "typescript": "^5.7.0"

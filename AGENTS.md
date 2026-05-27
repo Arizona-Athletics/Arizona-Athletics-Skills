@@ -1,6 +1,7 @@
 # AGENTS.md
 
-**For LLMs and agentic dev tools writing code in this repo.** Humans: see [`README.md`](./README.md).
+**For LLMs and agentic dev tools writing code in this repo: Claude Code, Codex,
+Cursor, Copilot, and similar assistants.** Humans: see [`README.md`](./README.md).
 
 ## What this repo is
 
@@ -22,18 +23,31 @@ you should never write a dark-mode override.
 ## Before you write code
 
 **Step 0 — check that this repo is still current.** Run the
-[`ua-standards-check`](./.claude/skills/ua-standards-check/SKILL.md) skill (in
-Claude Code: `/ua-standards-check`) to diff this repo against:
+[`ua-standards-check`](./.claude/skills/ua-standards-check/SKILL.md) workflow to
+diff this repo against:
 
 - UA Marcom + brand standards (`marcom.arizona.edu`, `brand.arizona.edu`)
 - Arizona Digital projects (`az-digital/arizona-bootstrap`, `az-digital/az_quickstart`) — latest releases
 - Major framework versions (Bun, TypeScript, React, Next, Astro, Vite+, Tailwind, Bootstrap)
 
-The skill is read-only — it reports drift and proposes updates. The human decides
-what to apply. Don't skip this for a one-line task, but always run it before a
-non-trivial PR (new template, token bump, framework upgrade). If you are not
-running in Claude Code, do the equivalent: fetch the sources, diff against
-`tokens.json` / `PLAN.md` / `package.json`, propose updates.
+The workflow is read-only — it reports drift and proposes updates. The human
+decides what to apply. Don't skip this for a one-line task, but always run it
+before a non-trivial PR (new template, token bump, framework upgrade).
+
+Invocation depends on the agent:
+
+- **Install locally first, if needed:** run `bun run install:agent-skills` from
+  the repo root to copy `ua-standards-check` into both Claude Code and Codex
+  user-level skill folders.
+- **Claude Code:** run `/ua-standards-check`.
+- **Codex:** invoke `$ua-standards-check` after installing the skill. If it is
+  not installed, read
+  [`.claude/skills/ua-standards-check/SKILL.md`](./.claude/skills/ua-standards-check/SKILL.md)
+  and perform the same read-only audit manually. Cite sources for any "latest"
+  claims.
+- **Other agents:** do the equivalent: fetch the sources, diff against
+  `tokens.json` / `PLAN.md` / `package.json`, and propose updates without
+  editing files as part of the standards-check run.
 
 Read these. Not optional.
 
