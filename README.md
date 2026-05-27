@@ -65,22 +65,39 @@ bun install
 bun run build       # builds @ua/ua-tokens → packages/ua-tokens/dist
 ```
 
-### Install the agent skill
+### Install the agent skills
 
-The repo ships `ua-standards-check` as a Claude Code and Codex skill. Install it
-into both user-level skill folders with:
+The repo ships three installable skills for agentic coding tools:
+
+- `ua-standards-check` — read-only freshness audit against UA Marcom, Arizona
+  Digital, and framework releases.
+- `ua-build-site` — scaffold a new UA Athletics site from the right template.
+- `ua-site-compliance` — refactor an existing site into UA Athletics compliance.
+
+The best prompt to give an agent is:
+
+> Install the skills from this repo:
+> `https://github.com/Arizona-Athletics/arizona-athletics-web-templates`
+
+The skills live in [`skills/`](./skills) as standard `SKILL.md` folders so
+repo-based skill installers can discover them directly. If the agent needs a
+manual fallback, have it clone the repo and run:
 
 ```bash
+git clone https://github.com/Arizona-Athletics/arizona-athletics-web-templates.git
+cd arizona-athletics-web-templates
 bun run install:agent-skills
 ```
 
-The installer copies
-`.claude/skills/ua-standards-check` to
-`$CLAUDE_HOME/skills/ua-standards-check` or
-`~/.claude/skills/ua-standards-check`, and to
-`$CODEX_HOME/skills/ua-standards-check` or
-`~/.codex/skills/ua-standards-check`. Use `--codex-only`, `--claude-only`, or
-`--dry-run` after `--` for narrower installs.
+The installer copies every skill in `skills/` to:
+
+- `$CLAUDE_HOME/skills/<skill>` or `~/.claude/skills/<skill>`
+- `$CODEX_HOME/skills/<skill>` or `~/.codex/skills/<skill>`
+- `$AGENTS_HOME/skills/<skill>` or `~/.agents/skills/<skill>` for Grok Build and
+  other AGENTS-compatible clients
+
+Use `--codex-only`, `--claude-only`, `--grok-only`, or `--dry-run` after `--`
+for narrower installs.
 
 Use the tokens in any project:
 

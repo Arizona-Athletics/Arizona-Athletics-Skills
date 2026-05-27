@@ -19,9 +19,14 @@ Before any non-trivial task, run the freshness audit:
 ```
 
 If the command is not installed in your user-level Claude Code skills, run
-`bun run install:agent-skills` from the repo root.
+`bun run install:agent-skills` from the repo root. That installs the full skill
+bundle:
 
-That skill ([`./.claude/skills/ua-standards-check/SKILL.md`](./.claude/skills/ua-standards-check/SKILL.md))
+- `ua-standards-check` for read-only freshness audits.
+- `ua-build-site` for starting new UA Athletics sites from templates.
+- `ua-site-compliance` for refactoring existing sites into compliance.
+
+That skill ([`./skills/ua-standards-check/SKILL.md`](./skills/ua-standards-check/SKILL.md))
 fetches UA Marcom + brand standards, Arizona Digital release feeds, and major
 framework versions, then reports drift against this repo. **It is read-only** —
 it proposes changes, never applies them. The human reviews and decides.

@@ -23,7 +23,7 @@ you should never write a dark-mode override.
 ## Before you write code
 
 **Step 0 — check that this repo is still current.** Run the
-[`ua-standards-check`](./.claude/skills/ua-standards-check/SKILL.md) workflow to
+[`ua-standards-check`](./skills/ua-standards-check/SKILL.md) workflow to
 diff this repo against:
 
 - UA Marcom + brand standards (`marcom.arizona.edu`, `brand.arizona.edu`)
@@ -37,17 +37,39 @@ before a non-trivial PR (new template, token bump, framework upgrade).
 Invocation depends on the agent:
 
 - **Install locally first, if needed:** run `bun run install:agent-skills` from
-  the repo root to copy `ua-standards-check` into both Claude Code and Codex
-  user-level skill folders.
+  the repo root to copy all UA Athletics skills into Claude Code, Codex, and
+  Grok / AGENTS-compatible user-level skill folders.
 - **Claude Code:** run `/ua-standards-check`.
 - **Codex:** invoke `$ua-standards-check` after installing the skill. If it is
   not installed, read
-  [`.claude/skills/ua-standards-check/SKILL.md`](./.claude/skills/ua-standards-check/SKILL.md)
+  [`skills/ua-standards-check/SKILL.md`](./skills/ua-standards-check/SKILL.md)
   and perform the same read-only audit manually. Cite sources for any "latest"
   claims.
 - **Other agents:** do the equivalent: fetch the sources, diff against
   `tokens.json` / `PLAN.md` / `package.json`, and propose updates without
   editing files as part of the standards-check run.
+
+The installable skills in `skills/` are:
+
+- `ua-standards-check` — audit brand, Arizona Digital, and framework drift.
+- `ua-build-site` — scaffold new UA Athletics sites from these templates.
+- `ua-site-compliance` — refactor existing sites into UA Athletics compliance.
+
+## If asked to install skills from this repo
+
+When a user says "Install skills from this repo" and points to
+`https://github.com/Arizona-Athletics/arizona-athletics-web-templates`, install
+the standard skill folders from [`skills/`](./skills). Prefer your platform's
+native GitHub skill installer if it can consume a repo URL. If not, clone the
+repo and run:
+
+```bash
+bun run install:agent-skills
+```
+
+That command installs all three skills into Claude Code, Codex, and Grok /
+AGENTS-compatible user-level skill folders. If Bun is unavailable, copy each
+`skills/<skill>` folder into the target platform's skills directory.
 
 Read these. Not optional.
 

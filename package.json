@@ -10,9 +10,9 @@
     "templates/*"
   ],
   "scripts": {
-    "build": "bun --filter '@ua/*' run build",
-    "check": "bun --filter '@ua/*' run check",
-    "clean": "bun --filter '@ua/*' run clean",
+    "build": "bun run --filter './packages/*' build",
+    "check": "bun run --filter './packages/*' check",
+    "clean": "bun run --filter './packages/*' clean",
     "install:agent-skills": "bun scripts/install-agent-skills.ts"
   },
   "devDependencies": {

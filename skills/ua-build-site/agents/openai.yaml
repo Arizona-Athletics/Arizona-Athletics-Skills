@@ -1,0 +1,7 @@
+interface:
+  display_name: "UA Build Site"
+  short_description: "Create UA Athletics sites from templates"
+  default_prompt: "Use $ua-build-site to scaffold a new UA Athletics web project from the right template."
+
+policy:
+  allow_implicit_invocation: true
