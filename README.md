@@ -6,6 +6,20 @@ new UA Athletics site produces on-brand work whether the target is React, Next, 
 HTML + Bootstrap, HTML + Tailwind, Node/Express, a Drupal Quickstart subtheme, Hugo,
 or transactional email.
 
+## Install for LLMs
+
+For Codex, Claude Code, and other agentic coding tools, copy this prompt:
+
+```text
+Install the skills from this repo: https://github.com/Arizona-Athletics/arizona-athletics-web-templates
+```
+
+If you already have this repo locally, install the skills directly:
+
+```bash
+bun run install:agent-skills
+```
+
 ## Status
 
 The token package, the design-system docs, and all nine starter templates are in
@@ -74,13 +88,8 @@ The repo ships three installable skills for agentic coding tools:
 - `ua-build-site` — scaffold a new UA Athletics site from the right template.
 - `ua-site-compliance` — refactor an existing site into UA Athletics compliance.
 
-The best prompt to give an agent is:
-
-> Install the skills from this repo:
-> `https://github.com/Arizona-Athletics/arizona-athletics-web-templates`
-
 The skills live in [`skills/`](./skills) as standard `SKILL.md` folders so
-repo-based skill installers can discover them directly. If the agent needs a
+repo-based skill installers can discover them directly. If an agent needs a
 manual fallback, have it clone the repo and run:
 
 ```bash
