@@ -111,7 +111,3 @@ for the do/don't list.
 ## License
 
 MIT. See [`LICENSE`](./LICENSE) (forthcoming).
-
-## Maintainers
-
-University of Arizona Athletics · Web team
