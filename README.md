@@ -8,7 +8,74 @@ or transactional email.
 
 ## Install for LLMs
 
-For Codex, Claude Code, and other agentic coding tools, copy this prompt:
+### Claude web, no upload required
+
+Paste this into Claude web:
+
+```text
+Use the UA Athletics web skills from this GitHub repo for this conversation:
+https://github.com/Arizona-Athletics/arizona-athletics-web-templates
+
+First read CLAUDE_WEB.md. Then read SKILL.md. If SKILL.md is unavailable, read skills/ua-athletics-web/SKILL.md. Treat the loaded file as the active skill instructions for this chat. Do not ask me to upload a ZIP and do not run the Bun installer unless I specifically ask for a persistent local install.
+```
+
+That path requires no upload. Claude uses the repo as skill context for the
+current chat or project. It is intentionally different from a persistent native
+Claude.ai custom skill install.
+
+### Claude Code, no-upload marketplace install
+
+This repo is also a Claude plugin marketplace. After the repo is pushed to
+GitHub, Claude Code users can install from the repo link:
+
+```text
+/plugin marketplace add Arizona-Athletics/arizona-athletics-web-templates
+/plugin install ua-athletics-web@ua-athletics-web-templates
+/reload-plugins
+```
+
+The installed skill is invoked as:
+
+```text
+/ua-athletics-web:ua-athletics-web
+```
+
+### Claude Cowork, organization-managed marketplace
+
+For Team or Enterprise organizations using Cowork, an owner can connect this repo
+as a GitHub-synced plugin marketplace from organization plugin settings. Use this
+owner/repo value:
+
+```text
+Arizona-Athletics/arizona-athletics-web-templates
+```
+
+That makes the `ua-athletics-web` plugin available through the organization's
+plugin catalog without asking each user to upload a ZIP.
+
+### Claude.ai persistent custom skill upload, optional fallback
+
+If someone specifically wants the skill in Claude.ai's `Customize > Skills`
+custom skill list, use the prebuilt ZIP:
+
+[Download `ua-athletics-web.zip`](https://github.com/Arizona-Athletics/arizona-athletics-web-templates/raw/main/claude-web/ua-athletics-web.zip)
+
+Upload it here:
+
+```text
+Customize > Skills > + > Create skill > Upload a skill
+```
+
+Do not upload the full repo ZIP. The prebuilt ZIP contains exactly:
+
+```text
+ua-athletics-web/
+└── SKILL.md
+```
+
+### Codex, Grok Build, and other local coding agents
+
+For Codex, Grok Build, and other agentic coding tools, copy this prompt:
 
 ```text
 Install the skills from this repo: https://github.com/Arizona-Athletics/arizona-athletics-web-templates
@@ -90,7 +157,11 @@ The repo ships three focused skills for agentic coding tools:
 
 It also ships `ua-athletics-web`, a single portable skill bundle for ChatGPT web,
 Claude web, or fallback environments where the focused skills are not installed.
-Prefer the focused skills for local coding agents.
+Prefer the focused skills for local coding agents. For Claude web no-upload use,
+ask Claude to read the root [`SKILL.md`](./SKILL.md). If that file is unavailable,
+have it read [`skills/ua-athletics-web/SKILL.md`](./skills/ua-athletics-web/SKILL.md).
+For a persistent Claude custom skill, use the prebuilt upload package at
+[`claude-web/ua-athletics-web.zip`](./claude-web/ua-athletics-web.zip).
 
 The skills live in [`skills/`](./skills) as standard `SKILL.md` folders. If an
 agent needs a manual fallback, have it clone the repo and run:
@@ -112,7 +183,9 @@ Use `--codex-only`, `--agents-only`, `--claude-only`, `--grok-only`, or
 `--dry-run` after `--` for narrower installs. Use `--include-bundle` to install
 all four skills or `bun run install:agent-skill-bundle` to install only the
 portable `ua-athletics-web` bundle. Rebuild that bundle after editing the
-focused skills with `bun run build:agent-skill-bundle`.
+focused skills with `bun run build:agent-skill-bundle`. Rebuild the Claude web
+upload ZIP with `bun run build:claude-web-skill`. The no-upload Claude web pull
+prompt lives at [`claude-web/PULL_PROMPT.md`](./claude-web/PULL_PROMPT.md).
 
 Use the tokens in any project:
 

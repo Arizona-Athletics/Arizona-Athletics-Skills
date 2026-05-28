@@ -15,7 +15,8 @@
     "clean": "bun run --filter './packages/*' clean",
     "install:agent-skills": "bun scripts/install-agent-skills.ts",
     "install:agent-skill-bundle": "bun scripts/build-agent-skill-bundle.ts && bun scripts/install-agent-skills.ts --bundle-only",
-    "build:agent-skill-bundle": "bun scripts/build-agent-skill-bundle.ts"
+    "build:agent-skill-bundle": "bun scripts/build-agent-skill-bundle.ts",
+    "build:claude-web-skill": "bun scripts/build-agent-skill-bundle.ts && bun scripts/package-claude-web-skill.ts"
   },
   "devDependencies": {
     "typescript": "^5.7.0"

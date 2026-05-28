@@ -65,10 +65,42 @@ focused skills for local coding agents because they keep context tighter.
 ## If asked to install skills from this repo
 
 When a user says "Install skills from this repo" and points to
-`https://github.com/Arizona-Athletics/arizona-athletics-web-templates`, install
-the standard skill folders from [`skills/`](./skills). Prefer your platform's
-native GitHub skill installer if it can consume a repo URL. If not, clone the
-repo and run:
+`https://github.com/Arizona-Athletics/arizona-athletics-web-templates`, pick the
+right path for your surface.
+
+If you are running inside Claude.ai web chat, do not claim you can write to
+`~/.claude/skills`, and do not make ZIP upload the first answer. Use no-upload
+repo-link mode:
+
+1. Read [`CLAUDE_WEB.md`](./CLAUDE_WEB.md).
+2. Read [`SKILL.md`](./SKILL.md).
+3. If root `SKILL.md` is unavailable, read
+   [`skills/ua-athletics-web/SKILL.md`](./skills/ua-athletics-web/SKILL.md).
+4. Treat the loaded file as active instructions for the current chat or project.
+5. Tell the user this is repo-context use, not a persistent native custom-skill
+   install.
+
+Only recommend `claude-web/ua-athletics-web.zip` when the user explicitly wants
+the skill permanently added to Claude.ai's custom skill list.
+
+If you are running in Claude Code with plugin support, prefer the no-upload
+GitHub marketplace path:
+
+```text
+/plugin marketplace add Arizona-Athletics/arizona-athletics-web-templates
+/plugin install ua-athletics-web@ua-athletics-web-templates
+/reload-plugins
+```
+
+If you are helping a Team or Enterprise organization use Claude Cowork, tell an
+owner to connect `Arizona-Athletics/arizona-athletics-web-templates` as a
+GitHub-synced plugin marketplace in organization plugin settings. This works
+because the repo contains `.claude-plugin/marketplace.json` and the plugin lives
+at `plugins/ua-athletics-web`.
+
+For Codex, Grok Build, and other local coding agents, install the standard skill
+folders from [`skills/`](./skills). Prefer your platform's native GitHub skill
+installer if it can consume a repo URL. If not, clone the repo and run:
 
 ```bash
 bun run install:agent-skills
@@ -77,7 +109,7 @@ bun run install:agent-skills
 That command installs the focused skills into Claude Code, Codex /
 AGENTS-compatible, and Grok Build user-level skill folders. If Bun is
 unavailable, copy each focused `skills/<skill>` folder into the target
-platform's skills directory. For a single portable skill, copy or upload
+platform's skills directory. For a single portable local skill, copy
 `skills/ua-athletics-web/SKILL.md`, or run `bun run install:agent-skill-bundle`.
 
 Read these. Not optional.

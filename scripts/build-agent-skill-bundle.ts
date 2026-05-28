@@ -8,6 +8,14 @@ const scriptDir = dirname(fileURLToPath(import.meta.url));
 const repoRoot = resolve(scriptDir, "..");
 const outputSkillDir = join(repoRoot, "skills", "ua-athletics-web");
 const outputSkillFile = join(outputSkillDir, "SKILL.md");
+const repoEntrySkillFile = join(repoRoot, "SKILL.md");
+const pluginDir = join(repoRoot, "plugins", "ua-athletics-web");
+const pluginSkillDir = join(pluginDir, "skills", "ua-athletics-web");
+const pluginSkillFile = join(pluginSkillDir, "SKILL.md");
+const pluginManifestDir = join(pluginDir, ".claude-plugin");
+const pluginManifestFile = join(pluginManifestDir, "plugin.json");
+const marketplaceDir = join(repoRoot, ".claude-plugin");
+const marketplaceFile = join(marketplaceDir, "marketplace.json");
 
 const sourceSkills = [
   {
@@ -35,8 +43,66 @@ for (const skill of sourceSkills) {
 
 const generated = renderBundle(parsedSkills);
 await mkdir(outputSkillDir, { recursive: true });
+await mkdir(pluginSkillDir, { recursive: true });
+await mkdir(pluginManifestDir, { recursive: true });
+await mkdir(marketplaceDir, { recursive: true });
 await writeFile(outputSkillFile, generated);
+await writeFile(repoEntrySkillFile, generated);
+await writeFile(pluginSkillFile, generated);
+await writeFile(pluginManifestFile, renderPluginManifest());
+await writeFile(marketplaceFile, renderMarketplace());
 console.log(`Wrote ${outputSkillFile}`);
+console.log(`Wrote ${repoEntrySkillFile}`);
+console.log(`Wrote ${pluginSkillFile}`);
+console.log(`Wrote ${pluginManifestFile}`);
+console.log(`Wrote ${marketplaceFile}`);
+
+function renderMarketplace() {
+  return `${JSON.stringify(
+    {
+      $schema: "https://json.schemastore.org/claude-code-plugin-marketplace.json",
+      name: "ua-athletics-web-templates",
+      description: "UA Athletics web design-system skills and starter-template workflows.",
+      owner: {
+        name: "Arizona Athletics",
+      },
+      plugins: [
+        {
+          name: "ua-athletics-web",
+          displayName: "UA Athletics Web",
+          description:
+            "Installs the UA Athletics web skill for standards checks, new-site scaffolds, and existing-site compliance work.",
+          source: "./plugins/ua-athletics-web",
+          category: "development",
+          tags: ["ua", "arizona", "athletics", "design-system", "templates"],
+        },
+      ],
+    },
+    null,
+    2,
+  )}\n`;
+}
+
+function renderPluginManifest() {
+  return `${JSON.stringify(
+    {
+      $schema: "https://json.schemastore.org/claude-code-plugin-manifest.json",
+      name: "ua-athletics-web",
+      displayName: "UA Athletics Web",
+      description:
+        "Adds a UA Athletics web skill for brand standards checks, template scaffolding, and compliance refactors.",
+      author: {
+        name: "Arizona Athletics",
+      },
+      homepage: "https://github.com/Arizona-Athletics/arizona-athletics-web-templates",
+      repository: "https://github.com/Arizona-Athletics/arizona-athletics-web-templates",
+      license: "MIT",
+      keywords: ["ua", "arizona", "athletics", "design-system", "templates"],
+    },
+    null,
+    2,
+  )}\n`;
+}
 
 function parseSkill(raw, skillFile) {
   const match = /^---\n([\s\S]*?)\n---\n?([\s\S]*)$/.exec(raw);
@@ -126,11 +192,24 @@ embedded fallbacks are the working instructions.
 
 ## Platform notes
 
-For coding agents, install this folder as \`ua-athletics-web/SKILL.md\` in the
-platform skill directory. For web chat, upload this file or a zip containing the
-\`ua-athletics-web/\` folder. If the web surface cannot execute shell commands or
-read GitHub directly, ask the user to attach the repo zip or the files needed for
-the specific workflow.
+- Claude web, no-upload repo-link mode: when the user gives the GitHub repo URL,
+  read \`CLAUDE_WEB.md\` first if it is available, then read this file from
+  \`SKILL.md\` or \`skills/ua-athletics-web/SKILL.md\`, and follow it in the
+  current chat or Claude Project. Do not tell the user they must upload a ZIP
+  just to use this repo as skill context. This is not a persistent native
+  custom-skill install; it is the repo-link workflow for Claude web sessions.
+- Claude web, persistent native skill mode: if the user specifically wants the
+  skill permanently added to Claude.ai's custom skill list, use
+  \`claude-web/ua-athletics-web.zip\`, or any ZIP whose root contains
+  \`ua-athletics-web/SKILL.md\`.
+- ChatGPT web: read this file from the repo, upload it as project/custom GPT
+  reference material, or paste the instructions into the project/GPT
+  instructions.
+- Claude Code, Codex, Grok Build, and other local coding agents: install this
+  folder as \`ua-athletics-web/SKILL.md\` in the platform skill directory. Prefer
+  the focused source skills when available.
+- If the web surface cannot execute shell commands or read GitHub directly, ask
+  the user to attach the repo zip or the files needed for the specific workflow.
 
 ${embedded}
 `;
