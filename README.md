@@ -81,16 +81,19 @@ bun run build       # builds @ua/ua-tokens → packages/ua-tokens/dist
 
 ### Install the agent skills
 
-The repo ships three installable skills for agentic coding tools:
+The repo ships three focused skills for agentic coding tools:
 
 - `ua-standards-check` — read-only freshness audit against UA Marcom, Arizona
   Digital, and framework releases.
 - `ua-build-site` — scaffold a new UA Athletics site from the right template.
 - `ua-site-compliance` — refactor an existing site into UA Athletics compliance.
 
-The skills live in [`skills/`](./skills) as standard `SKILL.md` folders so
-repo-based skill installers can discover them directly. If an agent needs a
-manual fallback, have it clone the repo and run:
+It also ships `ua-athletics-web`, a single portable skill bundle for ChatGPT web,
+Claude web, or fallback environments where the focused skills are not installed.
+Prefer the focused skills for local coding agents.
+
+The skills live in [`skills/`](./skills) as standard `SKILL.md` folders. If an
+agent needs a manual fallback, have it clone the repo and run:
 
 ```bash
 git clone https://github.com/Arizona-Athletics/arizona-athletics-web-templates.git
@@ -98,15 +101,18 @@ cd arizona-athletics-web-templates
 bun run install:agent-skills
 ```
 
-The installer copies every skill in `skills/` to:
+The default installer copies the three focused skills to:
 
 - `$CLAUDE_HOME/skills/<skill>` or `~/.claude/skills/<skill>`
-- `$CODEX_HOME/skills/<skill>` or `~/.codex/skills/<skill>`
-- `$AGENTS_HOME/skills/<skill>` or `~/.agents/skills/<skill>` for Grok Build and
+- `$AGENTS_HOME/skills/<skill>` or `~/.agents/skills/<skill>` for Codex and
   other AGENTS-compatible clients
+- `$GROK_HOME/skills/<skill>` or `~/.grok/skills/<skill>` for Grok Build
 
-Use `--codex-only`, `--claude-only`, `--grok-only`, or `--dry-run` after `--`
-for narrower installs.
+Use `--codex-only`, `--agents-only`, `--claude-only`, `--grok-only`, or
+`--dry-run` after `--` for narrower installs. Use `--include-bundle` to install
+all four skills or `bun run install:agent-skill-bundle` to install only the
+portable `ua-athletics-web` bundle. Rebuild that bundle after editing the
+focused skills with `bun run build:agent-skill-bundle`.
 
 Use the tokens in any project:
 

@@ -4,6 +4,7 @@ import { constants } from "node:fs";
 import { access, cp, mkdir, readdir, readFile } from "node:fs/promises";
 import { homedir } from "node:os";
 import { basename, dirname, join, resolve } from "node:path";
+import { fileURLToPath } from "node:url";
 
 const validArgs = new Set([
   "--help",
@@ -11,8 +12,14 @@ const validArgs = new Set([
   "--dry-run",
   "--claude-only",
   "--codex-only",
+  "--agents-only",
   "--grok-only",
+  "--focused-only",
+  "--include-bundle",
+  "--bundle-only",
 ]);
+const platformFilterArgs = new Set(["--claude-only", "--codex-only", "--agents-only", "--grok-only"]);
+const skillModeArgs = new Set(["--focused-only", "--include-bundle", "--bundle-only"]);
 const args = process.argv.slice(2);
 const unknownArgs = args.filter((arg) => !validArgs.has(arg));
 
@@ -27,52 +34,62 @@ if (args.includes("--help") || args.includes("-h")) {
   process.exit(0);
 }
 
-const onlyFlags = ["--claude-only", "--codex-only", "--grok-only"].filter((arg) =>
-  args.includes(arg),
-);
+const platformFilters = args.filter((arg) => platformFilterArgs.has(arg));
+const skillModes = args.filter((arg) => skillModeArgs.has(arg));
 const dryRun = args.includes("--dry-run");
+const bundleSkillName = "ua-athletics-web";
 
-if (onlyFlags.length > 1) {
-  console.error(`Choose only one platform filter: ${onlyFlags.join(", ")}`);
+if (platformFilters.length > 1) {
+  console.error(`Choose only one platform filter: ${platformFilters.join(", ")}`);
   process.exit(1);
 }
 
-const repoRoot = resolve(import.meta.dir, "..");
+if (skillModes.length > 1) {
+  console.error(`Choose only one skill mode: ${skillModes.join(", ")}`);
+  process.exit(1);
+}
+
+const selectedPlatformFilter = platformFilters[0];
+const selectedSkillMode = skillModes[0] || "--focused-only";
+
+const scriptDir = dirname(fileURLToPath(import.meta.url));
+const repoRoot = resolve(scriptDir, "..");
 const sourceSkillsDir = join(repoRoot, "skills");
 const home = homedir();
 
 const targets = [
   {
     name: "Claude Code",
-    enabled: shouldInstall("--claude-only"),
+    flags: new Set(["--claude-only"]),
     skillsDir: join(process.env.CLAUDE_HOME || join(home, ".claude"), "skills"),
   },
   {
-    name: "Codex",
-    enabled: shouldInstall("--codex-only"),
-    skillsDir: join(process.env.CODEX_HOME || join(home, ".codex"), "skills"),
-  },
-  {
-    name: "Grok / AGENTS",
-    enabled: shouldInstall("--grok-only"),
+    name: "Codex / AGENTS-compatible",
+    flags: new Set(["--codex-only", "--agents-only"]),
     skillsDir: join(process.env.AGENTS_HOME || join(home, ".agents"), "skills"),
   },
-].filter((target) => target.enabled);
+  {
+    name: "Grok Build",
+    flags: new Set(["--grok-only"]),
+    skillsDir: join(process.env.GROK_HOME || join(home, ".grok"), "skills"),
+  },
+].filter((target) => shouldInstallTarget(target.flags));
 
 const skills = await loadSkills();
 
-console.log(`Installing ${skills.length} UA Athletics skills from ${sourceSkillsDir}`);
+console.log(`Installing ${skills.length} UA Athletics skill(s) from ${sourceSkillsDir}`);
+console.log(`Skill mode: ${selectedSkillMode.replace(/^--/, "")}`);
 
 for (const target of targets) {
   await installTarget(target);
 }
 
 if (!dryRun) {
-  console.log("Restart Claude Code, Codex, or Grok if the skill list does not refresh automatically.");
+  console.log("Restart or refresh your agent if the skill list does not update automatically.");
 }
 
-function shouldInstall(onlyFlag: string): boolean {
-  return onlyFlags.length === 0 || onlyFlags[0] === onlyFlag;
+function shouldInstallTarget(flags: Set<string>): boolean {
+  return selectedPlatformFilter === undefined || flags.has(selectedPlatformFilter);
 }
 
 async function loadSkills(): Promise<Array<{ name: string; sourceDir: string }>> {
@@ -90,10 +107,11 @@ async function loadSkills(): Promise<Array<{ name: string; sourceDir: string }>>
       name: entry.name,
       sourceDir: join(sourceSkillsDir, entry.name),
     }))
+    .filter((skill) => shouldInstallSkill(skill.name))
     .sort((a, b) => a.name.localeCompare(b.name));
 
   if (skills.length === 0) {
-    console.error(`No skills found in ${sourceSkillsDir}`);
+    console.error(`No skills selected from ${sourceSkillsDir}`);
     process.exit(1);
   }
 
@@ -102,6 +120,18 @@ async function loadSkills(): Promise<Array<{ name: string; sourceDir: string }>>
   }
 
   return skills;
+}
+
+function shouldInstallSkill(name: string): boolean {
+  if (selectedSkillMode === "--bundle-only") {
+    return name === bundleSkillName;
+  }
+
+  if (selectedSkillMode === "--include-bundle") {
+    return true;
+  }
+
+  return name !== bundleSkillName;
 }
 
 async function assertReadableSource(skill: { name: string; sourceDir: string }): Promise<void> {
@@ -155,7 +185,7 @@ function escapeRegExp(value: string): string {
 }
 
 function printHelp(): void {
-  console.log(`Install UA Athletics agent skills for Claude Code, Codex, and Grok.
+  console.log(`Install UA Athletics agent skills for Claude Code, Codex, and Grok Build.
 
 Usage:
   # From a local clone of https://github.com/Arizona-Athletics/arizona-athletics-web-templates
@@ -163,16 +193,24 @@ Usage:
   bun run install:agent-skills -- --codex-only
   bun run install:agent-skills -- --claude-only
   bun run install:agent-skills -- --grok-only
+  bun run install:agent-skills -- --include-bundle
+  bun run install:agent-skills -- --bundle-only
   bun run install:agent-skills -- --dry-run
 
+Skill modes:
+  --focused-only     Install the three focused skills only. Default.
+  --include-bundle   Install the focused skills plus the single portable bundle.
+  --bundle-only      Install only the single portable bundle for web-style use.
+
 Skills:
-  ua-standards-check
-  ua-build-site
-  ua-site-compliance
+  ua-standards-check   Read-only standards freshness audit.
+  ua-build-site        Build new UA Athletics sites from templates.
+  ua-site-compliance   Refactor existing sites into UA Athletics compliance.
+  ua-athletics-web     Single portable bundle for web ChatGPT/Claude or fallback use.
 
 Destinations:
   Claude Code: $CLAUDE_HOME/skills/<skill> or ~/.claude/skills/<skill>
-  Codex:       $CODEX_HOME/skills/<skill> or ~/.codex/skills/<skill>
-  Grok:        $AGENTS_HOME/skills/<skill> or ~/.agents/skills/<skill>
+  Codex:       $AGENTS_HOME/skills/<skill> or ~/.agents/skills/<skill>
+  Grok Build:  $GROK_HOME/skills/<skill> or ~/.grok/skills/<skill>
 `);
 }

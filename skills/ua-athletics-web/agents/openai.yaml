@@ -1,0 +1,7 @@
+interface:
+  display_name: "UA Athletics Web Bundle"
+  short_description: "Single-file UA Athletics web skill bundle"
+  default_prompt: "Use $ua-athletics-web when the focused UA Athletics skills are not installed or when a single portable skill bundle is needed."
+
+policy:
+  allow_implicit_invocation: false

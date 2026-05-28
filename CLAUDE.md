@@ -19,12 +19,14 @@ Before any non-trivial task, run the freshness audit:
 ```
 
 If the command is not installed in your user-level Claude Code skills, run
-`bun run install:agent-skills` from the repo root. That installs the full skill
-bundle:
+`bun run install:agent-skills` from the repo root. That installs the focused skill bundle:
 
 - `ua-standards-check` for read-only freshness audits.
 - `ua-build-site` for starting new UA Athletics sites from templates.
 - `ua-site-compliance` for refactoring existing sites into compliance.
+
+Use `bun run install:agent-skill-bundle` only when you need the single portable
+`ua-athletics-web` skill for web Claude/ChatGPT or a fallback environment.
 
 That skill ([`./skills/ua-standards-check/SKILL.md`](./skills/ua-standards-check/SKILL.md))
 fetches UA Marcom + brand standards, Arizona Digital release feeds, and major

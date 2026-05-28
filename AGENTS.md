@@ -37,8 +37,11 @@ before a non-trivial PR (new template, token bump, framework upgrade).
 Invocation depends on the agent:
 
 - **Install locally first, if needed:** run `bun run install:agent-skills` from
-  the repo root to copy all UA Athletics skills into Claude Code, Codex, and
-  Grok / AGENTS-compatible user-level skill folders.
+  the repo root to copy the focused UA Athletics skills into Claude Code,
+  Codex / AGENTS-compatible, and Grok Build user-level skill folders. Use
+  `bun run install:agent-skill-bundle` only when a single portable bundle is
+  needed for web ChatGPT/Claude or an environment that cannot load the focused
+  skills.
 - **Claude Code:** run `/ua-standards-check`.
 - **Codex:** invoke `$ua-standards-check` after installing the skill. If it is
   not installed, read
@@ -49,11 +52,15 @@ Invocation depends on the agent:
   `tokens.json` / `PLAN.md` / `package.json`, and propose updates without
   editing files as part of the standards-check run.
 
-The installable skills in `skills/` are:
+The installable focused skills in `skills/` are:
 
 - `ua-standards-check` — audit brand, Arizona Digital, and framework drift.
 - `ua-build-site` — scaffold new UA Athletics sites from these templates.
 - `ua-site-compliance` — refactor existing sites into UA Athletics compliance.
+
+There is also `ua-athletics-web`, a single portable bundle for ChatGPT web,
+Claude web, or fallback use when focused skills are not installed. Prefer the
+focused skills for local coding agents because they keep context tighter.
 
 ## If asked to install skills from this repo
 
@@ -67,9 +74,11 @@ repo and run:
 bun run install:agent-skills
 ```
 
-That command installs all three skills into Claude Code, Codex, and Grok /
-AGENTS-compatible user-level skill folders. If Bun is unavailable, copy each
-`skills/<skill>` folder into the target platform's skills directory.
+That command installs the focused skills into Claude Code, Codex /
+AGENTS-compatible, and Grok Build user-level skill folders. If Bun is
+unavailable, copy each focused `skills/<skill>` folder into the target
+platform's skills directory. For a single portable skill, copy or upload
+`skills/ua-athletics-web/SKILL.md`, or run `bun run install:agent-skill-bundle`.
 
 Read these. Not optional.
 
