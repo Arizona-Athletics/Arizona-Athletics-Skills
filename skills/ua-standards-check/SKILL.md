@@ -5,7 +5,7 @@ description: Audit this repo against the latest UA Athletics design standards. F
 
 # UA Standards Freshness Check
 
-You are auditing `arizona-athletics-web-templates` against authoritative external
+You are auditing `Arizona-Athletics-Skills` against authoritative external
 sources. The repo's whole purpose is to be the canonical UA Athletics baseline —
 which only works if the sources behind it are still current.
 

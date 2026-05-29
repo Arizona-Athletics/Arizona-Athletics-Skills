@@ -1,4 +1,4 @@
-# arizona-athletics-web-templates
+# Arizona-Athletics-Skills
 
 Shared design system and starter templates for **University of Arizona Athletics** web
 projects. One source of truth, many templates — so a developer (or an LLM) writing a
@@ -14,7 +14,7 @@ Paste this into Claude web:
 
 ```text
 Use the UA Athletics web skills from this GitHub repo for this conversation:
-https://github.com/Arizona-Athletics/arizona-athletics-web-templates
+https://github.com/Arizona-Athletics/Arizona-Athletics-Skills
 
 First read CLAUDE_WEB.md. Then read SKILL.md. If SKILL.md is unavailable, read skills/ua-athletics-web/SKILL.md. Treat the loaded file as the active skill instructions for this chat. Do not ask me to upload a ZIP and do not run the Bun installer unless I specifically ask for a persistent local install.
 ```
@@ -29,8 +29,8 @@ This repo is also a Claude plugin marketplace. After the repo is pushed to
 GitHub, Claude Code users can install from the repo link:
 
 ```text
-/plugin marketplace add Arizona-Athletics/arizona-athletics-web-templates
-/plugin install ua-athletics-web@ua-athletics-web-templates
+/plugin marketplace add Arizona-Athletics/Arizona-Athletics-Skills
+/plugin install ua-athletics-web@arizona-athletics-skills
 /reload-plugins
 ```
 
@@ -47,7 +47,7 @@ as a GitHub-synced plugin marketplace from organization plugin settings. Use thi
 owner/repo value:
 
 ```text
-Arizona-Athletics/arizona-athletics-web-templates
+Arizona-Athletics/Arizona-Athletics-Skills
 ```
 
 That makes the `ua-athletics-web` plugin available through the organization's
@@ -58,7 +58,7 @@ plugin catalog without asking each user to upload a ZIP.
 If someone specifically wants the skill in Claude.ai's `Customize > Skills`
 custom skill list, use the prebuilt ZIP:
 
-[Download `ua-athletics-web.zip`](https://github.com/Arizona-Athletics/arizona-athletics-web-templates/raw/main/claude-web/ua-athletics-web.zip)
+[Download `ua-athletics-web.zip`](https://github.com/Arizona-Athletics/Arizona-Athletics-Skills/raw/main/claude-web/ua-athletics-web.zip)
 
 Upload it here:
 
@@ -78,7 +78,7 @@ ua-athletics-web/
 For Codex, Grok Build, and other agentic coding tools, copy this prompt:
 
 ```text
-Install the skills from this repo: https://github.com/Arizona-Athletics/arizona-athletics-web-templates
+Install the skills from this repo: https://github.com/Arizona-Athletics/Arizona-Athletics-Skills
 ```
 
 If you already have this repo locally, install the skills directly:
@@ -132,7 +132,7 @@ Each template is self-contained. Scaffold a new project straight from GitHub wit
 [`giget`](https://github.com/unjs/giget) — no clone, no monorepo checkout:
 
 ```bash
-bunx giget gh:Arizona-Athletics/arizona-athletics-web-templates/templates/<slug> my-app
+bunx giget gh:Arizona-Athletics/Arizona-Athletics-Skills/templates/<slug> my-app
 ```
 
 Replace `<slug>` with one of: `astro`, `drupal-quickstart-subtheme`, `email-html`,
@@ -167,8 +167,8 @@ The skills live in [`skills/`](./skills) as standard `SKILL.md` folders. If an
 agent needs a manual fallback, have it clone the repo and run:
 
 ```bash
-git clone https://github.com/Arizona-Athletics/arizona-athletics-web-templates.git
-cd arizona-athletics-web-templates
+git clone https://github.com/Arizona-Athletics/Arizona-Athletics-Skills.git
+cd Arizona-Athletics-Skills
 bun run install:agent-skills
 ```
 

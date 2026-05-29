@@ -11,7 +11,7 @@ Codex, Claude Code, Grok Build, Claude on the web, and ChatGPT as a project or
 knowledge file.
 
 Source repo:
-`https://github.com/Arizona-Athletics/arizona-athletics-web-templates`
+`https://github.com/Arizona-Athletics/Arizona-Athletics-Skills`
 
 ## How to use this skill
 
@@ -80,7 +80,7 @@ Source file: `skills/ua-standards-check/SKILL.md`
 
 # UA Standards Freshness Check
 
-You are auditing `arizona-athletics-web-templates` against authoritative external
+You are auditing `Arizona-Athletics-Skills` against authoritative external
 sources. The repo's whole purpose is to be the canonical UA Athletics baseline —
 which only works if the sources behind it are still current.
 
@@ -209,7 +209,7 @@ Build new UA Athletics web work from the shared template repo instead of
 recreating the brand by hand.
 
 Source repo:
-`https://github.com/Arizona-Athletics/arizona-athletics-web-templates`
+`https://github.com/Arizona-Athletics/Arizona-Athletics-Skills`
 
 ## First moves
 
@@ -241,7 +241,7 @@ Use the user's stack if they named one. Otherwise choose the closest fit:
 Pull a template without cloning the full repo:
 
 ```bash
-bunx giget gh:Arizona-Athletics/arizona-athletics-web-templates/templates/<slug> <target-dir>
+bunx giget gh:Arizona-Athletics/Arizona-Athletics-Skills/templates/<slug> <target-dir>
 ```
 
 Each template carries a minimal vendored `@ua/ua-tokens` package at
@@ -325,7 +325,7 @@ Bring an existing site into the UA Athletics system without rewriting unrelated
 behavior.
 
 Source repo:
-`https://github.com/Arizona-Athletics/arizona-athletics-web-templates`
+`https://github.com/Arizona-Athletics/Arizona-Athletics-Skills`
 
 ## First moves
 

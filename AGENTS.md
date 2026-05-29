@@ -65,7 +65,7 @@ focused skills for local coding agents because they keep context tighter.
 ## If asked to install skills from this repo
 
 When a user says "Install skills from this repo" and points to
-`https://github.com/Arizona-Athletics/arizona-athletics-web-templates`, pick the
+`https://github.com/Arizona-Athletics/Arizona-Athletics-Skills`, pick the
 right path for your surface.
 
 If you are running inside Claude.ai web chat, do not claim you can write to
@@ -87,13 +87,13 @@ If you are running in Claude Code with plugin support, prefer the no-upload
 GitHub marketplace path:
 
 ```text
-/plugin marketplace add Arizona-Athletics/arizona-athletics-web-templates
-/plugin install ua-athletics-web@ua-athletics-web-templates
+/plugin marketplace add Arizona-Athletics/Arizona-Athletics-Skills
+/plugin install ua-athletics-web@arizona-athletics-skills
 /reload-plugins
 ```
 
 If you are helping a Team or Enterprise organization use Claude Cowork, tell an
-owner to connect `Arizona-Athletics/arizona-athletics-web-templates` as a
+owner to connect `Arizona-Athletics/Arizona-Athletics-Skills` as a
 GitHub-synced plugin marketplace in organization plugin settings. This works
 because the repo contains `.claude-plugin/marketplace.json` and the plugin lives
 at `plugins/ua-athletics-web`.
