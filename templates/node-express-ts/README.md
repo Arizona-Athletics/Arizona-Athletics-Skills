@@ -10,7 +10,31 @@ official UA CDN (`cdn.digital.arizona.edu`). All colors come from
 [`@ua/ua-tokens`](../../packages/ua-tokens) so light/dark/system flips with
 zero per-component overrides.
 
-## Quick start
+## Standalone quick start
+
+Use this path when the folder was extracted with:
+`bunx giget gh:Arizona-Athletics/arizona-athletics-web-templates/templates/node-express-ts my-site`.
+
+```bash
+cd my-site
+bun install
+cp .env.example .env
+bun run dev
+bun run build
+```
+
+The template vendors a minimal `@ua/ua-tokens` package at
+`vendor/ua-tokens`, so it does not need the monorepo workspace after
+extraction. For the repo-wide rules, use the GitHub docs:
+[`AGENTS.md`](https://github.com/Arizona-Athletics/arizona-athletics-web-templates/blob/main/AGENTS.md),
+[`docs/COMPONENTS.md`](https://github.com/Arizona-Athletics/arizona-athletics-web-templates/blob/main/docs/COMPONENTS.md),
+and [`docs/DARK_MODE.md`](https://github.com/Arizona-Athletics/arizona-athletics-web-templates/blob/main/docs/DARK_MODE.md).
+
+Project-specific view partials belong in `src/views/partials/` only when the
+six shared partials do not cover the workflow. Keep them token-driven and
+compose from the existing card, toolbar, and hero partials where possible.
+
+## Monorepo quick start
 
 ```bash
 # from the monorepo root, install once (Bun)
@@ -44,7 +68,7 @@ bun run start   # node dist/server.js
 | EJS | 3.1 |
 | Helmet | 8 |
 | zod | 3.23 |
-| `@ua/ua-tokens` | `workspace:*` |
+| `@ua/ua-tokens` | `file:./vendor/ua-tokens` |
 
 Arizona Bootstrap is **not** an npm dependency. It is loaded from
 `cdn.digital.arizona.edu/lib/arizona-bootstrap/5.1.3/`, which is the only
@@ -205,5 +229,5 @@ The inline pre-paint + theme-toggle scripts run under per-request nonces.
 - [`docs/COLORS.md`](../../docs/COLORS.md), [`docs/TYPOGRAPHY.md`](../../docs/TYPOGRAPHY.md),
   [`docs/COMPONENTS.md`](../../docs/COMPONENTS.md), [`docs/DARK_MODE.md`](../../docs/DARK_MODE.md).
 - [`docs/AUTH.md`](../../docs/AUTH.md) — Cognito + UA SAML in detail.
-- [`.claude/research/ua-design-spec-2026-05-22.md`](../../.claude/research/ua-design-spec-2026-05-22.md)
+- [`docs/COMPONENTS.md`](https://github.com/Arizona-Athletics/arizona-athletics-web-templates/blob/main/docs/COMPONENTS.md)
   — canonical design spec (Header markup, Hero, Cards, Footer, Block A rules).

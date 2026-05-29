@@ -44,13 +44,24 @@ Pull a template without cloning the full repo:
 bunx giget gh:Arizona-Athletics/arizona-athletics-web-templates/templates/<slug> <target-dir>
 ```
 
-Then run Bun, not npm/yarn/pnpm:
+Each template carries a minimal vendored `@ua/ua-tokens` package at
+`vendor/ua-tokens`, so the extracted folder is self-contained and does not
+need the monorepo workspace. Then run Bun, not npm/yarn/pnpm:
 
 ```bash
 cd <target-dir>
 bun install
 bun run build
 ```
+
+Some non-JS templates use a different final command:
+
+| Template | Final command |
+| --- | --- |
+| `html-bootstrap5` | `bun run dev` or open the folder with a static server |
+| `email-html` | `bun run check`, then open `preview/index.html` |
+| `drupal-quickstart-subtheme` | move into `web/themes/custom/ua_athletics_starter`, then `bun run lint` if local PHP tooling is available |
+| `hugo` | requires Hugo extended; `bun run build` after `bun install` |
 
 ## Build rules
 
@@ -60,8 +71,9 @@ bun run build
   `--accent-hover`, `--on-accent`.
 - Use brand tokens such as `--ua-red` and `--ua-blue` only for deliberate
   identity accents.
-- Build from the six shared components: `Header`, `Hero`, `Toolbar`, `Card`,
-  `Footer`, `ThemeToggle`.
+- Build web pages from the six shared components: `Header`, `Hero`, `Toolbar`,
+  `Card`, `Footer`, `ThemeToggle`. For `email-html`, follow the documented
+  no-JavaScript exception and use the email-safe partials.
 - Ship the FOUC-safe theme script from `docs/DARK_MODE.md`.
 - Use Proxima Nova / Garamond Premier Pro / system mono only. Leave Typekit kit
   IDs as `CONFIGURE_ME` unless the human provides a cleared ID.
@@ -76,13 +88,16 @@ bun run build
 
 1. Identify the target platform, audience, pages, content source, auth needs,
    and deployment constraints.
-2. Pull the closest template and keep its conventions.
+2. Pull the closest template and keep its conventions. Do not rewrite
+   `@ua/ua-tokens` back to `workspace:*` in a standalone project; keep
+   `file:./vendor/ua-tokens` until the package is published to npm.
 3. Replace placeholder content with the user's content while preserving the six
    shared component skeleton.
 4. Wire tokens through the template's native path: CSS variables, Tailwind
    preset, SCSS, or TypeScript export.
 5. Add only project-specific components when the six shared components do not
-   cover the workflow.
+   cover the workflow. Put them in the template's native component/partial
+   directory and keep them token-driven.
 6. Run the template's build/check scripts.
 7. Verify light, dark, and system theme states. For browser apps, inspect the
    rendered page at desktop and mobile widths before calling it done.

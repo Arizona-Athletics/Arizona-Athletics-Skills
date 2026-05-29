@@ -1,0 +1,84 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/Arizona-Athletics/arizona-athletics-web-templates/packages/ua-tokens/tokens.schema.json",
+  "title": "@ua/ua-tokens design tokens",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "version",
+    "brand",
+    "semantic",
+    "type",
+    "space",
+    "radius",
+    "shadow",
+    "container"
+  ],
+  "properties": {
+    "$schema": { "type": "string" },
+    "version": { "type": "string" },
+    "brand": {
+      "type": "object",
+      "additionalProperties": { "$ref": "#/$defs/hex" }
+    },
+    "semantic": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["light", "dark"],
+      "properties": {
+        "light": {
+          "type": "object",
+          "additionalProperties": { "$ref": "#/$defs/hex" }
+        },
+        "dark": {
+          "type": "object",
+          "additionalProperties": { "$ref": "#/$defs/hex" }
+        }
+      }
+    },
+    "type": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["sans", "serif", "mono", "scale", "weight", "lineHeight"],
+      "properties": {
+        "sans": { "type": "string" },
+        "serif": { "type": "string" },
+        "mono": { "type": "string" },
+        "scale": {
+          "type": "object",
+          "additionalProperties": { "type": "string" }
+        },
+        "weight": {
+          "type": "object",
+          "additionalProperties": { "type": "string" }
+        },
+        "lineHeight": {
+          "type": "object",
+          "additionalProperties": { "type": "string" }
+        }
+      }
+    },
+    "space": {
+      "type": "object",
+      "additionalProperties": { "type": "string" }
+    },
+    "radius": {
+      "type": "object",
+      "additionalProperties": { "type": "string" }
+    },
+    "shadow": {
+      "type": "object",
+      "additionalProperties": { "type": "string" }
+    },
+    "container": {
+      "type": "object",
+      "additionalProperties": { "type": "string" }
+    }
+  },
+  "$defs": {
+    "hex": {
+      "type": "string",
+      "pattern": "^#[0-9A-Fa-f]{6}$"
+    }
+  }
+}

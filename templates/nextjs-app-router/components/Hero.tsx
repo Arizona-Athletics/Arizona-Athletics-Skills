@@ -9,6 +9,9 @@ export interface HeroProps {
   ctaHref?: string;
   secondaryCtaLabel?: string;
   secondaryCtaHref?: string;
+  imageSrc?: string;
+  imageAlt?: string;
+  overlay?: string;
   /** Text alignment within the hero. */
   align?: "start" | "center";
 }
@@ -21,8 +24,9 @@ export interface HeroProps {
  * CTAs inherit the global accent fill; focus rings use --focus-ring via the
  * preset's `focus-visible:outline-semantic-focus-ring`.
  *
- * `with-image` is intentionally left as a stub variant — drop the image-with-
- * brand-scrim treatment in once UA Marcom approves the photography.
+ * `with-image` renders real image plumbing plus the default brand scrim from
+ * the component contract. Use `imageAlt` only when the image conveys content;
+ * leave it empty for decorative photography.
  */
 export function Hero({
   variant = "default",
@@ -32,6 +36,9 @@ export function Hero({
   ctaHref,
   secondaryCtaLabel,
   secondaryCtaHref,
+  imageSrc,
+  imageAlt = "",
+  overlay,
   align = "start",
 }: HeroProps): React.ReactElement {
   const paddingY =
@@ -42,38 +49,56 @@ export function Hero({
         : "py-12 md:py-16";
   const alignClass =
     align === "center" ? "items-center text-center" : "items-start text-left";
+  const withImage = variant === "with-image" && Boolean(imageSrc);
+  const overlayStyle = {
+    background:
+      overlay ??
+      "linear-gradient(135deg, color-mix(in srgb, var(--ua-blue) 85%, transparent), color-mix(in srgb, var(--ua-red) 60%, transparent))",
+  };
 
   return (
     <section
       aria-labelledby="hero-title"
       className={`
-        relative bg-semantic-surface
+        relative overflow-hidden bg-semantic-surface
         border-b border-semantic-border
         ${paddingY}
       `}
     >
+      {withImage ? (
+        <div className="absolute inset-0" aria-hidden={imageAlt ? undefined : true}>
+          <img
+            src={imageSrc}
+            alt={imageAlt}
+            className="h-full w-full object-cover"
+          />
+          <div className="absolute inset-0" style={overlayStyle} />
+        </div>
+      ) : null}
       <div
         className={`
-          mx-auto flex w-full max-w-wide flex-col gap-4 px-4
+          relative mx-auto flex w-full max-w-wide flex-col gap-4 px-4
           ${alignClass}
         `}
       >
         <h1
           id="hero-title"
-          className="
+          className={`
             font-sans font-extrabold text-semantic-text-strong
             text-3xl md:text-5xl
             leading-tight
-          "
+            ${withImage ? "text-ua-white" : ""}
+          `}
         >
           {headline}
         </h1>
         {subhead ? (
-          <p className="
+          <p className={`
             font-sans text-semantic-text-muted
             text-base md:text-lg
             max-w-narrow
-          ">
+            ${withImage ? "text-ua-white/90" : ""}
+          `}>
             {subhead}
           </p>
         ) : null}
@@ -95,7 +120,7 @@ export function Hero({
             {secondaryCtaHref && secondaryCtaLabel ? (
               <Link
                 href={secondaryCtaHref}
-                className="
+                className={`
                   inline-flex items-center justify-center
                   h-10 px-5 rounded-md
                   border border-semantic-border bg-transparent
@@ -103,7 +128,8 @@ export function Hero({
                   font-sans font-semibold
                   transition-colors hover:bg-semantic-surface-alt
                   focus-visible:outline focus-visible:outline-2 focus-visible:outline-semantic-focus-ring focus-visible:outline-offset-2
-                "
+                  ${withImage ? "border-ua-white/80 text-ua-white hover:bg-ua-white/10" : ""}
+                `}
               >
                 {secondaryCtaLabel}
               </Link>

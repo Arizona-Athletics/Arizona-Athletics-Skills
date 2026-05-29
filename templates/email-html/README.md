@@ -7,6 +7,29 @@ These are static `.html` files. Drop them in your sending platform (SES,
 SendGrid, Postmark, Mailgun, etc.), swap the `CONFIGURE_ME` placeholders, and
 ship.
 
+## Standalone quick start
+
+Use this path when the folder was extracted with:
+`bunx giget gh:Arizona-Athletics/arizona-athletics-web-templates/templates/email-html my-emails`.
+
+```bash
+cd my-emails
+bun install
+bun run check
+open preview/index.html
+```
+
+The template vendors a minimal `@ua/ua-tokens` package at
+`vendor/ua-tokens` for scripts and source traceability, but email HTML still
+uses literal, inlined hex values for client compatibility. For the repo-wide
+rules, use the GitHub docs:
+[`AGENTS.md`](https://github.com/Arizona-Athletics/arizona-athletics-web-templates/blob/main/AGENTS.md),
+[`docs/COMPONENTS.md`](https://github.com/Arizona-Athletics/arizona-athletics-web-templates/blob/main/docs/COMPONENTS.md),
+and [`docs/DARK_MODE.md`](https://github.com/Arizona-Athletics/arizona-athletics-web-templates/blob/main/docs/DARK_MODE.md).
+
+New email components should be copy-pasteable table partials under
+`src/partials/`, with colors traced back to `@ua/ua-tokens`.
+
 ## What this is
 
 - Five hand-rolled, cross-client HTML email templates aligned with the canonical

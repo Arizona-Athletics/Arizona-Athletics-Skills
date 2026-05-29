@@ -137,11 +137,16 @@ Brand tokens (`--ua-blue`, `--ua-red`, `--ua-sky`, ...) stay **constant across t
 
 If a component renders the wrong color in dark mode, the diagnosis is almost always the same: it referenced a brand token (`--ua-blue`) where it should have referenced a semantic one (`--surface`). Fix the reference; do not add a dark-mode override at the component level.
 
-## `color-scheme: dark`
+## `color-scheme`
 
-The dark block in `tokens.css` includes `color-scheme: dark;`. This is a small CSS property with outsized impact: it tells the browser to render native form controls, scrollbars, and other user-agent UI in their dark variants. Without it, you get default white scrollbars on a navy page and the whole UI looks broken at the edges.
+The light root in `tokens.css` includes `color-scheme: light;`, and the dark
+block includes `color-scheme: dark;`. This is a small CSS property with outsized
+impact: it tells the browser to render native form controls, scrollbars, and
+other user-agent UI in the active theme. Without the light value, a user who
+forces light mode on a dark OS can still get dark native controls.
 
-Confirm it's set whenever you write a new dark-mode selector outside of `tokens.css`:
+Confirm the matching value is set whenever you write a new scoped theme selector
+outside of `tokens.css`:
 
 ```css
 [data-theme="dark"],
@@ -152,6 +157,13 @@ Confirm it's set whenever you write a new dark-mode selector outside of `tokens.
 ```
 
 If you ever scope dark mode to a subtree (rare, but possible for a single dark-themed hero), set `color-scheme: dark` on that subtree too.
+
+## Reduced Motion
+
+`tokens.css` also emits a global `@media (prefers-reduced-motion: reduce)` reset
+that shortens animations and transitions and disables smooth scrolling. Keep
+component motion modest, but do not duplicate reduced-motion overrides in each
+template unless a component needs a more specific fallback.
 
 ## Testing dark mode
 

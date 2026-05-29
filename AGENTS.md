@@ -131,7 +131,11 @@ Read these. Not optional.
 
 ## Six shared components
 
-Every template ships these. Build new ones only if none fit.
+Every web template ships these. Build new ones only if none fit. The
+`email-html` template is the documented exception: email clients do not support
+JavaScript, persistent theme state, or app-style toolbars, so it ships
+email-safe Header / Hero-style content / Card-style content / Footer / CTA
+partials instead of `Toolbar` and `ThemeToggle`.
 
 | Component | Use |
 | --- | --- |

@@ -51,6 +51,7 @@ function emitCss() {
   for (const [name, hex] of Object.entries(tokens.semantic.light)) {
     lines.push(`  --${name}: ${hex};`);
   }
+  lines.push("  color-scheme: light;");
   lines.push("");
   lines.push("  /* Typography */");
   lines.push(`  --font-sans: ${tokens.type.sans};`);
@@ -94,6 +95,17 @@ function emitCss() {
     lines.push(`  --${name}: ${hex};`);
   }
   lines.push("  color-scheme: dark;");
+  lines.push("}");
+  lines.push("");
+  lines.push("@media (prefers-reduced-motion: reduce) {");
+  lines.push("  *,");
+  lines.push("  *::before,");
+  lines.push("  *::after {");
+  lines.push("    animation-duration: 0.01ms !important;");
+  lines.push("    animation-iteration-count: 1 !important;");
+  lines.push("    scroll-behavior: auto !important;");
+  lines.push("    transition-duration: 0.01ms !important;");
+  lines.push("  }");
   lines.push("}");
   lines.push("");
   writeFileSync(join(DIST, "tokens.css"), lines.join("\n"));
@@ -203,12 +215,10 @@ function emitTailwind() {
   writeFileSync(join(DIST, "tailwind.preset.cjs"), body);
 
   // Companion .d.ts so TS templates can `import uaPreset from "@ua/ua-tokens/tailwind"`
-  // without TS7016 ("Could not find a declaration file for module"). The preset is
-  // emitted as CommonJS (module.exports = ...), so the matching declaration is
-  // `export = preset`; templates with esModuleInterop pick this up as a default
-  // import. Typing it as `Partial<Config>` lets template configs spread
-  // `presets: [uaPreset]` without TypeScript demanding every Config field.
-  const dts = `${banner("Tailwind preset types")}import type { Config } from "tailwindcss";\n\ndeclare const preset: Partial<Config>;\nexport = preset;\n`;
+  // without TS7016 ("Could not find a declaration file for module"). Runtime is
+  // still CommonJS for Tailwind compatibility; the type surface exposes a
+  // default export because the templates use ESM-style config files.
+  const dts = `${banner("Tailwind preset types")}import type { Config } from "tailwindcss";\n\ndeclare const preset: Partial<Config>;\nexport default preset;\n`;
   writeFileSync(join(DIST, "tailwind.preset.d.ts"), dts);
 }
 
@@ -217,7 +227,9 @@ function verify() {
   const css = readFileSync(join(DIST, "tokens.css"), "utf8");
   if (!css.includes("--ua-red: #AB0520")) throw new Error("CSS: --ua-red missing");
   if (!css.includes("--az-red: var(--ua-red)")) throw new Error("CSS: --az-red alias missing");
+  if (!css.includes("color-scheme: light")) throw new Error("CSS: light color-scheme missing");
   if (!css.includes("color-scheme: dark")) throw new Error("CSS: dark color-scheme missing");
+  if (!css.includes("prefers-reduced-motion: reduce")) throw new Error("CSS: reduced-motion reset missing");
   if (!css.includes("[data-theme=\"dark\"]")) throw new Error("CSS: dark selector missing");
 
   const scss = readFileSync(join(DIST, "tokens.scss"), "utf8");

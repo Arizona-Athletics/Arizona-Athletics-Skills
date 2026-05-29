@@ -20,7 +20,7 @@
       "name": "@ua/template-astro",
       "version": "0.1.0",
       "dependencies": {
-        "@ua/ua-tokens": "workspace:*",
+        "@ua/ua-tokens": "file:./vendor/ua-tokens",
         "astro": "^6.3.7",
       },
       "devDependencies": {
@@ -35,28 +35,28 @@
       "name": "@ua/template-drupal-quickstart-subtheme",
       "version": "0.1.0",
       "dependencies": {
-        "@ua/ua-tokens": "workspace:*",
+        "@ua/ua-tokens": "file:./vendor/ua-tokens",
       },
     },
     "templates/email-html": {
       "name": "@ua/template-email-html",
       "version": "0.1.0",
       "dependencies": {
-        "@ua/ua-tokens": "workspace:*",
+        "@ua/ua-tokens": "file:./vendor/ua-tokens",
       },
     },
     "templates/html-bootstrap5": {
       "name": "@ua/template-html-bootstrap5",
       "version": "0.1.0",
       "dependencies": {
-        "@ua/ua-tokens": "workspace:*",
+        "@ua/ua-tokens": "file:./vendor/ua-tokens",
       },
     },
     "templates/html-tailwind": {
       "name": "@ua/template-html-tailwind",
       "version": "0.1.0",
       "dependencies": {
-        "@ua/ua-tokens": "workspace:*",
+        "@ua/ua-tokens": "file:./vendor/ua-tokens",
       },
       "devDependencies": {
         "@tailwindcss/cli": "^4.0.0",
@@ -67,14 +67,14 @@
       "name": "@ua/template-hugo",
       "version": "0.1.0",
       "dependencies": {
-        "@ua/ua-tokens": "workspace:*",
+        "@ua/ua-tokens": "file:./vendor/ua-tokens",
       },
     },
     "templates/nextjs-app-router": {
       "name": "@ua/template-nextjs-app-router",
       "version": "0.1.0",
       "dependencies": {
-        "@ua/ua-tokens": "workspace:*",
+        "@ua/ua-tokens": "file:./vendor/ua-tokens",
         "next": "16.2.0",
         "react": "19.2.0",
         "react-dom": "19.2.0",
@@ -95,7 +95,7 @@
       "name": "@ua/template-node-express-ts",
       "version": "0.1.0",
       "dependencies": {
-        "@ua/ua-tokens": "workspace:*",
+        "@ua/ua-tokens": "file:./vendor/ua-tokens",
         "compression": "^1.7.5",
         "cookie-parser": "^1.4.7",
         "ejs": "^3.1.10",
@@ -119,7 +119,7 @@
       "name": "@ua/template-react-vite-plus",
       "version": "0.1.0",
       "dependencies": {
-        "@ua/ua-tokens": "workspace:*",
+        "@ua/ua-tokens": "file:./vendor/ua-tokens",
         "react": "^19.2.0",
         "react-dom": "^19.2.0",
       },
@@ -1518,6 +1518,24 @@
     "@tailwindcss/oxide-wasm32-wasi/@tybys/wasm-util": ["@tybys/wasm-util@0.10.2", "", { "dependencies": { "tslib": "^2.4.0" }, "bundled": true }, "sha512-RoBvJ2X0wuKlWFIjrwffGw1IqZHKQqzIchKaadZZfnNpsAYp2mM0h36JtPCjNDAHGgYez/15uMBpfGwchhiMgg=="],
 
     "@tailwindcss/oxide-wasm32-wasi/tslib": ["tslib@2.8.1", "", { "bundled": true }, "sha512-oJFu94HQb+KVduSUQL7wnpmqnfmLsOA/nAh6b6EH0wCEoK0/mPeXU6c3wKDV83MkOuHPRHtSXKKU99IBazS/2w=="],
+
+    "@ua/template-astro/@ua/ua-tokens": ["@ua/ua-tokens@file:templates/astro/vendor/ua-tokens", {}],
+
+    "@ua/template-drupal-quickstart-subtheme/@ua/ua-tokens": ["@ua/ua-tokens@file:templates/drupal-quickstart-subtheme/vendor/ua-tokens", {}],
+
+    "@ua/template-email-html/@ua/ua-tokens": ["@ua/ua-tokens@file:templates/email-html/vendor/ua-tokens", {}],
+
+    "@ua/template-html-bootstrap5/@ua/ua-tokens": ["@ua/ua-tokens@file:templates/html-bootstrap5/vendor/ua-tokens", {}],
+
+    "@ua/template-html-tailwind/@ua/ua-tokens": ["@ua/ua-tokens@file:templates/html-tailwind/vendor/ua-tokens", {}],
+
+    "@ua/template-hugo/@ua/ua-tokens": ["@ua/ua-tokens@file:templates/hugo/vendor/ua-tokens", {}],
+
+    "@ua/template-nextjs-app-router/@ua/ua-tokens": ["@ua/ua-tokens@file:templates/nextjs-app-router/vendor/ua-tokens", {}],
+
+    "@ua/template-node-express-ts/@ua/ua-tokens": ["@ua/ua-tokens@file:templates/node-express-ts/vendor/ua-tokens", {}],
+
+    "@ua/template-react-vite-plus/@ua/ua-tokens": ["@ua/ua-tokens@file:templates/react-vite-plus/vendor/ua-tokens", {}],
 
     "@voidzero-dev/vite-plus-test/es-module-lexer": ["es-module-lexer@1.7.0", "", {}, "sha512-jEQoCwk8hyb2AZziIOLhDqpm5+2ww5uIE6lkO/6jcOCusfk6LhMHpXXfBLXTZ7Ydyt0j4VoUQv6uGNYbdW+kBA=="],
 
