@@ -4,12 +4,13 @@
 
 # Dependencies (only used if a future config adds optional tooling).
 node_modules/
+!vendor/
+!vendor/ua-tokens/
+!vendor/ua-tokens/dist/
+!vendor/ua-tokens/dist/**
 
 # OS / editor noise.
 .DS_Store
 Thumbs.db
 .idea/
 .vscode/
-
-# Regenerated from @ua/ua-tokens by `bun run tokens:sync`.
-vendor/tokens.css

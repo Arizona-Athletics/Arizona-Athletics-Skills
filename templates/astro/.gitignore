@@ -6,6 +6,10 @@ dist/
 
 # Dependencies
 node_modules/
+!vendor/
+!vendor/ua-tokens/
+!vendor/ua-tokens/dist/
+!vendor/ua-tokens/dist/**
 
 # Local env — secrets and project-specific Cognito IDs go here.
 .env

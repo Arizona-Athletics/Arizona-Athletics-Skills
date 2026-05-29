@@ -5,11 +5,38 @@ University of Arizona Athletics starter — **React 19 + Vite+ + Arizona Bootstr
 [`../../docs/COMPONENTS.md`](../../docs/COMPONENTS.md) on a single demo page
 that renders correctly in both light and dark mode out of the box.
 
+In the monorepo, relative docs links resolve against the repo root. In a
+standalone extraction, use the absolute GitHub docs linked below.
+
 This template is a **scaffold**, not a finished site. The placeholder
 content, demo cards, and `// CONFIGURE_ME` markers are there for the human
 or LLM landing on a fresh clone — wire them up, then delete them.
 
-## Quick-start
+## Standalone quick start
+
+Use this path when the folder was extracted with:
+`bunx giget gh:Arizona-Athletics/arizona-athletics-web-templates/templates/react-vite-plus my-site`.
+
+```bash
+cd my-site
+bun install
+bun run dev
+bun run build
+bun run check
+```
+
+The template vendors a minimal `@ua/ua-tokens` package at
+`vendor/ua-tokens`, so it does not need the monorepo workspace after
+extraction. For the repo-wide rules, use the GitHub docs:
+[`AGENTS.md`](https://github.com/Arizona-Athletics/arizona-athletics-web-templates/blob/main/AGENTS.md),
+[`docs/COMPONENTS.md`](https://github.com/Arizona-Athletics/arizona-athletics-web-templates/blob/main/docs/COMPONENTS.md),
+and [`docs/DARK_MODE.md`](https://github.com/Arizona-Athletics/arizona-athletics-web-templates/blob/main/docs/DARK_MODE.md).
+
+Project-specific components belong in `src/components/` only when the six
+shared components do not cover the workflow. Keep them token-driven and compose
+them from `Card`, `Toolbar`, or `Hero` patterns where possible.
+
+## Monorepo quick start
 
 ```bash
 # from the repo root

@@ -25,10 +25,14 @@ Common decisions, with the answer up front:
 - **Where do I get the Block A logo?** → `// CONFIGURE_ME` — every template ships a placeholder. Do **not** invent an SVG path or download from a guessed URL. Ask the human for the asset.
 - **Which template should I use?**
   - React app → `templates/react-vite-plus`
-  - Marketing / static page → `templates/html-bootstrap5`
+  - Next.js App Router app → `templates/nextjs-app-router`
+  - Marketing / static page with Arizona Bootstrap → `templates/html-bootstrap5`
+  - Utility-first static page → `templates/html-tailwind`
   - Drupal site → `templates/drupal-quickstart-subtheme`
   - Long-form / editorial content → `templates/astro`
-  - API or SSR app → `templates/nextjs-app-router` or `templates/node-express-ts`
+  - Hugo content site → `templates/hugo`
+  - API or SSR app → `templates/node-express-ts`
+  - Transactional or marketing email → `templates/email-html`
 
 If your question isn't on this list, check the sibling doc for that topic before guessing.
 
@@ -38,7 +42,7 @@ If your question isn't on this list, check the sibling doc for that topic before
 
 - **DO** import tokens from `@ua/ua-tokens` — pick the artifact the template uses (CSS variables via `tokens.css`, Tailwind preset via `ua-preset`, or the typed TS object via `tokens.ts`). All three are generated from the same `tokens.json`.
 - **DO** use **semantic tokens** (`--bg`, `--surface`, `--text`, `--text-strong`, `--text-muted`, `--border`, `--link`, `--accent`, `--accent-hover`, `--on-accent`) for everything structural. Brand tokens (`--ua-red`, `--ua-blue`, `--ua-navy`, `--ua-bloom`, `--ua-chili`, `--ua-sky`, `--ua-oasis`, `--ua-leaf`, `--ua-river`, `--ua-mesa`, `--ua-warm-gray`, etc.) are for one-off identity accents only.
-- **DO** use the six shared components — **Header, Hero, Toolbar, Card, Footer, ThemeToggle** — as the skeleton of every page. See `COMPONENTS.md` for the prop contracts.
+- **DO** use the six shared components — **Header, Hero, Toolbar, Card, Footer, ThemeToggle** — as the skeleton of every web page. See `COMPONENTS.md` for the prop contracts. Email templates follow the documented no-JavaScript exception.
 - **DO** ship a **FOUC-safe pre-paint theme script** in `<head>` so the page renders in the right theme on first paint. See `DARK_MODE.md` for the exact snippet.
 - **DO** use **TypeScript** across all JS templates (`.ts` / `.tsx`). No new `.js` files in JS templates without a reason.
 - **DO** use **Bun** as the package manager and script runner. `bun install`, `bun run`, `bun x`. Lockfile is `bun.lockb`.

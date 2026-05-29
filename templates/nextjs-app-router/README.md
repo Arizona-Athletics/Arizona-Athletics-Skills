@@ -3,11 +3,36 @@
 Next.js 16 App Router starter for University of Arizona Athletics web projects.
 Consumes [`@ua/ua-tokens`](../../packages/ua-tokens/) for all design tokens.
 
-Read [`AGENTS.md`](../../AGENTS.md) at the repo root before editing any code
-here. The short version: never hardcode UA colors, default to semantic tokens,
-and build pages from the six shared components.
+In the monorepo, read [`AGENTS.md`](../../AGENTS.md) at the repo root before
+editing any code here. In a standalone extraction, use the absolute GitHub docs
+linked below. The short version: never hardcode UA colors, default to semantic
+tokens, and build pages from the six shared components.
 
-## Quick start
+## Standalone quick start
+
+Use this path when the folder was extracted with:
+`bunx giget gh:Arizona-Athletics/arizona-athletics-web-templates/templates/nextjs-app-router my-site`.
+
+```bash
+cd my-site
+bun install
+bun run dev
+bun run build
+bun run check
+```
+
+The template vendors a minimal `@ua/ua-tokens` package at
+`vendor/ua-tokens`, so it does not need the monorepo workspace after
+extraction. For the repo-wide rules, use the GitHub docs:
+[`AGENTS.md`](https://github.com/Arizona-Athletics/arizona-athletics-web-templates/blob/main/AGENTS.md),
+[`docs/COMPONENTS.md`](https://github.com/Arizona-Athletics/arizona-athletics-web-templates/blob/main/docs/COMPONENTS.md),
+and [`docs/DARK_MODE.md`](https://github.com/Arizona-Athletics/arizona-athletics-web-templates/blob/main/docs/DARK_MODE.md).
+
+Project-specific components belong in `components/` only when the six shared
+components do not cover the workflow. Keep them token-driven and compose them
+from `Card`, `Toolbar`, or `Hero` patterns where possible.
+
+## Monorepo quick start
 
 ```bash
 # from the repo root
@@ -33,9 +58,9 @@ bun --filter @ua/template-nextjs-app-router run lint    # next lint
 | --- | --- |
 | Next.js | 16.2 (App Router, Turbopack dev, React Compiler) |
 | React | 19.2 |
-| TypeScript | 5.7 strict (extends `../../tsconfig.base.json`) |
+| TypeScript | 5.7 strict, self-contained for standalone extraction |
 | Tailwind | 4 (`@tailwindcss/postcss` PostCSS plugin) |
-| Tokens | `@ua/ua-tokens` workspace dep |
+| Tokens | `@ua/ua-tokens` vendored file dep |
 | Auth | Cognito confidential client, server-side code exchange |
 
 ## The six components
@@ -133,7 +158,7 @@ lib/
 next.config.ts           # React Compiler on, Turbopack default in dev
 tailwind.config.ts       # @ua/ua-tokens/tailwind preset
 postcss.config.js        # Tailwind 4 PostCSS plugin
-tsconfig.json            # extends ../../tsconfig.base.json
+tsconfig.json            # self-contained strict TypeScript config
 .env.example             # Cognito server config
 ```
 

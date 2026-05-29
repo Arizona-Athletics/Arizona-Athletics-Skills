@@ -52,6 +52,7 @@ export function Toolbar({
                   key={label}
                   type="button"
                   aria-pressed={active}
+                  data-filter={label.toLowerCase().replace(/\s+/g, "-")}
                   className={`
                     inline-flex items-center
                     h-8 px-3 rounded-pill border

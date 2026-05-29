@@ -29,6 +29,8 @@ const {
   ],
   sticky = false,
 } = Astro.props;
+
+const drawerId = "ua-primary-navigation-drawer";
 ---
 
 <header
@@ -41,6 +43,19 @@ const {
     <span class="ua-header__brand-mark" aria-hidden="true">A</span>
     <span class="ua-header__site-title">{siteTitle}</span>
   </a>
+
+  <button
+    type="button"
+    class="ua-header__menu-button"
+    aria-label="Open primary navigation"
+    aria-expanded="false"
+    aria-controls={drawerId}
+    data-ua-mobile-menu-trigger
+  >
+    <span aria-hidden="true"></span>
+    <span aria-hidden="true"></span>
+    <span aria-hidden="true"></span>
+  </button>
 
   <nav class="ua-header__nav" aria-label="Primary">
     <ul>
@@ -60,6 +75,30 @@ const {
     </ul>
   </nav>
 
+  <nav
+    id={drawerId}
+    class="ua-header__drawer"
+    aria-label="Primary"
+    hidden
+    data-ua-mobile-menu-drawer
+  >
+    <ul>
+      {
+        nav.map((item) => (
+          <li>
+            <a
+              href={item.href}
+              aria-current={item.current ? "page" : undefined}
+              class:list={["ua-header__drawer-link", { "is-active": item.current }]}
+            >
+              {item.label}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </nav>
+
   <div class="ua-header__actions">
     <ThemeToggle />
     {/* CONFIGURE_ME: drop in an account/login control here (Cognito hosted UI
@@ -67,8 +106,71 @@ const {
   </div>
 </header>
 
+<script>
+  for (const header of document.querySelectorAll(".ua-header")) {
+    const trigger = header.querySelector<HTMLButtonElement>("[data-ua-mobile-menu-trigger]");
+    const drawer = header.querySelector<HTMLElement>("[data-ua-mobile-menu-drawer]");
+    if (!trigger || !drawer) continue;
+    const drawerElement = drawer;
+
+    const focusableSelector = "a[href], button:not([disabled])";
+    let lastFocused: HTMLElement | null = null;
+
+    const close = () => {
+      trigger.setAttribute("aria-expanded", "false");
+      trigger.setAttribute("aria-label", "Open primary navigation");
+      drawerElement.hidden = true;
+      document.removeEventListener("keydown", onKeyDown);
+      lastFocused?.focus();
+    };
+
+    const open = () => {
+      lastFocused = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+      trigger.setAttribute("aria-expanded", "true");
+      trigger.setAttribute("aria-label", "Close primary navigation");
+      drawerElement.hidden = false;
+      document.addEventListener("keydown", onKeyDown);
+      const firstFocusable = drawerElement.querySelector<HTMLElement>(focusableSelector);
+      firstFocusable?.focus();
+    };
+
+    function onKeyDown(event: KeyboardEvent) {
+      if (event.key === "Escape") {
+        close();
+        return;
+      }
+      if (event.key !== "Tab" || drawerElement.hidden) return;
+
+      const focusable = Array.from(drawerElement.querySelectorAll<HTMLElement>(focusableSelector));
+      if (!focusable.length) return;
+
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (!first || !last) return;
+
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    }
+
+    trigger.addEventListener("click", () => {
+      if (trigger.getAttribute("aria-expanded") === "true") close();
+      else open();
+    });
+
+    drawerElement.addEventListener("click", (event) => {
+      if (event.target instanceof HTMLAnchorElement) close();
+    });
+  }
+</script>
+
 <style>
   .ua-header {
+    position: relative;
     display: flex;
     align-items: center;
     gap: var(--space-4);
@@ -146,12 +248,101 @@ const {
     gap: var(--space-3);
   }
 
+  .ua-header__menu-button {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 4px;
+    width: 40px;
+    height: 40px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    background: var(--surface);
+    color: var(--text-strong);
+    cursor: pointer;
+  }
+
+  .ua-header__menu-button span {
+    width: 18px;
+    height: 2px;
+    background: currentColor;
+    border-radius: var(--radius-pill);
+  }
+
+  .ua-header__menu-button:focus-visible,
+  .ua-header__drawer-link:focus-visible {
+    outline: 2px solid var(--focus-ring);
+    outline-offset: 2px;
+  }
+
+  .ua-header__drawer {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    z-index: 60;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    box-shadow: var(--shadow-sm);
+    padding: var(--space-3) var(--space-4);
+  }
+
+  .ua-header__drawer[hidden] {
+    display: none;
+  }
+
+  .ua-header__drawer ul {
+    display: grid;
+    gap: var(--space-2);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .ua-header__drawer-link {
+    display: block;
+    color: var(--text);
+    text-decoration: none;
+    font-family: var(--font-sans);
+    font-weight: var(--font-weight-semibold);
+    padding: var(--space-3) 0;
+    border-bottom: 2px solid transparent;
+  }
+
+  .ua-header__drawer-link:hover,
+  .ua-header__drawer-link.is-active {
+    color: var(--text-strong);
+  }
+
+  .ua-header__drawer-link.is-active {
+    border-bottom-color: var(--accent);
+  }
+
   @media (max-width: 767px) {
     .ua-header {
       height: 56px;
       padding: 0 var(--space-4);
     }
     .ua-header__nav {
+      display: none;
+    }
+    .ua-header__brand {
+      flex: 1;
+      min-width: 0;
+    }
+    .ua-header__site-title {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .ua-header__menu-button {
+      display: inline-flex;
+    }
+  }
+
+  @media (min-width: 768px) {
+    .ua-header__drawer {
       display: none;
     }
   }

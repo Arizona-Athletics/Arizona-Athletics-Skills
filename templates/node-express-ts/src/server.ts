@@ -27,6 +27,7 @@ import healthRoutes from "./routes/healthz.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+const uaTokensDist = path.dirname(fileURLToPath(import.meta.resolve("@ua/ua-tokens/tokens.css")));
 
 function buildApp(): Application {
   const app = express();
@@ -84,10 +85,7 @@ function buildApp(): Application {
   // resolver, so we expose the package's dist folder verbatim.
   app.use(
     "/static/ua-tokens",
-    express.static(
-      path.resolve(__dirname, "..", "..", "..", "packages", "ua-tokens", "dist"),
-      staticOpts,
-    ),
+    express.static(uaTokensDist, staticOpts),
   );
 
   // Routes

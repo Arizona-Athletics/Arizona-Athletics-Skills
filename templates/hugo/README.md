@@ -2,7 +2,32 @@
 
 University of Arizona Athletics starter — **Hugo** static-site generator wired to [`@ua/ua-tokens`](../../packages/ua-tokens) and [Arizona Bootstrap 5.1.3](https://digital.arizona.edu/arizona-bootstrap) (CDN).
 
-For the full design-system contract (six components, hard don'ts, token discipline) read [`/AGENTS.md`](../../AGENTS.md) before changing anything. The canonical build spec lives in [`.claude/research/ua-design-spec-2026-05-22.md`](../../.claude/research/ua-design-spec-2026-05-22.md).
+In the monorepo, read [`AGENTS.md`](../../AGENTS.md) before changing anything.
+In a standalone extraction, use the absolute GitHub docs linked below.
+
+## Standalone quick start
+
+Use this path when the folder was extracted with:
+`bunx giget gh:Arizona-Athletics/arizona-athletics-web-templates/templates/hugo my-site`.
+
+```bash
+cd my-site
+bun install
+bun run dev
+bun run build
+```
+
+The template vendors a minimal `@ua/ua-tokens` package at
+`vendor/ua-tokens` and commits `static/css/tokens.css` for Hugo's static
+pipeline. Re-run `bun run tokens:sync` after token bumps. For the repo-wide
+rules, use the GitHub docs:
+[`AGENTS.md`](https://github.com/Arizona-Athletics/arizona-athletics-web-templates/blob/main/AGENTS.md),
+[`docs/COMPONENTS.md`](https://github.com/Arizona-Athletics/arizona-athletics-web-templates/blob/main/docs/COMPONENTS.md),
+and [`docs/DARK_MODE.md`](https://github.com/Arizona-Athletics/arizona-athletics-web-templates/blob/main/docs/DARK_MODE.md).
+
+Project-specific partials belong in `layouts/partials/` only when the six
+shared partials do not cover the workflow. Keep them token-driven and compose
+from `card.html`, `toolbar.html`, or `hero.html` where possible.
 
 ## Prereqs
 
@@ -11,7 +36,7 @@ For the full design-system contract (six components, hard don'ts, token discipli
   brew install hugo
   hugo version   # must include "extended"
   ```
-- [Bun](https://bun.sh) ≥ 1.3 (workspace tooling — installs the `@ua/ua-tokens` link).
+- [Bun](https://bun.sh) ≥ 1.3 (installs the vendored `@ua/ua-tokens` file dependency).
 
 ## Quick start
 
@@ -19,9 +44,7 @@ For the full design-system contract (six components, hard don'ts, token discipli
 # from repo root
 bun install
 
-# mirror the compiled tokens.css snapshot into static/ for Hugo's pipeline
 cd templates/hugo
-bun run tokens:sync
 
 # dev server (drafts on, live-reload)
 bun run dev          # → http://localhost:1313
@@ -30,13 +53,13 @@ bun run dev          # → http://localhost:1313
 bun run build        # → ./public
 ```
 
-`tokens:sync` copies `packages/ua-tokens/dist/tokens.css` into `static/css/tokens.css`. The file is in `.gitignore` — re-run the script after every token bump or `@ua/ua-tokens` build.
+`tokens:sync` copies `vendor/ua-tokens/dist/tokens.css` into `static/css/tokens.css`. The mirrored CSS is committed so a standalone extraction renders immediately; re-run the script after every token bump.
 
 ## Stack
 
 - **Hugo extended** — no npm build step; Hugo's own pipeline handles CSS, JS, and assets in `/static`.
 - **Arizona Bootstrap 5.1.3** via `cdn.digital.arizona.edu`. The version is pinned in `hugo.toml` under `[params].azBootstrapVersion` — the freshness audit (`/ua-standards-check`) checks this against the upstream release feed.
-- **`@ua/ua-tokens`** — linked through the Bun workspace. The compiled CSS file is mirrored into `static/css/tokens.css` via `bun run tokens:sync` (Hugo's static pipeline cannot reach into `node_modules`).
+- **`@ua/ua-tokens`** — vendored as a file dependency. The compiled CSS file is mirrored into `static/css/tokens.css` via `bun run tokens:sync` (Hugo's static pipeline cannot reach into `node_modules`).
 - **Vanilla JS** — `static/js/theme.js` (FOUC-safe theme toggle) and `static/js/auth.js` (Cognito PKCE scaffold).
 
 ## Layout
@@ -64,7 +87,7 @@ templates/hugo/
 └── static/
     ├── block-a.svg                 # 96x96 placeholder — replace with licensed UA asset
     ├── css/
-    │   ├── tokens.css              # mirrored from @ua/ua-tokens (gitignored)
+    │   ├── tokens.css              # mirrored from @ua/ua-tokens
     │   └── styles.css              # project overrides — zero hex values
     └── js/
         ├── theme.js                # theme cycle + system listener

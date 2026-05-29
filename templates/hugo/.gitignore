@@ -2,13 +2,14 @@
 public/
 resources/
 .hugo_build.lock
+!vendor/
+!vendor/ua-tokens/
+!vendor/ua-tokens/dist/
+!vendor/ua-tokens/dist/**
 
 # Local environment
 .env
 .env.local
-
-# Mirrored tokens snapshot (regenerated via `bun run tokens:sync`)
-static/css/tokens.css
 
 # OS noise
 .DS_Store

@@ -46,11 +46,10 @@
   <!-- <link rel="stylesheet" href="https://use.typekit.net/YOUR_KIT_ID.css"> -->
 
   <!--
-    @ua/ua-tokens — copied locally by `bun run tokens:sync`.
-    The static dev server is rooted at this template directory, so parent
-    paths outside the template do not resolve in the browser.
+    @ua/ua-tokens — vendored with this template so a single extracted folder
+    can serve the token CSS without reaching back into the monorepo.
   -->
-  <link rel="stylesheet" href="./vendor/tokens.css" />
+  <link rel="stylesheet" href="./vendor/ua-tokens/dist/tokens.css" />
 
   <!-- Project-local UA overrides (semantic tokens / Arizona Bootstrap CSS vars only — zero hex). Must come last. -->
   <link rel="stylesheet" href="./styles.css" />

@@ -1,6 +1,11 @@
 # UA Athletics Component Contract
 
-This document defines the **cross-template component contract** for the University of Arizona Athletics shared design system. It is **not a runtime component library**. The repo does not ship a single React (or Astro, or Twig) package that every site imports. Instead, each template under `templates/*` — React, Astro, Bootstrap-HTML, Tailwind-HTML, Drupal subtheme, Hugo, and MJML email — implements these six components in its own idiom: a React component, an Astro component, an EJS partial, Bootstrap markup, a Tailwind utility composition, a Drupal Twig template, a Hugo partial, or an MJML block. This contract pins down the names, props, slots, visual rules, tokens, and accessibility requirements so a UA Athletics page looks and behaves the same whether it is rendered by Next.js or by hand-written HTML. Every template **must** implement all six. Templates **must** consume tokens from `@ua/ua-tokens`. No hardcoded hex.
+This document defines the **cross-template component contract** for the University of Arizona Athletics shared design system. It is **not a runtime component library**. The repo does not ship a single React (or Astro, or Twig) package that every site imports. Instead, each web template under `templates/*` — React, Astro, Bootstrap-HTML, Tailwind-HTML, Drupal subtheme, Hugo, and server-rendered HTML — implements these six components in its own idiom: a React component, an Astro component, an EJS partial, Bootstrap markup, a Tailwind utility composition, a Drupal Twig template, or a Hugo partial. This contract pins down the names, props, slots, visual rules, tokens, and accessibility requirements so a UA Athletics page looks and behaves the same whether it is rendered by Next.js or by hand-written HTML. Every web template **must** implement all six. Templates **must** consume tokens from `@ua/ua-tokens`. No hardcoded hex.
+
+The `email-html` template is the exception because email clients do not support
+JavaScript, persistent theme state, app-style toolbars, or reliable CSS custom
+properties. It ships email-safe Header, Hero-style content, Card-style content,
+Footer, and CTA partials, with literal colors traced back to `@ua/ua-tokens`.
 
 ---
 
@@ -15,7 +20,9 @@ This document defines the **cross-template component contract** for the Universi
 | `Footer`      | Site chrome at bottom: wordmark, link columns, social row, legal bottom bar.  | Yes       |
 | `ThemeToggle` | Three-state (system / light / dark) toggle, persisted, FOUC-safe.             | Yes       |
 
-All six are **required**. A template that omits one is not a valid UA Athletics template.
+All six are **required** for web templates. A web template that omits one is not
+a valid UA Athletics template. Email templates follow the documented exception
+above.
 
 ---
 

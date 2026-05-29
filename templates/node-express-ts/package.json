@@ -16,7 +16,7 @@
     "check": "tsc --noEmit"
   },
   "dependencies": {
-    "@ua/ua-tokens": "workspace:*",
+    "@ua/ua-tokens": "file:./vendor/ua-tokens",
     "compression": "^1.7.5",
     "cookie-parser": "^1.4.7",
     "ejs": "^3.1.10",

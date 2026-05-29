@@ -6,6 +6,7 @@
 
 interface FilterChip {
   label: string;
+  value?: string;
   pressed?: boolean;
 }
 
@@ -45,6 +46,7 @@ const {
           type="button"
           class:list={["ua-chip", { "is-active": chip.pressed }]}
           aria-pressed={chip.pressed ? "true" : "false"}
+          data-filter={chip.value ?? chip.label.toLowerCase().replace(/\s+/g, "-")}
         >
           {chip.label}
         </button>

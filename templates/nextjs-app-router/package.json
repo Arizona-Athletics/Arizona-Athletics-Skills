@@ -13,7 +13,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@ua/ua-tokens": "workspace:*",
+    "@ua/ua-tokens": "file:./vendor/ua-tokens",
     "next": "16.2.0",
     "react": "19.2.0",
     "react-dom": "19.2.0"
