@@ -9,7 +9,7 @@ Build new UA Athletics web work from the shared template repo instead of
 recreating the brand by hand.
 
 Source repo:
-`https://github.com/Arizona-Athletics/arizona-athletics-web-templates`
+`https://github.com/Arizona-Athletics/Arizona-Athletics-Skills`
 
 ## First moves
 
@@ -41,7 +41,7 @@ Use the user's stack if they named one. Otherwise choose the closest fit:
 Pull a template without cloning the full repo:
 
 ```bash
-bunx giget gh:Arizona-Athletics/arizona-athletics-web-templates/templates/<slug> <target-dir>
+bunx giget gh:Arizona-Athletics/Arizona-Athletics-Skills/templates/<slug> <target-dir>
 ```
 
 Each template carries a minimal vendored `@ua/ua-tokens` package at

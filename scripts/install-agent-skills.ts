@@ -188,7 +188,7 @@ function printHelp(): void {
   console.log(`Install UA Athletics agent skills for Claude Code, Codex, and Grok Build.
 
 Usage:
-  # From a local clone of https://github.com/Arizona-Athletics/arizona-athletics-web-templates
+  # From a local clone of https://github.com/Arizona-Athletics/Arizona-Athletics-Skills
   bun run install:agent-skills
   bun run install:agent-skills -- --codex-only
   bun run install:agent-skills -- --claude-only

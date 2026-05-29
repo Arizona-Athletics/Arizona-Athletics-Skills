@@ -61,7 +61,7 @@ function renderMarketplace() {
   return `${JSON.stringify(
     {
       $schema: "https://json.schemastore.org/claude-code-plugin-marketplace.json",
-      name: "ua-athletics-web-templates",
+      name: "arizona-athletics-skills",
       description: "UA Athletics web design-system skills and starter-template workflows.",
       owner: {
         name: "Arizona Athletics",
@@ -94,8 +94,8 @@ function renderPluginManifest() {
       author: {
         name: "Arizona Athletics",
       },
-      homepage: "https://github.com/Arizona-Athletics/arizona-athletics-web-templates",
-      repository: "https://github.com/Arizona-Athletics/arizona-athletics-web-templates",
+      homepage: "https://github.com/Arizona-Athletics/Arizona-Athletics-Skills",
+      repository: "https://github.com/Arizona-Athletics/Arizona-Athletics-Skills",
       license: "MIT",
       keywords: ["ua", "arizona", "athletics", "design-system", "templates"],
     },
@@ -152,7 +152,7 @@ Codex, Claude Code, Grok Build, Claude on the web, and ChatGPT as a project or
 knowledge file.
 
 Source repo:
-\`https://github.com/Arizona-Athletics/arizona-athletics-web-templates\`
+\`https://github.com/Arizona-Athletics/Arizona-Athletics-Skills\`
 
 ## How to use this skill
 

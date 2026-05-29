@@ -8,8 +8,8 @@ plugin marketplace.
 Claude Code install:
 
 ```text
-/plugin marketplace add Arizona-Athletics/arizona-athletics-web-templates
-/plugin install ua-athletics-web@ua-athletics-web-templates
+/plugin marketplace add Arizona-Athletics/Arizona-Athletics-Skills
+/plugin install ua-athletics-web@arizona-athletics-skills
 /reload-plugins
 ```
 

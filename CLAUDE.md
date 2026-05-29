@@ -4,7 +4,7 @@ This file is loaded automatically by Claude Code in this repo. It points to the
 canonical instructions; keep this file thin and update [`AGENTS.md`](./AGENTS.md)
 instead.
 
-## You are working in `arizona-athletics-web-templates`
+## You are working in `Arizona-Athletics-Skills`
 
 The shared design system + starter templates for **University of Arizona Athletics**
 web projects. Read [`AGENTS.md`](./AGENTS.md) for the full contract — what to do,

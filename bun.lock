@@ -3,7 +3,7 @@
   "configVersion": 1,
   "workspaces": {
     "": {
-      "name": "arizona-athletics-web-templates",
+      "name": "arizona-athletics-skills",
       "devDependencies": {
         "typescript": "^5.7.0",
       },
