@@ -1,0 +1,7 @@
+interface:
+  display_name: "UA Site Compliance"
+  short_description: "Refactor sites to UA Athletics standards"
+  default_prompt: "Use $ua-site-compliance to audit and refactor this site against UA Athletics standards."
+
+policy:
+  allow_implicit_invocation: true

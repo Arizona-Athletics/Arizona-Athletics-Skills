@@ -37,5 +37,20 @@ jobs:
       - name: Build token package
         run: bun run build
 
+      - name: Type-check packages
+        run: bun run check
+
+      - name: Validate tokens.json against schema
+        run: bunx ajv-cli validate --spec=draft2020 -s packages/ua-tokens/tokens.schema.json -d packages/ua-tokens/tokens.json
+
+      - name: Brand compliance lint (templates/)
+        run: bun run check:compliance
+
+      - name: Skill checks (frontmatter, project copies, bundle freshness)
+        run: bun run check:skills
+
+      - name: WCAG AA contrast audit
+        run: bun run check:contrast
+
       - name: Check standalone templates
         run: bun run check:standalone-templates

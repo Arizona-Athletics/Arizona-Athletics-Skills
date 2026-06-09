@@ -87,6 +87,12 @@ which only works if the sources behind it are still current.
 **You are read-only.** Report drift, propose updates, but never edit `tokens.json`,
 docs, or `package.json` files in this run. The human reviews and decides.
 
+## Prerequisites
+
+Network access plus either the `gh` CLI **or** plain `curl`. Every check below
+has a no-auth `curl` fallback — never skip a check just because `gh` is missing
+or unauthenticated.
+
 ## What to check
 
 Check these three groups. Use parallel WebFetch / Bash calls where possible to
@@ -96,9 +102,13 @@ keep this fast.
 
 Fetch and skim:
 
-- `https://marcom.arizona.edu/`
-- `https://brand.arizona.edu/` (if reachable)
-- `https://brand.arizona.edu/colors` and `/typography` (or the equivalent landing pages)
+- `https://marcom.arizona.edu/brand-guidelines/colors` — canonical palette
+- `https://marcom.arizona.edu/brand-guidelines/typography` — canonical type
+- `https://marcom.arizona.edu/applying-brand/web` — web standards (confirms
+  Quickstart / Arizona Digital as the prescribed framework)
+- Legacy URLs 301-redirect here (as of June 2026): `brand.arizona.edu` and
+  `marcom.arizona.edu/applying-the-brand/*`. Follow redirects; flag if the
+  target changes again.
 
 Compare against:
 
@@ -116,11 +126,15 @@ Flag any of:
 
 ### 2. Arizona Digital projects
 
-Use the `gh` CLI:
+Use the `gh` CLI, or the public GitHub API via `curl` if `gh` is unavailable:
 
 ```bash
 gh release list --repo az-digital/arizona-bootstrap --limit 5
 gh release list --repo az-digital/az_quickstart --limit 5
+
+# No gh? Same data, no auth needed:
+curl -s "https://api.github.com/repos/az-digital/arizona-bootstrap/releases?per_page=5"
+curl -s "https://api.github.com/repos/az-digital/az_quickstart/releases?per_page=5"
 ```
 
 Compare to the versions cited in `PLAN.md` and `README.md` (currently AZ Digital
@@ -139,6 +153,15 @@ bun pm view react version             # also: react-dom, next, astro, tailwindcs
 gh release list --repo oven-sh/bun --limit 3
 gh release list --repo vitejs/vite-plus --limit 3   # Vite+ is in preview; check VoidZero's channel if not on GitHub
 gh release list --repo microsoft/TypeScript --limit 3
+```
+
+No `gh` or no `bun pm view`? Use the npm registry and GitHub API directly:
+
+```bash
+curl -s "https://registry.npmjs.org/react/latest"   # .version; also next, astro, tailwindcss, bootstrap, typescript
+curl -s "https://registry.npmjs.org/-/package/next/dist-tags"   # when "latest" looks like a preview, check the stable line
+curl -s "https://api.github.com/repos/oven-sh/bun/releases?per_page=3"
+curl -s "https://api.github.com/repos/microsoft/TypeScript/releases?per_page=3"
 ```
 
 Frameworks to check:
@@ -160,7 +183,7 @@ A single markdown report with two parts.
 
 | Source | This repo says | Latest available | Drift | Where it's documented |
 | --- | --- | --- | --- | --- |
-| Arizona Red `#AB0520` | `#AB0520` | `#AB0520` (per brand.arizona.edu) | none | `tokens.json`, `BRAND.md` |
+| Arizona Red `#AB0520` | `#AB0520` | `#AB0520` (per marcom.arizona.edu/brand-guidelines/colors) | none | `tokens.json`, `BRAND.md` |
 | arizona-bootstrap | 5.1.3 | 5.2.0 | minor | `PLAN.md`, `README.md` |
 | React | 19.2 | 19.4 | minor | `PLAN.md` |
 | Vite+ | preview | preview / GA | varies | `README.md` |
@@ -184,7 +207,7 @@ this run.
 - **Don't edit any file.** This is a diff/report skill, not an apply skill.
 - **Don't fetch UA-internal URLs.** No `*.arizona.edu` admin / SSO / intranet endpoints.
 - **Don't include secrets or auth values** in the report. If a fetch needs auth, mark it `auth-required` and move on.
-- **Don't claim "the latest"** without a citation — every "latest" value in the table needs a source (GitHub release URL, npm registry, brand.arizona.edu page).
+- **Don't claim "the latest"** without a citation — every "latest" value in the table needs a source (GitHub release URL, npm registry, marcom.arizona.edu page).
 - **Don't run more than ~15 fetches.** Batch in parallel where possible. If a source is unreachable, report it and move on; don't retry.
 - **Don't second-guess intentional choices.** Vite+ is in preview *on purpose*; flag the status, don't propose downgrading to vanilla Vite.
 

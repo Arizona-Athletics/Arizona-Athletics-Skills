@@ -114,7 +114,7 @@ See [`/docs/AUTH.md`](../../docs/AUTH.md) for the engagement process. UA UITS / 
 
 | Where | What |
 | --- | --- |
-| `images/block-a.svg` | Placeholder. Replace with the licensed Athletics Block A from UA Marcom (`brand.arizona.edu` / `web@arizona.edu`). |
+| `images/block-a.svg` | Placeholder. Replace with the licensed Athletics Block A from UA Marcom (`marcom.arizona.edu` / `web@arizona.edu`). |
 | `images/screenshot.png` | 4×4 red placeholder. Replace with a 588×438 preview before submitting to a multi-site theme picker. |
 | Typekit `<link>` in `html.html.twig` (override or via base theme's settings) | Requires UA Marcom clearance. Email `web@arizona.edu`. See [`/docs/TYPOGRAPHY.md`](../../docs/TYPOGRAPHY.md). |
 | `settings.php` SAML block above | UA IdP metadata + service-provider entity ID. |

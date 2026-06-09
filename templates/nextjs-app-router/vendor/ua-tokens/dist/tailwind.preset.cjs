@@ -44,6 +44,7 @@ module.exports = {
           "link-hover": "var(--link-hover)",
           "accent": "var(--accent)",
           "accent-hover": "var(--accent-hover)",
+          "on-accent": "var(--on-accent)",
           "focus-ring": "var(--focus-ring)"
         }
       },

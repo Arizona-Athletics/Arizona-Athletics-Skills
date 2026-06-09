@@ -1,84 +1,134 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://github.com/Arizona-Athletics/arizona-athletics-web-templates/packages/ua-tokens/tokens.schema.json",
-  "title": "@ua/ua-tokens design tokens",
+  "title": "@ua/ua-tokens source tokens",
+  "description": "Schema for tokens.json — the single source of truth behind the generated CSS / SCSS / TS / Tailwind outputs (see build.ts).",
   "type": "object",
+  "required": ["version", "brand", "semantic", "type", "space", "radius", "shadow", "container"],
   "additionalProperties": false,
-  "required": [
-    "version",
-    "brand",
-    "semantic",
-    "type",
-    "space",
-    "radius",
-    "shadow",
-    "container"
-  ],
   "properties": {
     "$schema": { "type": "string" },
-    "version": { "type": "string" },
+    "version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$"
+    },
     "brand": {
+      "description": "Canonical UA brand palette. Emitted as --ua-<name> with --az-<name> aliases.",
       "type": "object",
-      "additionalProperties": { "$ref": "#/$defs/hex" }
+      "required": ["red", "blue", "white", "black"],
+      "additionalProperties": { "$ref": "#/$defs/hex" },
+      "propertyNames": { "pattern": "^[a-z][a-z0-9-]*$" }
     },
     "semantic": {
+      "description": "Theme-flipping structural tokens. Light and dark must define the same token names.",
       "type": "object",
-      "additionalProperties": false,
       "required": ["light", "dark"],
+      "additionalProperties": false,
       "properties": {
-        "light": {
-          "type": "object",
-          "additionalProperties": { "$ref": "#/$defs/hex" }
-        },
-        "dark": {
-          "type": "object",
-          "additionalProperties": { "$ref": "#/$defs/hex" }
-        }
+        "light": { "$ref": "#/$defs/semanticTheme" },
+        "dark": { "$ref": "#/$defs/semanticTheme" }
       }
     },
     "type": {
       "type": "object",
-      "additionalProperties": false,
       "required": ["sans", "serif", "mono", "scale", "weight", "lineHeight"],
+      "additionalProperties": false,
       "properties": {
-        "sans": { "type": "string" },
-        "serif": { "type": "string" },
-        "mono": { "type": "string" },
+        "sans": { "type": "string", "minLength": 1 },
+        "serif": { "type": "string", "minLength": 1 },
+        "mono": { "type": "string", "minLength": 1 },
         "scale": {
           "type": "object",
-          "additionalProperties": { "type": "string" }
+          "required": ["h1", "h2", "h3", "h4", "h5", "h6"],
+          "additionalProperties": { "$ref": "#/$defs/remValue" }
         },
         "weight": {
           "type": "object",
-          "additionalProperties": { "type": "string" }
+          "required": ["regular", "medium", "semibold", "bold", "extrabold"],
+          "additionalProperties": { "type": "string", "pattern": "^[1-9]00$" }
         },
         "lineHeight": {
           "type": "object",
-          "additionalProperties": { "type": "string" }
+          "required": ["tight", "snug", "normal", "relaxed"],
+          "additionalProperties": { "type": "string", "pattern": "^\\d+(\\.\\d+)?$" }
         }
       }
     },
     "space": {
       "type": "object",
-      "additionalProperties": { "type": "string" }
+      "minProperties": 1,
+      "additionalProperties": { "$ref": "#/$defs/cssLength" },
+      "propertyNames": { "pattern": "^\\d+$" }
     },
     "radius": {
       "type": "object",
-      "additionalProperties": { "type": "string" }
+      "required": ["sm", "md", "lg"],
+      "additionalProperties": { "$ref": "#/$defs/cssLength" }
     },
     "shadow": {
       "type": "object",
-      "additionalProperties": { "type": "string" }
+      "required": ["sm", "md", "lg"],
+      "additionalProperties": { "type": "string", "minLength": 1 }
     },
     "container": {
       "type": "object",
-      "additionalProperties": { "type": "string" }
+      "required": ["narrow", "default", "wide"],
+      "additionalProperties": { "$ref": "#/$defs/cssLength" }
     }
   },
   "$defs": {
     "hex": {
       "type": "string",
-      "pattern": "^#[0-9A-Fa-f]{6}$"
+      "pattern": "^#[0-9A-F]{6}$",
+      "description": "Six-digit uppercase hex color."
+    },
+    "remValue": {
+      "type": "string",
+      "pattern": "^\\d+(\\.\\d+)?rem$"
+    },
+    "cssLength": {
+      "type": "string",
+      "pattern": "^(0|\\d+(\\.\\d+)?(rem|px|em)|999px)$"
+    },
+    "semanticTheme": {
+      "type": "object",
+      "required": [
+        "bg",
+        "surface",
+        "surface-alt",
+        "surface-sunk",
+        "border",
+        "border-strong",
+        "text",
+        "text-strong",
+        "text-muted",
+        "text-faint",
+        "link",
+        "link-hover",
+        "accent",
+        "accent-hover",
+        "on-accent",
+        "focus-ring"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "bg": { "$ref": "#/$defs/hex" },
+        "surface": { "$ref": "#/$defs/hex" },
+        "surface-alt": { "$ref": "#/$defs/hex" },
+        "surface-sunk": { "$ref": "#/$defs/hex" },
+        "border": { "$ref": "#/$defs/hex" },
+        "border-strong": { "$ref": "#/$defs/hex" },
+        "text": { "$ref": "#/$defs/hex" },
+        "text-strong": { "$ref": "#/$defs/hex" },
+        "text-muted": { "$ref": "#/$defs/hex" },
+        "text-faint": { "$ref": "#/$defs/hex" },
+        "link": { "$ref": "#/$defs/hex" },
+        "link-hover": { "$ref": "#/$defs/hex" },
+        "accent": { "$ref": "#/$defs/hex" },
+        "accent-hover": { "$ref": "#/$defs/hex" },
+        "on-accent": { "$ref": "#/$defs/hex" },
+        "focus-ring": { "$ref": "#/$defs/hex" }
+      }
     }
   }
 }

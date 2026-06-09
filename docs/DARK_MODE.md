@@ -6,7 +6,7 @@ University of Arizona Athletics dark mode is **brand-true navy**, not generic gr
 
 UA's visual identity is navy and red. A neutral gray dark theme would dilute that identity on every page that opts in. By grounding dark mode in Midnight (`#001C48`) and Arizona Blue (`#0C234B`), the dark experience stays unmistakably Arizona — the same brand on a dark canvas, not a different product. Gray is a safe default for product UIs without a strong identity; UA Athletics has a strong identity, so we lean into it.
 
-The accent color also shifts: Arizona Red (`#AB0520`) is too dark to read on navy, so we use a brighter red (`#D8112D`) in dark mode, with Bloom (`#EF4056`) for hover. Links use Sky (`#81D3EB`) so they pop against the deep navy without competing with the red accent.
+The accent color also shifts: Arizona Red (`#AB0520`) is too dark to read on navy, so we use a brighter red (`#D8112D`) in dark mode, with a brighter step (`#DE1F3C`) for hover — bright enough to read as hover while keeping white labels AA. Links use Sky (`#81D3EB`) so they pop against the deep navy without competing with the red accent.
 
 ## The three states
 
@@ -170,7 +170,7 @@ template unless a component needs a more specific fallback.
 Run through this checklist before merging anything that touches a themed surface:
 
 - [ ] Toggle to dark, then hard-reload — is there a white flash before the dark theme paints?
-- [ ] All text legible? Focus on muted (`--text-muted` = `#A6B5CC`) and faint (`--text-faint` = `#7B8AA6`) shades, which are the most likely to fail contrast.
+- [ ] All text legible? Focus on muted (`--text-muted` = `#A6B5CC`) and faint (`--text-faint` = `#8292AC`) shades, which are the most likely to fail contrast.
 - [ ] Focus rings visible? `--focus-ring` is Sky `#81D3EB` in dark mode; tab through interactive elements and confirm.
 - [ ] Form inputs and scrollbars rendered dark? If they are white, `color-scheme: dark` is missing or scoped wrong.
 - [ ] Images with transparent backgrounds — do they need a light-backdrop wrapper, or do they read on navy as-is? Logos in particular often need a wrapper.
