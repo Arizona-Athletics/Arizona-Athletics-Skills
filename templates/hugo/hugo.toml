@@ -11,7 +11,6 @@ baseURL          = "https://example.arizona.edu/"
 languageCode     = "en-us"
 defaultContentLanguage = "en"
 title            = "Arizona Athletics"
-theme            = ""           # files live in /layouts directly — no theme subdir
 enableRobotsTXT  = true
 enableEmoji      = false
 timeout          = "60s"
@@ -79,5 +78,5 @@ buildFuture      = false
 # ----------------------------------------------------------------------
 [params.designSystem]
   package = "@ua/ua-tokens"
-  version = "workspace:*"
-  spec    = ".claude/research/ua-design-spec-2026-05-22.md"
+  version = "file:./vendor/ua-tokens"
+  spec    = "docs/COMPONENTS.md"

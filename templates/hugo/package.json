@@ -10,10 +10,10 @@
     "build": "hugo --minify",
     "preview": "hugo server",
     "clean": "rm -rf public resources .hugo_build.lock",
-    "tokens:sync": "cp ../../packages/ua-tokens/dist/tokens.css static/css/tokens.css"
+    "tokens:sync": "cp vendor/ua-tokens/dist/tokens.css static/css/tokens.css"
   },
   "dependencies": {
-    "@ua/ua-tokens": "workspace:*"
+    "@ua/ua-tokens": "file:./vendor/ua-tokens"
   },
   "engines": {
     "hugo": ">=0.140.0"

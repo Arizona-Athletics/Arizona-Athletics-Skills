@@ -1,5 +1,9 @@
 dist/
 node_modules/
+!vendor/
+!vendor/ua-tokens/
+!vendor/ua-tokens/dist/
+!vendor/ua-tokens/dist/**
 .env
 .env.local
 .bun

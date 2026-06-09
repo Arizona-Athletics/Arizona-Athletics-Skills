@@ -5,6 +5,10 @@ next-env.d.ts
 
 # Dependencies
 node_modules/
+!vendor/
+!vendor/ua-tokens/
+!vendor/ua-tokens/dist/
+!vendor/ua-tokens/dist/**
 
 # Env files — never commit. Only .env.example is tracked.
 .env

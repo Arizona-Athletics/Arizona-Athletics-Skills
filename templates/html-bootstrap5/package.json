@@ -6,15 +6,12 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "tokens:sync": "mkdir -p vendor && cp ../../packages/ua-tokens/dist/tokens.css ./vendor/tokens.css",
-    "predev": "bun run tokens:sync",
-    "prestart": "bun run tokens:sync",
     "dev": "python3 -m http.server 8080",
     "start": "python3 -m http.server 8080",
     "format": "echo 'No formatter wired — drop in prettier or biome at the project root if you need one.'",
     "lint": "echo 'No linter wired — this template is plain HTML/JS with no build step.'"
   },
   "dependencies": {
-    "@ua/ua-tokens": "workspace:*"
+    "@ua/ua-tokens": "file:./vendor/ua-tokens"
   }
 }

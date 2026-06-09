@@ -2,9 +2,34 @@
 
 University of Arizona Athletics starter — **plain HTML5 + Tailwind 4 + Arizona Bootstrap (CDN)**. Demonstrates how a Tailwind-first project consumes UA tokens AND the canonical Arizona Bootstrap components side-by-side.
 
-For the full design-system contract (six components, hard don'ts, token discipline) read [`/AGENTS.md`](../../AGENTS.md) before changing anything.
+In the monorepo, read [`AGENTS.md`](../../AGENTS.md) before changing anything.
+In a standalone extraction, use the absolute GitHub docs linked below.
 
-## Quick start
+## Standalone quick start
+
+Use this path when the folder was extracted with:
+`bunx giget gh:Arizona-Athletics/arizona-athletics-web-templates/templates/html-tailwind my-site`.
+
+```bash
+cd my-site
+bun install
+bun run build
+bun run serve
+```
+
+For iterative work, run `bun run dev` in one terminal and `bun run serve` in
+another. The template vendors a minimal `@ua/ua-tokens` package at
+`vendor/ua-tokens`, so it does not need the monorepo workspace after
+extraction. For the repo-wide rules, use the GitHub docs:
+[`AGENTS.md`](https://github.com/Arizona-Athletics/arizona-athletics-web-templates/blob/main/AGENTS.md),
+[`docs/COMPONENTS.md`](https://github.com/Arizona-Athletics/arizona-athletics-web-templates/blob/main/docs/COMPONENTS.md),
+and [`docs/DARK_MODE.md`](https://github.com/Arizona-Athletics/arizona-athletics-web-templates/blob/main/docs/DARK_MODE.md).
+
+Project-specific sections should stay in `index.html` or move into a small
+partial system only when repetition justifies it. Keep new UI token-driven and
+reuse the Header, Hero, Toolbar, Card, Footer, and ThemeToggle shapes.
+
+## Monorepo quick start
 
 ```bash
 # from the repo root
@@ -31,8 +56,8 @@ Then open <http://localhost:8081>.
 
 - **HTML5** — vanilla, no framework, no bundler.
 - **Tailwind 4 (Oxide)** via the `@tailwindcss/cli` package, configured by
-  [`tailwind.config.ts`](./tailwind.config.ts). The config consumes the workspace
-  preset from [`@ua/ua-tokens`](../../packages/ua-tokens) so UA brand and
+  [`tailwind.config.ts`](./tailwind.config.ts). The config consumes the vendored
+  preset from `@ua/ua-tokens` so UA brand and
   semantic utilities (`bg-ua-red`, `text-semantic-text-strong`,
   `border-semantic-border`) are available out of the box. No hand-rolled
   `theme.extend.colors`.
@@ -53,7 +78,7 @@ The two CSS layers are intentionally complementary, not competitive:
    — `.arizona-header.bg-red`, `.background-wrapper.text-bg-red.bg-triangles-top-left`,
    `.navbar.navbar-expand-lg.bg-blue`, `.bg-warm-gray`, `.card.border-0.shadow-sm.rounded-3`,
    `.row.row-cols-md-5` — uses canonical AZ Bootstrap markup straight from
-   [`../../.claude/research/ua-design-spec-2026-05-22.md`](../../.claude/research/ua-design-spec-2026-05-22.md).
+   [`docs/COMPONENTS.md`](https://github.com/Arizona-Athletics/arizona-athletics-web-templates/blob/main/docs/COMPONENTS.md).
    Do not replace those with Tailwind utility chains; doing so drifts the
    brand and breaks the dark-mode wiring AZ ships.
 2. **Tailwind handles project-specific polish.** Micro-spacing

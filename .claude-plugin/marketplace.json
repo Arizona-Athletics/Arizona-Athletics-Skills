@@ -1,17 +1,24 @@
 {
-  "name": "ua-athletics",
+  "$schema": "https://json.schemastore.org/claude-code-plugin-marketplace.json",
+  "name": "arizona-athletics-skills",
+  "description": "UA Athletics web design-system skills and starter-template workflows.",
   "owner": {
-    "name": "University of Arizona Athletics"
-  },
-  "metadata": {
-    "description": "Skills for building and maintaining UA Athletics web projects on the shared design system.",
-    "version": "0.1.0"
+    "name": "Arizona Athletics"
   },
   "plugins": [
     {
       "name": "ua-athletics-web",
-      "source": "./",
-      "description": "UA Athletics web skills: standards audit, new-site scaffolding, and brand-compliance refactoring backed by @ua/ua-tokens and the shared templates."
+      "displayName": "UA Athletics Web",
+      "description": "Installs the UA Athletics web skill for standards checks, new-site scaffolds, and existing-site compliance work.",
+      "source": "./plugins/ua-athletics-web",
+      "category": "development",
+      "tags": [
+        "ua",
+        "arizona",
+        "athletics",
+        "design-system",
+        "templates"
+      ]
     }
   ]
 }

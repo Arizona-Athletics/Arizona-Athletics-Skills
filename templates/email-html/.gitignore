@@ -1,5 +1,9 @@
 node_modules/
 dist/
+!vendor/
+!vendor/ua-tokens/
+!vendor/ua-tokens/dist/
+!vendor/ua-tokens/dist/**
 .DS_Store
 *.log
 

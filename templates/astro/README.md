@@ -4,10 +4,34 @@ University of Arizona Athletics starter — **Astro 6 + Tailwind 4 + `@ua/ua-tok
 Long-form / editorial / mostly-static sites that still need PKCE auth and the
 six shared UA components.
 
-> Read [`AGENTS.md`](../../AGENTS.md) first. It is the LLM contract for this
-> repo. This README only covers what is template-specific.
+> In the monorepo, read [`AGENTS.md`](../../AGENTS.md) first. In a standalone
+> extraction, use the absolute GitHub docs linked below.
 
-## Quick start
+## Standalone quick start
+
+Use this path when the folder was extracted with:
+`bunx giget gh:Arizona-Athletics/arizona-athletics-web-templates/templates/astro my-site`.
+
+```bash
+cd my-site
+bun install
+bun run dev
+bun run build
+bun run check
+```
+
+The template vendors a minimal `@ua/ua-tokens` package at
+`vendor/ua-tokens`, so it does not need the monorepo workspace after
+extraction. For the repo-wide rules, use the GitHub docs:
+[`AGENTS.md`](https://github.com/Arizona-Athletics/arizona-athletics-web-templates/blob/main/AGENTS.md),
+[`docs/COMPONENTS.md`](https://github.com/Arizona-Athletics/arizona-athletics-web-templates/blob/main/docs/COMPONENTS.md),
+and [`docs/DARK_MODE.md`](https://github.com/Arizona-Athletics/arizona-athletics-web-templates/blob/main/docs/DARK_MODE.md).
+
+Project-specific components belong in `src/components/` only when the six
+shared components do not cover the workflow. Keep them token-driven and compose
+them from `Card`, `Toolbar`, or `Hero` patterns where possible.
+
+## Monorepo quick start
 
 ```bash
 # from the repo root
@@ -27,7 +51,7 @@ bun --filter @ua/template-astro run check    # astro check + tsc --noEmit
   `@astrojs/tailwind` integration. `@astrojs/tailwind` is pinned to Tailwind 3
   and Astro ≤ 5. The Vite plugin is what Astro 6 + Tailwind 4 actually uses,
   and it matches `templates/react-vite-plus`.
-- **`@ua/ua-tokens`** as a workspace dependency. The Tailwind preset
+- **`@ua/ua-tokens`** as a vendored file dependency. The Tailwind preset
   (`@ua/ua-tokens/tailwind`) is the single source of truth for colors, type,
   spacing, radii, and shadows. Use `bg-semantic-*` / `text-semantic-*` etc.
   rather than hex.
@@ -96,7 +120,7 @@ short version:
 templates/astro/
   astro.config.mjs            # static output + Tailwind 4 via @tailwindcss/vite
   tailwind.config.ts          # presets: [@ua/ua-tokens/tailwind]
-  tsconfig.json               # extends ../../tsconfig.base.json (strict)
+  tsconfig.json               # self-contained strict TypeScript config
   package.json                # @ua/template-astro
   .env.example                # Cognito + Typekit placeholders
   src/

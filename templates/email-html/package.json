@@ -10,7 +10,7 @@
     "check": "echo 'No type-check needed — HTML only'"
   },
   "dependencies": {
-    "@ua/ua-tokens": "workspace:*"
+    "@ua/ua-tokens": "file:./vendor/ua-tokens"
   },
   "devDependencies": {}
 }

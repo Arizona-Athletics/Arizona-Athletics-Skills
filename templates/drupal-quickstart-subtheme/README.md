@@ -4,7 +4,31 @@ University of Arizona Athletics starter — a **Drupal 10/11 subtheme of `arizon
 
 Per UA Marcom: **Arizona Quickstart is the official Drupal distro for `arizona.edu` sites.** This subtheme is the most important template in the repo — it is the canonical surface for any UA Athletics property built on Drupal.
 
-For the full design-system contract (six components, hard don'ts, token discipline) read [`/AGENTS.md`](../../AGENTS.md) before changing anything.
+In the monorepo, read [`AGENTS.md`](../../AGENTS.md) before changing anything.
+In a standalone extraction, use the absolute GitHub docs linked below.
+
+## Standalone extraction
+
+Use this path when the folder was extracted with:
+`bunx giget gh:Arizona-Athletics/arizona-athletics-web-templates/templates/drupal-quickstart-subtheme ua_athletics_starter`.
+
+```bash
+cd ua_athletics_starter
+bun install
+bun run lint
+```
+
+The template vendors a minimal `@ua/ua-tokens` package at
+`vendor/ua-tokens` for optional semantic-token layering and source
+traceability, so it does not need the monorepo workspace after extraction. For
+the repo-wide rules, use the GitHub docs:
+[`AGENTS.md`](https://github.com/Arizona-Athletics/arizona-athletics-web-templates/blob/main/AGENTS.md),
+[`docs/COMPONENTS.md`](https://github.com/Arizona-Athletics/arizona-athletics-web-templates/blob/main/docs/COMPONENTS.md),
+and [`docs/DARK_MODE.md`](https://github.com/Arizona-Athletics/arizona-athletics-web-templates/blob/main/docs/DARK_MODE.md).
+
+Project-specific Twig templates belong under `templates/` only when Drupal's
+regions and the six shared component shapes do not cover the workflow. Keep
+new CSS token-driven and avoid forking `arizona_bootstrap`.
 
 ## Stack
 

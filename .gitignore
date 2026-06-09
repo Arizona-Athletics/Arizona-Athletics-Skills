@@ -9,6 +9,14 @@ bun.lockb
 # @ua/ua-tokens ships its compiled dist as a snapshot so downstream templates
 # can consume it without a build step.
 !packages/ua-tokens/dist/
+!packages/ua-tokens/tokens.schema.json
+
+# Each template carries a minimal vendored @ua/ua-tokens package so a single
+# extracted template can install without the monorepo workspace.
+!templates/*/vendor/
+!templates/*/vendor/ua-tokens/
+!templates/*/vendor/ua-tokens/dist/
+!templates/*/vendor/ua-tokens/dist/**
 
 # Local preview folders for architecture comparison (not committed)
 templates/_preview-*/

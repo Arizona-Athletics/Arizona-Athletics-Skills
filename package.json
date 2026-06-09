@@ -1,5 +1,5 @@
 {
-  "name": "arizona-athletics-web-templates",
+  "name": "arizona-athletics-skills",
   "version": "0.1.0",
   "description": "Shared design system + starter templates for University of Arizona Athletics web projects.",
   "private": true,
@@ -17,10 +17,15 @@
     "check:bundle": "bun scripts/check-skills.ts --bundle-only",
     "check:contrast": "bun scripts/check-contrast.ts",
     "clean": "bun run --filter './packages/*' clean",
+    "sync:template-token-vendors": "bun scripts/sync-template-token-vendors.ts",
+    "check:template-token-vendors": "bun scripts/sync-template-token-vendors.ts --check",
+    "check:token-dist": "bun scripts/check-token-dist.ts",
+    "check:standalone-templates": "bun scripts/check-standalone-templates.ts",
     "install:agent-skills": "bun scripts/install-agent-skills.ts",
     "install:agent-skill-bundle": "bun scripts/build-agent-skill-bundle.ts && bun scripts/install-agent-skills.ts --bundle-only",
     "build:agent-skill-bundle": "bun scripts/build-agent-skill-bundle.ts",
-    "sync:project-skills": "bun scripts/install-agent-skills.ts --project-only"
+    "sync:project-skills": "bun scripts/install-agent-skills.ts --project-only",
+    "build:claude-web-skill": "bun scripts/build-agent-skill-bundle.ts && bun scripts/package-claude-web-skill.ts"
   },
   "devDependencies": {
     "typescript": "^5.7.0"

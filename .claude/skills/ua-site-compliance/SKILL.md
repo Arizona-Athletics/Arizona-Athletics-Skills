@@ -9,7 +9,7 @@ Bring an existing site into the UA Athletics system without rewriting unrelated
 behavior.
 
 Source repo:
-`https://github.com/Arizona-Athletics/arizona-athletics-web-templates`
+`https://github.com/Arizona-Athletics/Arizona-Athletics-Skills`
 
 ## First moves
 

@@ -1,5 +1,8 @@
 # Drupal — never commit
 vendor/
+!vendor/
+!vendor/ua-tokens/
+!vendor/ua-tokens/**
 web/sites/default/files/
 web/sites/default/settings.local.php
 web/sites/*/files/

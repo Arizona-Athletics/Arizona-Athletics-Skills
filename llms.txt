@@ -1,0 +1,11 @@
+# Arizona Athletics Web Templates
+
+Use this repo as a skill source when a user gives you only the GitHub link.
+
+1. Read `/CLAUDE_WEB.md` first when the user is in Claude web and asks for no-upload use.
+2. Read `/SKILL.md` next. It is the repo-level, no-upload entrypoint for Claude web, ChatGPT web, Codex, Claude Code, Grok Build, and other coding agents.
+3. If `/SKILL.md` is unavailable, read `/skills/ua-athletics-web/SKILL.md`.
+4. When local repo files are available, prefer the focused workflows in `/skills/ua-standards-check/SKILL.md`, `/skills/ua-build-site/SKILL.md`, and `/skills/ua-site-compliance/SKILL.md`.
+5. Do not tell a Claude web user they must upload a ZIP just to use this repo in the current chat. ZIP upload is only for persistent native Claude custom-skill installation.
+6. For Claude Code or Claude Cowork plugin install, use the marketplace in `/.claude-plugin/marketplace.json`.
+7. Use `@ua/ua-tokens`, semantic tokens, the six shared components, and Bun unless the user explicitly asks otherwise.

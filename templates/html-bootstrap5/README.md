@@ -2,9 +2,33 @@
 
 University of Arizona Athletics starter — **plain HTML5 + Arizona Bootstrap 5.1.3 (loaded via the official UA CDN) + vanilla JS**. No bundler, no framework, no build step.
 
-For the full design-system contract (six components, hard don'ts, token discipline) read [`/AGENTS.md`](../../AGENTS.md) before changing anything.
+In the monorepo, read [`AGENTS.md`](../../AGENTS.md) before changing anything.
+In a standalone extraction, use the absolute GitHub docs linked below.
 
-## Quick start
+## Standalone quick start
+
+Use this path when the folder was extracted with:
+`bunx giget gh:Arizona-Athletics/arizona-athletics-web-templates/templates/html-bootstrap5 my-site`.
+
+```bash
+cd my-site
+bun install
+bun run dev
+```
+
+The template vendors a minimal `@ua/ua-tokens` package at
+`vendor/ua-tokens`, and `index.html` loads
+`./vendor/ua-tokens/dist/tokens.css` directly. For the repo-wide rules, use the
+GitHub docs:
+[`AGENTS.md`](https://github.com/Arizona-Athletics/arizona-athletics-web-templates/blob/main/AGENTS.md),
+[`docs/COMPONENTS.md`](https://github.com/Arizona-Athletics/arizona-athletics-web-templates/blob/main/docs/COMPONENTS.md),
+and [`docs/DARK_MODE.md`](https://github.com/Arizona-Athletics/arizona-athletics-web-templates/blob/main/docs/DARK_MODE.md).
+
+Project-specific sections should stay in `index.html` unless repetition
+justifies a tiny include/preprocess layer. Keep new UI token-driven and reuse
+the Header, Hero, Toolbar, Card, Footer, and ThemeToggle shapes.
+
+## Monorepo quick start
 
 ```bash
 cd templates/html-bootstrap5
@@ -33,7 +57,7 @@ A single canonical page that demonstrates every UA Athletics surface in the spec
 - **Arizona Bootstrap 5.1.3** — loaded from the official UA CDN. AZ Bootstrap is not on npm, so the CDN `<link>` and `<script>` tags are the canonical install:
   - CSS: `https://cdn.digital.arizona.edu/lib/arizona-bootstrap/5.1.3/css/arizona-bootstrap.min.css`
   - JS: `https://cdn.digital.arizona.edu/lib/arizona-bootstrap/5.1.3/js/arizona-bootstrap.bundle.min.js`
-- **`@ua/ua-tokens`** — copied into `vendor/tokens.css` by `bun run tokens:sync` before `dev` / `start`, so the static server can load tokens from inside the template root.
+- **`@ua/ua-tokens`** — vendored at `vendor/ua-tokens`; `index.html` loads its committed `dist/tokens.css` snapshot directly.
 - **Material Symbols Rounded** — Google Fonts CDN; used by the AZ header buttons and the social icon row in the footer.
 - **Vanilla JS** — `theme.js` (FOUC-safe theme toggle, system-change listener, year stamp) and `auth.js` (Cognito + UA SAML PKCE scaffold, all values `// CONFIGURE_ME`).
 
@@ -45,7 +69,7 @@ A single canonical page that demonstrates every UA Athletics surface in the spec
 | `styles.css`          | Project-local overrides. **Zero hex values** — Arizona Bootstrap + `@ua/ua-tokens` CSS vars only. |
 | `theme.js`            | `[data-ua-theme-toggle]` cycle button + OS prefers-color-scheme listener + year stamp.  |
 | `auth.js`             | Cognito + UA SAML PKCE scaffold. Every real value is `// CONFIGURE_ME`. No secrets.     |
-| `package.json`        | Workspace member `@ua/template-html-bootstrap5`. Scripts: `tokens:sync` / `dev` / `format` / `lint`. |
+| `package.json`        | Template metadata and Bun scripts: `dev` / `format` / `lint`. |
 | `.env.example`        | Cognito placeholders. Copy to `.env` (gitignored) and fill in for your deployment.       |
 | `.gitignore`          | `node_modules/`, `.env`, OS junk.                                                       |
 | `public/block-a.svg`  | Placeholder Block A (96×96, white substrate, Arizona Blue block, Arizona Red serif). Swap for the licensed asset. |

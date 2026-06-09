@@ -11,7 +11,7 @@
     "serve": "python3 -m http.server 8081"
   },
   "dependencies": {
-    "@ua/ua-tokens": "workspace:*"
+    "@ua/ua-tokens": "file:./vendor/ua-tokens"
   },
   "devDependencies": {
     "@tailwindcss/cli": "^4.0.0",

@@ -1,30 +1,31 @@
 import Link from "next/link";
+import { MobileNav, type HeaderNavItem } from "./MobileNav";
 import { ThemeToggle } from "./ThemeToggle";
 
 /**
  * Header — site chrome at the top of every page.
  *
- * Server component. The interactive bits (ThemeToggle, eventually a mobile
- * drawer trigger) live in client subcomponents and are dropped into the
- * `actions` slot. No hex values: colors come from the semantic token
+ * Server component. The interactive bits (ThemeToggle and mobile drawer)
+ * live in client subcomponents and are dropped into the `actions` slot. No hex
+ * values: colors come from the semantic token
  * utilities, which flip automatically in dark mode.
  *
  * Visual contract: docs/COMPONENTS.md § Header.
  */
 export function Header(): React.ReactElement {
   // CONFIGURE_ME: replace these placeholder nav items with the real site nav.
-  const nav: ReadonlyArray<{ label: string; href: string; current?: boolean }> =
-    [
-      { label: "Teams", href: "#", current: true },
-      { label: "Schedule", href: "#" },
-      { label: "Tickets", href: "#" },
-      { label: "News", href: "#" },
-    ];
+  const nav: ReadonlyArray<HeaderNavItem> = [
+    { label: "Teams", href: "#", current: true },
+    { label: "Schedule", href: "#" },
+    { label: "Tickets", href: "#" },
+    { label: "News", href: "#" },
+  ];
 
   return (
     <header
       role="banner"
       className="
+        relative
         bg-semantic-surface border-b border-semantic-border
         h-14 md:h-16
       "
@@ -72,6 +73,7 @@ export function Header(): React.ReactElement {
         </nav>
 
         <div className="ml-auto flex items-center gap-2">
+          <MobileNav nav={nav} />
           <ThemeToggle />
           {/*
             CONFIGURE_ME: wire this to the real Cognito sign-in flow. Right now

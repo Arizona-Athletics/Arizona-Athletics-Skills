@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
+  "name": "ua-athletics-web",
+  "displayName": "UA Athletics Web",
+  "description": "Adds a UA Athletics web skill for brand standards checks, template scaffolding, and compliance refactors.",
+  "author": {
+    "name": "Arizona Athletics"
+  },
+  "homepage": "https://github.com/Arizona-Athletics/Arizona-Athletics-Skills",
+  "repository": "https://github.com/Arizona-Athletics/Arizona-Athletics-Skills",
+  "license": "MIT",
+  "keywords": [
+    "ua",
+    "arizona",
+    "athletics",
+    "design-system",
+    "templates"
+  ]
+}

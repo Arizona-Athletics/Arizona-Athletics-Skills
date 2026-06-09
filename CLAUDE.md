@@ -4,7 +4,7 @@ This file is loaded automatically by Claude Code in this repo. It points to the
 canonical instructions; keep this file thin and update [`AGENTS.md`](./AGENTS.md)
 instead.
 
-## You are working in `arizona-athletics-web-templates`
+## You are working in `Arizona-Athletics-Skills`
 
 The shared design system + starter templates for **University of Arizona Athletics**
 web projects. Read [`AGENTS.md`](./AGENTS.md) for the full contract — what to do,
@@ -29,10 +29,12 @@ Those copies are generated from [`skills/`](./skills) (the source of truth) by
 `bun run sync:project-skills` — edit `skills/`, then regenerate; never edit
 `.claude/skills/` directly. To use the skills *outside* this repo, install them
 user-level with `bun run install:agent-skills`, or add the plugin:
-`/plugin marketplace add Arizona-Athletics/arizona-athletics-web-templates`
-then `/plugin install ua-athletics-web@ua-athletics`. Use
+`/plugin marketplace add Arizona-Athletics/Arizona-Athletics-Skills` then
+`/plugin install ua-athletics-web@arizona-athletics-skills`. Use
 `bun run install:agent-skill-bundle` only when you need the single portable
-`ua-athletics-web` skill for web Claude/ChatGPT or a fallback environment.
+`ua-athletics-web` skill for local fallback use. For Claude web no-upload use,
+read the root `SKILL.md`; upload `claude-web/ua-athletics-web.zip` only when the
+user wants a persistent native custom skill.
 
 That skill ([`./skills/ua-standards-check/SKILL.md`](./skills/ua-standards-check/SKILL.md))
 fetches UA Marcom + brand standards, Arizona Digital release feeds, and major
