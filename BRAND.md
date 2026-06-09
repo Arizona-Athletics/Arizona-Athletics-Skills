@@ -52,11 +52,12 @@ Use these for everything structural. They flip automatically in dark mode.
 | `--text` | `#1A2740` | Body text |
 | `--text-strong` | `#0C234B` | Headlines, labels |
 | `--text-muted` | `#5A6577` | Secondary text |
-| `--text-faint` | `#8895A8` | Tertiary text, helper |
+| `--text-faint` | `#657287` | Tertiary text, helper |
 | `--link` | `#1E5288` | Hyperlinks |
 | `--link-hover` | `#0C234B` | Hover state |
 | `--accent` | `#AB0520` | Primary CTA, brand emphasis |
 | `--accent-hover` | `#8B0015` | CTA hover |
+| `--on-accent` | `#FFFFFF` | Text/icons on accent fills |
 | `--focus-ring` | `#378DBD` | Focus outline |
 
 ## Semantic tokens — dark theme (brand-true navy)
@@ -74,11 +75,12 @@ Activates on `[data-theme="dark"]` or `[data-bs-theme="dark"]`.
 | `--text` | `#E8ECF4` | Body text |
 | `--text-strong` | `#FFFFFF` | Headlines |
 | `--text-muted` | `#A6B5CC` | Secondary text |
-| `--text-faint` | `#7B8AA6` | Tertiary text |
+| `--text-faint` | `#8292AC` | Tertiary text |
 | `--link` | `#81D3EB` | Hyperlinks (Sky — reads on navy) |
 | `--link-hover` | `#B6E3F1` | Hover state |
 | `--accent` | `#D8112D` | Primary CTA (brighter red — Arizona Red is too dark on navy) |
-| `--accent-hover` | `#EF4056` | CTA hover (Bloom) |
+| `--accent-hover` | `#DE1F3C` | CTA hover (brighter step, AA with white labels) |
+| `--on-accent` | `#FFFFFF` | Text/icons on accent fills |
 | `--focus-ring` | `#81D3EB` | Focus outline |
 
 ## Typography
@@ -131,5 +133,5 @@ Full tables in [`docs/COLORS.md`](./docs/COLORS.md) and
 
 - [`az-digital/arizona-bootstrap`](https://github.com/az-digital/arizona-bootstrap) — official UA Marcom Bootstrap fork
 - [`az-digital/az_quickstart`](https://github.com/az-digital/az_quickstart) — Arizona Quickstart 3 Drupal CMS
-- [marcom.arizona.edu](https://marcom.arizona.edu/) — UA brand standards
+- [marcom.arizona.edu](https://marcom.arizona.edu/) — UA brand standards ([colors](https://marcom.arizona.edu/brand-guidelines/colors), [typography](https://marcom.arizona.edu/brand-guidelines/typography), [web](https://marcom.arizona.edu/applying-brand/web))
 - [`Arizona-Athletics/bear-down-lms`](https://github.com/Arizona-Athletics/bear-down-lms) — reference Node/Express app with brand-true navy dark theme

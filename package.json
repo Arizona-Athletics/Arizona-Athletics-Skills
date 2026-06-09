@@ -12,10 +12,15 @@
   "scripts": {
     "build": "bun run --filter './packages/*' build",
     "check": "bun run --filter './packages/*' check",
+    "check:compliance": "bun scripts/check-compliance.ts",
+    "check:skills": "bun scripts/check-skills.ts",
+    "check:bundle": "bun scripts/check-skills.ts --bundle-only",
+    "check:contrast": "bun scripts/check-contrast.ts",
     "clean": "bun run --filter './packages/*' clean",
     "install:agent-skills": "bun scripts/install-agent-skills.ts",
     "install:agent-skill-bundle": "bun scripts/build-agent-skill-bundle.ts && bun scripts/install-agent-skills.ts --bundle-only",
-    "build:agent-skill-bundle": "bun scripts/build-agent-skill-bundle.ts"
+    "build:agent-skill-bundle": "bun scripts/build-agent-skill-bundle.ts",
+    "sync:project-skills": "bun scripts/install-agent-skills.ts --project-only"
   },
   "devDependencies": {
     "typescript": "^5.7.0"

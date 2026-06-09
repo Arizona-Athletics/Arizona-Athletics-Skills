@@ -1,0 +1,43 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Set up Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version-file: package.json
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile --ignore-scripts
+
+      - name: Build token package
+        run: bun run build
+
+      - name: Type-check packages
+        run: bun run check
+
+      - name: Validate tokens.json against schema
+        run: bunx ajv-cli validate --spec=draft2020 -s packages/ua-tokens/tokens.schema.json -d packages/ua-tokens/tokens.json
+
+      - name: Brand compliance lint (templates/)
+        run: bun run check:compliance
+
+      - name: Skill checks (frontmatter, project copies, bundle freshness)
+        run: bun run check:skills
+
+      - name: WCAG AA contrast audit
+        run: bun run check:contrast

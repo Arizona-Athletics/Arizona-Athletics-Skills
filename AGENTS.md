@@ -26,7 +26,7 @@ you should never write a dark-mode override.
 [`ua-standards-check`](./skills/ua-standards-check/SKILL.md) workflow to
 diff this repo against:
 
-- UA Marcom + brand standards (`marcom.arizona.edu`, `brand.arizona.edu`)
+- UA Marcom + brand standards (`marcom.arizona.edu` — legacy `brand.arizona.edu` redirects there)
 - Arizona Digital projects (`az-digital/arizona-bootstrap`, `az-digital/az_quickstart`) — latest releases
 - Major framework versions (Bun, TypeScript, React, Next, Astro, Vite+, Tailwind, Bootstrap)
 
@@ -36,13 +36,19 @@ before a non-trivial PR (new template, token bump, framework upgrade).
 
 Invocation depends on the agent:
 
-- **Install locally first, if needed:** run `bun run install:agent-skills` from
-  the repo root to copy the focused UA Athletics skills into Claude Code,
-  Codex / AGENTS-compatible, and Grok Build user-level skill folders. Use
+- **Claude Code:** run `/ua-standards-check`. It works with zero setup in this
+  repo — the skills are checked in under `.claude/skills/` (generated from
+  `skills/` by `bun run sync:project-skills`; edit `skills/`, never the copies).
+  Outside this repo, install user-level with `bun run install:agent-skills` or
+  via plugin: `/plugin marketplace add Arizona-Athletics/arizona-athletics-web-templates`,
+  then `/plugin install ua-athletics-web@ua-athletics`.
+- **Other tools — install locally first, if needed:** run
+  `bun run install:agent-skills` from the repo root to copy the focused UA
+  Athletics skills into Claude Code, Codex / AGENTS-compatible, and Grok Build
+  user-level skill folders (`--uninstall` reverses it). Use
   `bun run install:agent-skill-bundle` only when a single portable bundle is
   needed for web ChatGPT/Claude or an environment that cannot load the focused
   skills.
-- **Claude Code:** run `/ua-standards-check`.
 - **Codex:** invoke `$ua-standards-check` after installing the skill. If it is
   not installed, read
   [`skills/ua-standards-check/SKILL.md`](./skills/ua-standards-check/SKILL.md)
@@ -117,9 +123,9 @@ Spec: [`docs/COMPONENTS.md`](./docs/COMPONENTS.md).
 ```
 packages/
   ua-tokens/          # tokens.json → CSS / SCSS / TS / Tailwind preset
-templates/            # PR 2+: react-vite-plus, html-bootstrap5, drupal-quickstart-subtheme,
-                      #        nextjs-app-router, astro, node-express-ts, html-tailwind,
-                      #        react-ts-lib, hugo, email-html
+templates/            # react-vite-plus, html-bootstrap5, drupal-quickstart-subtheme,
+                      # nextjs-app-router, astro, node-express-ts, html-tailwind,
+                      # hugo, email-html
 docs/                 # specs (see above)
 ```
 

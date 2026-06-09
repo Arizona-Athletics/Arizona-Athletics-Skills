@@ -61,11 +61,12 @@ The light theme is the default and is applied when no `data-theme` attribute is 
 | `--text`          | `#1A2740` | Body text. Navy-leaning near-black for warmth.                 |
 | `--text-strong`   | `#0C234B` | Headlines, key labels, anywhere needing maximum emphasis.      |
 | `--text-muted`    | `#5A6577` | Secondary text, captions, meta info, helper copy.              |
-| `--text-faint`    | `#8895A8` | Disabled labels, the quietest non-decorative text.             |
+| `--text-faint`    | `#657287` | Disabled labels, the quietest non-decorative text.             |
 | `--link`          | `#1E5288` | Inline links and any non-button affordance.                    |
 | `--link-hover`    | `#0C234B` | Hover/focus state for inline links.                            |
 | `--accent`        | `#AB0520` | Primary CTA background, brand-loud emphasis fill.              |
 | `--accent-hover`  | `#8B0015` | Hover/active state for the accent fill.                        |
+| `--on-accent`     | `#FFFFFF` | Text and icons sitting on an accent fill.                      |
 | `--focus-ring`    | `#378DBD` | Keyboard focus outline. High contrast on both red and white.   |
 
 ## Semantic tokens — dark theme
@@ -83,11 +84,12 @@ Dark theme is brand-true navy, not the GitHub-style neutral gray you may be used
 | `--text`          | `#E8ECF4` | Body text on dark theme.                                       |
 | `--text-strong`   | `#FFFFFF` | Headlines and maximum-emphasis labels on dark theme.           |
 | `--text-muted`    | `#A6B5CC` | Secondary and helper text on dark theme.                       |
-| `--text-faint`    | `#7B8AA6` | Disabled labels and the quietest non-decorative text.          |
+| `--text-faint`    | `#8292AC` | Disabled labels and the quietest non-decorative text.          |
 | `--link`          | `#81D3EB` | Inline links on dark theme. Sky reads well on navy.            |
 | `--link-hover`    | `#B6E3F1` | Hover/focus state for links on dark theme.                     |
 | `--accent`        | `#D8112D` | Primary CTA background. A slightly hotter red for dark surfaces. |
-| `--accent-hover`  | `#EF4056` | Hover/active state for the accent fill. Bloom on dark reads bright. |
+| `--accent-hover`  | `#DE1F3C` | Hover/active state for the accent fill. Reads as a brightening step while keeping white labels AA. |
+| `--on-accent`     | `#FFFFFF` | Text and icons sitting on an accent fill.                      |
 | `--focus-ring`    | `#81D3EB` | Keyboard focus outline on dark theme.                          |
 
 ## WCAG AA contrast pairs
@@ -100,11 +102,15 @@ These are the foreground/background combinations the system is designed around. 
 | `--text-strong` `#0C234B`   | `--surface` `#FFFFFF`       | 16.0:1        | AAA (normal text)   |
 | `--text-muted` `#5A6577`    | `--surface` `#FFFFFF`       | 5.4:1         | AA (normal text)    |
 | `--text` `#1A2740`          | `--surface-alt` `#F4EDE5`   | 11.4:1        | AAA (normal text)   |
-| `#FFFFFF`                   | `--accent` `#AB0520`        | 8.7:1         | AAA (normal text)   |
-| `#FFFFFF`                   | `--accent-hover` `#8B0015`  | 10.7:1        | AAA (normal text)   |
+| `--on-accent` `#FFFFFF`     | `--accent` `#AB0520`        | 8.7:1         | AAA (normal text)   |
+| `--on-accent` `#FFFFFF`     | `--accent-hover` `#8B0015`  | 10.7:1        | AAA (normal text)   |
+| `--text-faint` `#657287`    | `--surface` `#FFFFFF`       | 4.9:1         | AA (normal text)    |
 | `--link` `#1E5288`          | `--bg` `#FAF8F4`            | 7.2:1         | AAA (normal text)   |
 | Dark `--text` `#E8ECF4`     | Dark `--bg` `#04122A`       | 14.5:1        | AAA (normal text)   |
 | Dark `--link` `#81D3EB`     | Dark `--surface` `#0C234B`  | 7.9:1         | AAA (normal text)   |
+| Dark `--on-accent` `#FFFFFF` | Dark `--accent-hover` `#DE1F3C` | 4.8:1     | AA (normal text)    |
+
+Every pair above is enforced by `bun run check:contrast` (`scripts/check-contrast.ts`), which fails CI if a token change drops a pair below its tier.
 
 Note on Bloom: `--ua-bloom` `#EF4056` on white sits at roughly 3.7:1, which **fails AA for body text**. Bloom on white is acceptable only for large display headlines (24px bold or 18.66px regular and up) or for non-text decorative accents such as rules, icons used as ornament, and illustration fills. For body-weight CTA fills, use `--accent` (red) on white instead.
 

@@ -57,11 +57,12 @@
   --text: #1A2740;
   --text-strong: #0C234B;
   --text-muted: #5A6577;
-  --text-faint: #8895A8;
+  --text-faint: #657287;
   --link: #1E5288;
   --link-hover: #0C234B;
   --accent: #AB0520;
   --accent-hover: #8B0015;
+  --on-accent: #FFFFFF;
   --focus-ring: #378DBD;
 
   /* Typography */
@@ -126,11 +127,12 @@
   --text: #E8ECF4;
   --text-strong: #FFFFFF;
   --text-muted: #A6B5CC;
-  --text-faint: #7B8AA6;
+  --text-faint: #8292AC;
   --link: #81D3EB;
   --link-hover: #B6E3F1;
   --accent: #D8112D;
-  --accent-hover: #EF4056;
+  --accent-hover: #DE1F3C;
+  --on-accent: #FFFFFF;
   --focus-ring: #81D3EB;
   color-scheme: dark;
 }

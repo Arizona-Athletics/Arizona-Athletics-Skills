@@ -1,0 +1,7 @@
+interface:
+  display_name: "UA Standards Check"
+  short_description: "Audit UA Athletics standards drift"
+  default_prompt: "Use $ua-standards-check to audit this repo for drift against current UA brand, Arizona Digital, and framework standards."
+
+policy:
+  allow_implicit_invocation: true

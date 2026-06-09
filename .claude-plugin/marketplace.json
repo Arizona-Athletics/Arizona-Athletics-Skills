@@ -1,0 +1,17 @@
+{
+  "name": "ua-athletics",
+  "owner": {
+    "name": "University of Arizona Athletics"
+  },
+  "metadata": {
+    "description": "Skills for building and maintaining UA Athletics web projects on the shared design system.",
+    "version": "0.1.0"
+  },
+  "plugins": [
+    {
+      "name": "ua-athletics-web",
+      "source": "./",
+      "description": "UA Athletics web skills: standards audit, new-site scaffolding, and brand-compliance refactoring backed by @ua/ua-tokens and the shared templates."
+    }
+  ]
+}

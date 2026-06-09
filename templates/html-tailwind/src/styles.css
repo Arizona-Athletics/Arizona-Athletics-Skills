@@ -139,49 +139,6 @@
   }
 
   /*
-   * Primary navbar — adapts the official AZ Marcom .navbar-az pattern to
-   * .bg-blue (navy). AZ Bootstrap paints the parent <li> with a near-white
-   * tile on .nav-item:hover and .nav-item:has(> .nav-link.active) — both are
-   * affordances for white navbars. Suppress them on navy.
-   *
-   * Indicator: 2px underline with 4px offset.
-   *   hover  → Sky (Midnight is invisible on navy; Sky reads clean)
-   *   active → Arizona Red (Marcom accent, iconic on navy)
-   *
-   * Bootstrap's .text-white utility ships with !important, so we restate the
-   * color on every state to keep the indicator visible without fighting the
-   * inline utility class on the <a>.
-   */
-  .navbar.bg-blue .navbar-nav .nav-item:has(> .nav-link:is(.active, .is-active, .show, :active)),
-  .navbar.bg-blue .navbar-nav .nav-item:hover {
-    background-color: transparent;
-  }
-  .navbar.bg-blue .nav-link {
-    color: var(--bs-white, var(--ua-white));
-    text-decoration: none;
-  }
-  .navbar.bg-blue .nav-link:hover,
-  .navbar.bg-blue .nav-link:focus-visible {
-    color: var(--bs-sky, var(--ua-sky));
-    text-decoration: underline;
-    text-decoration-thickness: 2px;
-    text-underline-offset: 4px;
-    text-decoration-skip-ink: none;
-    text-decoration-color: var(--bs-sky, var(--ua-sky));
-  }
-  .navbar.bg-blue .nav-link.active,
-  .navbar.bg-blue .nav-link.is-active,
-  .navbar.bg-blue .nav-link:active {
-    color: var(--bs-white, var(--ua-white));
-    background-color: transparent;
-    text-decoration: underline;
-    text-decoration-thickness: 2px;
-    text-underline-offset: 4px;
-    text-decoration-skip-ink: none;
-    text-decoration-color: var(--bs-red, var(--ua-red));
-  }
-
-  /*
    * Toolbar (.bg-warm-gray) — Marcom's white-navbar pattern: Arizona Blue text,
    * Arizona Red on hover. No underline indicator at this size.
    */
@@ -382,4 +339,62 @@ footer .border-top,
 
 .offcanvas:not(.show):not(.showing) {
   display: none;
+}
+
+/*
+ * Tailwind's `collapse` utility (visibility: collapse) shares a class name
+ * with Bootstrap's .collapse component, and Tailwind's utilities layer wins,
+ * leaving the navbar contents invisible at every width. Un-layered rules beat
+ * all @layer rules, so restore visibility here; show/hide stays governed by
+ * Bootstrap's collapse display logic.
+ */
+.navbar-collapse.collapse {
+  visibility: visible;
+}
+
+/*
+ * Primary navbar — adapts the official AZ Marcom .navbar-az pattern to
+ * .bg-blue (navy). AZ Bootstrap paints the parent <li> with a near-white
+ * tile on .nav-item:hover and .nav-item:has(> .nav-link.active) — both are
+ * affordances for white navbars. Suppress them on navy.
+ *
+ * These rules stay OUTSIDE @layer: the AZ Bootstrap CDN stylesheet is
+ * un-layered, and un-layered author CSS always beats @layer rules — inside
+ * @layer components this suppression silently loses.
+ *
+ * Indicator: 2px underline with 4px offset.
+ *   hover  → Sky (Midnight is invisible on navy; Sky reads clean)
+ *   active → Arizona Red (Marcom accent, iconic on navy)
+ *
+ * Bootstrap's .text-white utility ships with !important, so we restate the
+ * color on every state to keep the indicator visible without fighting the
+ * inline utility class on the <a>.
+ */
+.navbar.bg-blue .navbar-nav .nav-item:has(> .nav-link:is(.active, .is-active, .show, :active)),
+.navbar.bg-blue .navbar-nav .nav-item:hover {
+  background-color: transparent;
+}
+.navbar.bg-blue .nav-link {
+  color: var(--bs-white, var(--ua-white));
+  text-decoration: none;
+}
+.navbar.bg-blue .nav-link:hover,
+.navbar.bg-blue .nav-link:focus-visible {
+  color: var(--bs-sky, var(--ua-sky));
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+  text-decoration-skip-ink: none;
+  text-decoration-color: var(--bs-sky, var(--ua-sky));
+}
+.navbar.bg-blue .nav-link.active,
+.navbar.bg-blue .nav-link.is-active,
+.navbar.bg-blue .nav-link:active {
+  color: var(--bs-white, var(--ua-white));
+  background-color: transparent;
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+  text-decoration-skip-ink: none;
+  text-decoration-color: var(--bs-red, var(--ua-red));
 }
